@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jack Sockwell | 3D Artist</title>
+  <meta name="description" content="Portfolio website for Jack Sockwell, 3D artist and modeler." />
+  <style>
+    :root{
+      --bg:#0b0f17;
+      --bg2:#121826;
+      --card:#171f31;
+      --text:#f3f6ff;
+      --muted:#a7b0c2;
+      --accent:#6ea8fe;
+      --accent2:#8b5cf6;
+      --border:rgba(255,255,255,.08);
+      --shadow:0 10px 30px rgba(0,0,0,.25);
+      --max:1100px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:linear-gradient(180deg,var(--bg),#09111d 40%, #0d1220 100%);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{width:min(calc(100% - 32px),var(--max));margin:0 auto}
+    .nav{
+      position:sticky;top:0;z-index:1000;
+      backdrop-filter: blur(10px);
+      background:rgba(8,12,20,.7);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:16px;padding:14px 0;
+    }
+    .brand{font-weight:800;letter-spacing:.4px}
+    .nav-links{display:flex;gap:18px;flex-wrap:wrap}
+    .nav-links a{color:var(--muted)}
+    .nav-links a:hover,.nav-links a.active{color:var(--text)}
+    .hero{
+      padding:96px 0 72px;
+      background:
+        radial-gradient(circle at top right, rgba(110,168,254,.18), transparent 28%),
+        radial-gradient(circle at top left, rgba(139,92,246,.16), transparent 22%);
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:28px;
+      align-items:center;
+    }
+    .eyebrow{
+      display:inline-block;
+      color:#cdd8ff;
+      background:rgba(110,168,254,.12);
+      border:1px solid rgba(110,168,254,.2);
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:.92rem;
+      margin-bottom:16px;
+    }
+    h1{
+      font-size:clamp(2.4rem,5vw,4.6rem);
+      line-height:1.04;
+      margin:0 0 16px;
+      letter-spacing:-1.8px;
+    }
+    .lead{
+      font-size:1.1rem;
+      color:var(--muted);
+      max-width:700px;
+      margin:0 0 28px;
+    }
+    .btn-row{display:flex;gap:14px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      min-height:48px;padding:0 18px;border-radius:14px;
+      border:1px solid var(--border);
+      transition:.2s ease;
+      font-weight:700;
+      box-shadow:var(--shadow);
+    }
+    .btn.primary{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:white;border:none;
+    }
+    .btn.secondary{background:rgba(255,255,255,.03)}
+    .btn:hover{transform:translateY(-1px)}
+    .hero-card,.card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+    }
+    .hero-card{padding:22px}
+    .stat-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+      margin-top:14px;
+    }
+    .stat{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:16px;
+    }
+    .stat strong{display:block;font-size:1.4rem}
+    section{padding:72px 0}
+    .section-head{
+      display:flex;align-items:end;justify-content:space-between;gap:18px;
+      margin-bottom:24px;
+    }
+    .section-head h2{margin:0;font-size:clamp(1.7rem,3vw,2.5rem)}
+    .section-head p{margin:0;color:var(--muted)}
+    .about-grid,.contact-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:22px;
+    }
+    .card{padding:24px}
+    .muted{color:var(--muted)}
+    .skills{
+      display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;
+    }
+    .chip{
+      padding:9px 12px;border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      color:#dbe5ff;font-size:.95rem;
+    }
+    .work-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+    .project{
+      overflow:hidden;
+      padding:0;
+    }
+    .thumb{
+      aspect-ratio:16/10;
+      background:
+        linear-gradient(135deg, rgba(110,168,254,.25), rgba(139,92,246,.18)),
+        linear-gradient(180deg, #182034, #0f1524);
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:center;
+      color:#d9e4ff;font-weight:800;font-size:1.2rem;
+      letter-spacing:.04em;
+    }
+    .project-body{padding:18px}
+    .project h3{margin:0 0 8px;font-size:1.15rem}
+    .project p{margin:0;color:var(--muted)}
+    .project .tags{margin-top:14px}
+    .contact-list{
+      display:grid;gap:12px;margin-top:10px
+    }
+    .contact-item{
+      padding:14px 16px;border:1px solid var(--border);border-radius:16px;
+      background:rgba(255,255,255,.03)
+    }
+    .footer{
+      padding:32px 0 50px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+    }
+    .small{font-size:.95rem}
+    @media (max-width: 900px){
+      .hero-grid,.about-grid,.contact-grid,.work-grid{grid-template-columns:1fr}
+      .section-head{align-items:start;flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top">Jack Sockwell</a>
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">3D Artist • Modeler • Game Asset Creator</div>
+          <h1>Clean, stylized 3D work built for games and content.</h1>
+          <p class="lead">
+            I create 3D models, characters, props, and game-ready assets with a focus on strong shapes,
+            readable design, and polished presentation.
+          </p>
+          <div class="btn-row">
+            <a class="btn primary" href="#work">View My Work</a>
+            <a class="btn secondary" href="#contact">Contact Me</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <h3 style="margin:0 0 10px;">Quick intro</h3>
+          <p class="muted" style="margin:0;">
+            This starter site is ready for your real work, images, links, and contact info. We can swap out every part of it.
+          </p>
+          <div class="stat-grid">
+            <div class="stat">
+              <strong>3D Modeling</strong>
+              <span class="muted">Characters, props, stylized assets</span>
+            </div>
+            <div class="stat">
+              <strong>Game Ready</strong>
+              <span class="muted">Built for presentation and pipelines</span>
+            </div>
+            <div class="stat">
+              <strong>Portfolio Site</strong>
+              <span class="muted">Easy to update as you grow</span>
+            </div>
+            <div class="stat">
+              <strong>Fast Setup</strong>
+              <span class="muted">Single-file HTML starter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <h2>About</h2>
+          <p>Tell people what you do and what kind of work you take on.</p>
+        </div>
+        <div class="about-grid">
+          <div class="card">
+            <h3 style="margin-top:0;">Who I am</h3>
+            <p class="muted">
+              I’m Jack Sockwell, a 3D artist focused on creating stylized and game-ready models.
+              I work on characters, props, and other digital assets for games, content, and creative projects.
+            </p>
+            <p class="muted">
+              This section is a placeholder right now. We can rewrite it to sound more professional, more personal,
+              or more client-focused.
+            </p>
+          </div>
+          <div class="card" id="skills">
+            <h3 style="margin-top:0;">Skills & tools</h3>
+            <p class="muted">Replace or add anything here.</p>
+            <div class="skills">
+              <span class="chip">Blender</span>
+              <span class="chip">Substance Painter</span>
+              <span class="chip">Unreal Engine</span>
+              <span class="chip">Roblox Studio</span>
+              <span class="chip">Game Assets</span>
+              <span class="chip">Character Modeling</span>
+              <span class="chip">Stylized Art</span>
+              <span class="chip">UVs & Texturing</span>
+              <span class="chip">Rigging</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="container">
+        <div class="section-head">
+          <h2>Featured Work</h2>
+          <p>Add real project renders, names, and descriptions here.</p>
+        </div>
+
+        <div class="work-grid">
+          <article class="card project">
+            <div class="thumb">PROJECT 01</div>
+            <div class="project-body">
+              <h3>Stylized Character</h3>
+              <p>Short description of the model, what it was made for, and what makes it stand out.</p>
+              <div class="skills tags">
+                <span class="chip">Character</span>
+                <span class="chip">Stylized</span>
+                <span class="chip">Game Ready</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card project">
+            <div class="thumb">PROJECT 02</div>
+            <div class="project-body">
+              <h3>Prop / Asset Set</h3>
+              <p>Use this for a prop pack, environment asset, or any piece you want to showcase.</p>
+              <div class="skills tags">
+                <span class="chip">Props</span>
+                <span class="chip">Texturing</span>
+                <span class="chip">Presentation</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card project">
+            <div class="thumb">PROJECT 03</div>
+            <div class="project-body">
+              <h3>Game Model</h3>
+              <p>Another placeholder card for your work. We can add image thumbnails and project links next.</p>
+              <div class="skills tags">
+                <span class="chip">Modeling</span>
+                <span class="chip">Realtime</span>
+                <span class="chip">Portfolio</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head">
+          <h2>Contact</h2>
+          <p>Put your real links here when you're ready.</p>
+        </div>
+        <div class="contact-grid">
+          <div class="card">
+            <h3 style="margin-top:0;">Work with me</h3>
+            <p class="muted">
+              Use this section for commissions, freelance inquiries, or business contact details.
+            </p>
+            <div class="contact-list">
+              <div class="contact-item"><strong>Email:</strong> your@email.com</div>
+              <div class="contact-item"><strong>Instagram:</strong> @yourhandle</div>
+              <div class="contact-item"><strong>Twitter/X:</strong> @yourhandle</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 style="margin-top:0;">What we can do next</h3>
+            <p class="muted small">
+              Next, we can replace the placeholders with your actual bio, social links, project images,
+              commission info, colors, and sections.
+            </p>
+            <p class="muted small" style="margin-bottom:0;">
+              Then you upload this file to Netlify and your site updates.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container small">
+      © <span id="year"></span> Jack Sockwell. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
