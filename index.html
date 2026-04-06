@@ -1,23 +1,101 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Jack Sockwell</title><style>
-:root{--red:#ff003c;--green:#32ff00;--yellow:#fff200;--white:#f2f2f2;--black:#050505;--shadow:14px 14px 0 rgba(0,0,0,.35);--border:4px solid var(--yellow)}
-*{box-sizing:border-box}html,body{margin:0;background:var(--black);color:var(--white);font-family:Arial,Helvetica,sans-serif;scroll-behavior:smooth}a{text-decoration:none;color:inherit}
-body{background:radial-gradient(circle at 20% 10%, rgba(255,0,60,.18), transparent 30%),radial-gradient(circle at 85% 20%, rgba(50,255,0,.10), transparent 25%),radial-gradient(circle at 55% 75%, rgba(255,242,0,.08), transparent 20%),var(--black)}
-.site{min-height:100vh;border:4px solid var(--yellow);position:relative;overflow:hidden;isolation:isolate}.shape{position:absolute;z-index:0;pointer-events:none;opacity:.16;border:var(--border);will-change:transform}.shape.one{width:210px;height:210px;right:-30px;top:100px;background:var(--red);transform:rotate(9deg)}.shape.two{width:150px;height:150px;left:-50px;top:58%;background:var(--green);transform:rotate(-11deg)}.shape.three{width:120px;height:120px;right:16%;bottom:80px;background:var(--white);transform:rotate(8deg)}
-.wrap{max-width:1500px;margin:0 auto;padding:18px;position:relative;z-index:1}.block{border:var(--border);box-shadow:var(--shadow);background:#0d0d0d}
-.hero{min-height:86vh;display:grid;grid-template-columns:1.08fr .92fr;gap:22px;margin-bottom:22px}.hero-copy{background:linear-gradient(145deg, rgba(255,0,60,.88), rgba(255,0,60,.72));padding:28px;display:flex;flex-direction:column;justify-content:space-between}.tiny{color:var(--yellow);margin:0 0 10px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem}h1{margin:0;font-family:Rockwell,"Rockwell Nova","Roboto Slab",Georgia,serif;text-transform:uppercase;line-height:.88;font-size:clamp(3.2rem,10vw,8.4rem);color:var(--white);text-shadow:4px 4px 0 rgba(0,0,0,.22)}.sub{margin:16px 0 0;max-width:700px;font-size:clamp(1rem,1.8vw,1.15rem);line-height:1.45;color:#fff6c9}.hero-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:24px}
-.btn{display:inline-block;padding:14px 18px;border:3px solid var(--yellow);font-weight:900;text-transform:uppercase;letter-spacing:.05em;transition:transform .15s ease, box-shadow .15s ease, background .15s ease;box-shadow:6px 6px 0 rgba(0,0,0,.25)}.btn.yellow{background:var(--yellow);color:var(--black)}.btn.clear{background:transparent;color:var(--white)}.btn:hover{transform:translate(-3px,-3px);box-shadow:10px 10px 0 rgba(0,0,0,.28)}
-.hero-visual,.visual-card,.special-media{position:relative;overflow:hidden;background:#000}.hero-visual{min-height:520px}.hero-visual img,.visual-card img,.special-media img{width:112%;height:112%;object-fit:cover;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);will-change:transform;transition:transform .08s linear}.hero-visual::after,.visual-card::after,.special-media::after{content:"";position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,.50), rgba(0,0,0,.10));pointer-events:none}.badge{position:absolute;left:18px;bottom:18px;z-index:2;background:rgba(0,0,0,.8);border:3px solid var(--yellow);color:var(--yellow);padding:10px 12px;font-weight:900;text-transform:uppercase;letter-spacing:.05em}
-.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-bottom:22px}.color-card{min-height:120px;padding:18px;display:flex;align-items:flex-end;font-family:Rockwell,"Rockwell Nova","Roboto Slab",Georgia,serif;font-size:clamp(1.1rem,2vw,1.6rem);text-transform:uppercase;line-height:1}.red{background:var(--red)}.green{background:var(--green);color:var(--black)}.yellow{background:var(--yellow);color:var(--black)}.white{background:var(--white);color:var(--black)}
-.gallery{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;margin-bottom:22px}.visual-card{min-height:340px}.visual-card.tall{min-height:460px}.visual-card.wide{grid-column:span 2;min-height:460px}.label{position:absolute;left:14px;bottom:14px;z-index:2;padding:8px 10px;background:rgba(0,0,0,.82);border:3px solid var(--yellow);color:var(--yellow);font-weight:900;text-transform:uppercase;letter-spacing:.05em;font-size:.9rem}
-.special{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-bottom:22px}.special-copy{background:linear-gradient(135deg, rgba(255,242,0,1), rgba(255,242,0,.92));color:var(--black);padding:28px;display:flex;flex-direction:column;justify-content:space-between}.special-copy h2{margin:0;font-family:Rockwell,"Rockwell Nova","Roboto Slab",Georgia,serif;font-size:clamp(2.5rem,7vw,5.8rem);text-transform:uppercase;line-height:.9}.special-copy p{margin:16px 0 0;font-size:1rem;line-height:1.45;max-width:560px;font-weight:700}.special-tags{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.tag{padding:10px 12px;border:3px solid var(--black);font-weight:900;text-transform:uppercase;background:var(--white)}.special-media{min-height:460px}
-.footer-links{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:10px}.link-card{min-height:140px;padding:20px;display:flex;flex-direction:column;justify-content:space-between}.link-card h3{margin:0;font-family:Rockwell,"Rockwell Nova","Roboto Slab",Georgia,serif;text-transform:uppercase;font-size:2rem;line-height:1}.link-card.x{background:var(--red)}.link-card.yt{background:var(--green);color:var(--black)}.link-card.art{background:var(--white);color:var(--black)}.micro{font-size:.95rem;line-height:1.35;font-weight:700;margin:0}
-@media (max-width:1100px){.hero,.special{grid-template-columns:1fr}.gallery{grid-template-columns:1fr}.visual-card.wide{grid-column:auto}.strip,.footer-links{grid-template-columns:1fr 1fr}.hero{min-height:auto}}@media (max-width:700px){.wrap{padding:12px}.strip,.footer-links{grid-template-columns:1fr}.visual-card,.visual-card.tall,.visual-card.wide,.special-media,.hero-visual{min-height:320px}.hero-copy,.special-copy,.link-card{padding:18px}}
-</style></head><body><main class="site" id="siteFrame"><div class="shape one" data-depth="13"></div><div class="shape two" data-depth="9"></div><div class="shape three" data-depth="11"></div><div class="wrap">
-<section class="hero"><article class="hero-copy block"><div><p class="tiny">Jack Sockwell</p><h1>Models<br>Renders<br>Visuals</h1><p class="sub">Minimal text. More visuals. Bright colors. Slight mouse parallax on everything.</p></div><div class="hero-links"><a class="btn yellow" href="#work">Work</a><a class="btn clear" href="#links">Links</a></div></article><article class="hero-visual block parallax-card" data-depth="13"><img src="image.png" alt="Featured render by Jack Sockwell" style="object-position:center 38%;"><div class="badge">Featured Render</div></article></section>
-<section class="strip"><div class="color-card red block">Red</div><div class="color-card green block">Green</div><div class="color-card yellow block">Yellow</div><div class="color-card white block">White</div></section>
-<section class="gallery" id="work"><article class="visual-card wide block parallax-card" data-depth="10"><img src="image.png" alt="Render close-up" style="object-position:center 45%;"><div class="label">Render 01</div></article><article class="visual-card tall block parallax-card" data-depth="16"><img src="image.png" alt="Render portrait crop" style="object-position:center 30%;"><div class="label">Render 02</div></article><article class="visual-card block parallax-card" data-depth="12"><img src="image.png" alt="Render detail crop" style="object-position:center 56%;"><div class="label">Render 03</div></article><article class="visual-card block parallax-card" data-depth="17"><img src="image.png" alt="Render alternate crop" style="object-position:center 20%;"><div class="label">Render 04</div></article><article class="visual-card block parallax-card" data-depth="14"><img src="image.png" alt="Render cinematic crop" style="object-position:center 68%;"><div class="label">Render 05</div></article></section>
-<section class="special"><article class="special-copy block"><div><p class="tiny" style="color:var(--black)">Special Spot</p><h2>Don't<br>Fret</h2><p>Set aside as a featured piece. Once the actual Don’t Fret image is in the repo, swap it into the right panel and this section is done.</p></div><div class="special-tags"><span class="tag">Featured</span><span class="tag">Parallax</span><span class="tag">Big visual</span></div></article><article class="special-media block parallax-card" data-depth="11"><img src="image.png" alt="Special feature image area" style="object-position:center 40%;filter:saturate(1.15) contrast(1.05);"><div class="badge">Don't Fret Slot</div></article></section>
-<section class="footer-links" id="links"><article class="link-card x block"><div><h3>X</h3><p class="micro">Updates / posts</p></div><a class="btn clear" href="https://x.com/JackSockwellP" target="_blank" rel="noopener noreferrer">Open</a></article><article class="link-card yt block"><div><h3>YouTube</h3><p class="micro">Videos / streams</p></div><a class="btn yellow" href="https://www.youtube.com/@JackDoesGamez" target="_blank" rel="noopener noreferrer">Open</a></article><article class="link-card art block"><div><h3>ArtStation</h3><p class="micro">Portfolio / work</p></div><a class="btn clear" style="color:var(--black);border-color:var(--black)" href="https://www.artstation.com/polygonparadise" target="_blank" rel="noopener noreferrer">Open</a></article></section></div></main>
-<script>
-const frame=document.getElementById('siteFrame');const items=document.querySelectorAll('.parallax-card,.shape');let mouseX=0,mouseY=0,currentX=0,currentY=0;function animate(){currentX+=(mouseX-currentX)*0.08;currentY+=(mouseY-currentY)*0.08;items.forEach((item)=>{const depth=Number(item.dataset.depth||10);const moveX=currentX/depth;const moveY=currentY/depth;if(item.classList.contains('parallax-card')){const img=item.querySelector('img');if(img){img.style.transform=`translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px)) scale(1.035)`;}}else{const rotation=item.classList.contains('one')?' rotate(9deg)':item.classList.contains('two')?' rotate(-11deg)':item.classList.contains('three')?' rotate(8deg)':'';item.style.transform=`translate(${moveX}px, ${moveY}px)`+rotation;}});requestAnimationFrame(animate);}frame.addEventListener('mousemove',(e)=>{const rect=frame.getBoundingClientRect();const x=e.clientX-rect.left;const y=e.clientY-rect.top;mouseX=((x/rect.width)-0.5)*26;mouseY=((y/rect.height)-0.5)*26;});frame.addEventListener('mouseleave',()=>{mouseX=0;mouseY=0;});animate();
-</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jack Sockwell</title>
+  <meta name="description" content="Jack Sockwell models, renders, visuals." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="site" id="siteFrame">
+    <div class="shape shape-red" data-depth="13"></div>
+    <div class="shape shape-green" data-depth="9"></div>
+    <div class="shape shape-white" data-depth="11"></div>
+
+    <div class="wrap">
+      <section class="hero section">
+        <article class="hero-copy panel panel-red">
+          <div>
+            <p class="tiny">Jack Sockwell</p>
+            <h1>Models<br>Renders<br>Visuals</h1>
+            <p class="sub">Minimal text. More visuals.</p>
+          </div>
+
+          <div class="hero-links">
+            <a class="btn btn-yellow" href="#work">Work</a>
+            <a class="btn btn-clear" href="#dont-fret">Don't Fret</a>
+            <a class="btn btn-clear" href="#links">Links</a>
+          </div>
+        </article>
+
+        <article class="hero-visual panel parallax-card" data-depth="13">
+          <img src="header.jpg" alt="Header render by Jack Sockwell" style="object-position:center 42%;" />
+          <div class="badge">Header</div>
+        </article>
+      </section>
+
+      <section class="work-grid section" id="work">
+        <article class="gallery-card gallery-wide panel parallax-card" data-depth="10">
+          <img src="1.png" alt="Render 1" style="object-position:center 45%;" />
+          <div class="label">01</div>
+        </article>
+
+        <article class="gallery-card panel parallax-card" data-depth="15">
+          <img src="2.png" alt="Render 2" style="object-position:center 35%;" />
+          <div class="label">02</div>
+        </article>
+
+        <article class="gallery-card panel parallax-card" data-depth="12">
+          <img src="3.png" alt="Render 3" style="object-position:center 50%;" />
+          <div class="label">03</div>
+        </article>
+
+        <article class="gallery-card panel parallax-card" data-depth="17">
+          <img src="4.png" alt="Render 4" style="object-position:center 42%;" />
+          <div class="label">04</div>
+        </article>
+
+        <article class="gallery-card panel parallax-card" data-depth="14">
+          <img src="5.png" alt="Render 5" style="object-position:center 50%;" />
+          <div class="label">05</div>
+        </article>
+      </section>
+
+      <section class="dont-fret section" id="dont-fret">
+        <article class="dont-fret-copy panel">
+          <p class="tiny tiny-dark">Featured</p>
+          <h2>Don't<br>Fret</h2>
+          <div class="dont-fret-links">
+            <a class="btn btn-black" href="https://store.steampowered.com/app/2716830/Dont_Fret/" target="_blank" rel="noopener noreferrer">Steam Page</a>
+          </div>
+        </article>
+
+        <article class="dont-fret-visual panel parallax-card" data-depth="11">
+          <img src="header.jpg" alt="Don't Fret header art" style="object-position:center 50%;" />
+          <div class="badge">Don't Fret</div>
+        </article>
+      </section>
+
+      <section class="links-grid section" id="links">
+        <a class="link-card panel panel-red" href="https://x.com/JackSockwellP" target="_blank" rel="noopener noreferrer">
+          <h3>X</h3>
+          <p>Updates</p>
+        </a>
+
+        <a class="link-card panel panel-green" href="https://www.youtube.com/@JackDoesGamez" target="_blank" rel="noopener noreferrer">
+          <h3>YouTube</h3>
+          <p>Videos</p>
+        </a>
+
+        <a class="link-card panel panel-white" href="https://www.artstation.com/polygonparadise" target="_blank" rel="noopener noreferrer">
+          <h3>ArtStation</h3>
+          <p>Portfolio</p>
+        </a>
+      </section>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
