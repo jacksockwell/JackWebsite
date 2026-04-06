@@ -11,11 +11,16 @@
       --yellow:#ffe900;
       --orange:#ff7a00;
       --cyan:#00d8ff;
+      --purple:#7b39ff;
       --white:#fff8ef;
       --black:#171717;
     }
 
     *{box-sizing:border-box}
+
+    html{
+      scroll-behavior:smooth;
+    }
 
     body{
       margin:0;
@@ -25,42 +30,55 @@
       min-height:100vh;
     }
 
+    a{
+      color:inherit;
+    }
+
     .frame{
       min-height:100vh;
       border:4px solid var(--yellow);
       padding:18px;
       position:relative;
       overflow:hidden;
+      isolation:isolate;
     }
 
-    .frame::before,
-    .frame::after{
-      content:"";
+    .floating-shape{
       position:absolute;
+      border:4px solid var(--yellow);
       pointer-events:none;
+      opacity:.16;
+      will-change:transform;
+      transition:transform .08s linear;
       z-index:0;
     }
 
-    .frame::before{
+    .shape-a{
       width:260px;
       height:260px;
       right:-80px;
       top:90px;
       background:linear-gradient(135deg,var(--orange),var(--pink));
-      opacity:.18;
       transform:rotate(12deg);
-      border:4px solid var(--yellow);
     }
 
-    .frame::after{
+    .shape-b{
       width:180px;
       height:180px;
       left:-50px;
       bottom:40px;
       background:var(--cyan);
-      opacity:.12;
       transform:rotate(-16deg);
-      border:4px solid var(--yellow);
+    }
+
+    .shape-c{
+      width:120px;
+      height:120px;
+      right:16%;
+      bottom:11%;
+      background:var(--purple);
+      opacity:.12;
+      transform:rotate(8deg);
     }
 
     .wrap{
@@ -127,6 +145,7 @@
 
     .pink-card h2,
     .yellow-card h2,
+    .gallery-title,
     .mini-card h3{
       margin:0 0 14px;
       font-family: Rockwell, "Rockwell Nova", "Roboto Slab", Georgia, serif;
@@ -163,6 +182,7 @@
       letter-spacing:.04em;
       box-shadow:6px 6px 0 rgba(0,0,0,.18);
       transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+      display:inline-block;
     }
 
     .btn.alt{
@@ -204,6 +224,109 @@
       color:var(--white);
     }
 
+    .gallery{
+      margin-top:30px;
+      padding:28px;
+      background:#4e5377;
+    }
+
+    .gallery-title{
+      font-size:clamp(1.8rem,4vw,3rem);
+      color:var(--yellow);
+      margin-bottom:10px;
+    }
+
+    .gallery-sub{
+      margin:0 0 20px;
+      max-width:850px;
+      line-height:1.5;
+    }
+
+    .photo-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:22px;
+    }
+
+    .photo{
+      background:#2f3452;
+      min-height:240px;
+      position:relative;
+      overflow:hidden;
+      will-change:transform;
+      transition:transform .15s ease;
+    }
+
+    .photo:hover{
+      transform:translate(-2px,-2px);
+    }
+
+    .photo img{
+      width:112%;
+      height:112%;
+      object-fit:cover;
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      transition:transform .08s linear;
+      will-change:transform;
+    }
+
+    .photo-label{
+      position:absolute;
+      left:14px;
+      bottom:14px;
+      background:rgba(23,23,23,.78);
+      color:var(--yellow);
+      border:3px solid var(--yellow);
+      padding:8px 10px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+      z-index:2;
+    }
+
+    .socials{
+      margin-top:28px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:22px;
+    }
+
+    .social-card{
+      min-height:180px;
+      padding:22px;
+    }
+
+    .social-card h3{
+      margin:0 0 12px;
+      font-family: Rockwell, "Rockwell Nova", "Roboto Slab", Georgia, serif;
+      text-transform:uppercase;
+      line-height:1;
+      font-size:1.4rem;
+    }
+
+    .social-card p{
+      margin:0 0 16px;
+      line-height:1.5;
+    }
+
+    .social-card.x{
+      background:var(--pink);
+      color:var(--white);
+    }
+
+    .social-card.youtube{
+      background:var(--yellow);
+      color:var(--black);
+    }
+
+    .social-card.artstation{
+      background:var(--orange);
+      color:var(--black);
+    }
+
     .lower{
       margin-top:28px;
       display:grid;
@@ -224,7 +347,7 @@
     }
 
     .mini-card:nth-child(3){
-      background:#7b39ff;
+      background:var(--purple);
     }
 
     .mini-card h3{
@@ -236,8 +359,10 @@
       line-height:1.45;
     }
 
-    @media (max-width: 900px){
+    @media (max-width: 1000px){
       .grid,
+      .photo-grid,
+      .socials,
       .lower{
         grid-template-columns:1fr;
       }
@@ -249,17 +374,25 @@
       .pink-card{
         min-height:auto;
       }
+
+      .photo{
+        min-height:300px;
+      }
     }
   </style>
 </head>
 <body>
-  <main class="frame">
+  <main class="frame" id="siteFrame">
+    <div class="floating-shape shape-a" data-depth="14"></div>
+    <div class="floating-shape shape-b" data-depth="8"></div>
+    <div class="floating-shape shape-c" data-depth="12"></div>
+
     <div class="wrap">
       <section class="top-banner card">
         <p class="eyebrow">Blocky / Artistic / Loud</p>
-        <h1 class="title">This is test text</h1>
+        <h1 class="title">Jack Sockwell</h1>
         <p class="subtitle">
-          A first homepage concept based on your sketch — heavy blocks, bright colors, Rockwell-style heading, and a clean chaotic vibe.
+          3D models, weird art, funny edits, and loud visuals in one place.
         </p>
       </section>
 
@@ -268,42 +401,142 @@
           <div>
             <h2>About this space</h2>
             <p>
-              This left section matches the pink block in your concept. Use it for your intro, announcements, links, shop info, art, commissions, music, or whatever the site is actually about.
+              This layout keeps the rough blocky shape from your sketch, but now it is built to hold real content. Use this area as your intro, updates, commission info, or whatever you want people to see first.
             </p>
           </div>
 
           <div class="actions">
-            <a class="btn" href="#">Main Link</a>
-            <a class="btn alt" href="#">Second Link</a>
+            <a class="btn" href="#gallery">See Work</a>
+            <a class="btn alt" href="#socials">Socials</a>
           </div>
         </article>
 
         <article class="yellow-card card">
-          <h2>Big feature block</h2>
+          <h2>Featured block</h2>
           <p>
-            This matches the big yellow block from your drawing. It is good for a featured image, latest project, gallery preview, embedded video, or a huge callout.
+            This big square is perfect for a featured project, hero image, newest model, or some really loud artwork that reacts slightly to the mouse.
           </p>
-          <span class="tag">Put anything loud here</span>
+          <span class="tag">Mouse parallax ready</span>
+        </article>
+      </section>
+
+      <section class="gallery card" id="gallery">
+        <h2 class="gallery-title">Art / Models / Photos</h2>
+        <p class="gallery-sub">
+          Drop your own images into these blocks and they will shift very slightly with your mouse. The effect is intentionally subtle so it feels clean instead of gimmicky.
+        </p>
+
+        <div class="photo-grid">
+          <figure class="photo card parallax-item" data-depth="10">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80" alt="Placeholder artwork 1" />
+            <figcaption class="photo-label">Project One</figcaption>
+          </figure>
+
+          <figure class="photo card parallax-item" data-depth="14">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="Placeholder artwork 2" />
+            <figcaption class="photo-label">Project Two</figcaption>
+          </figure>
+
+          <figure class="photo card parallax-item" data-depth="18">
+            <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1200&q=80" alt="Placeholder artwork 3" />
+            <figcaption class="photo-label">Project Three</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="socials" id="socials">
+        <article class="social-card x card">
+          <h3>X / Twitter</h3>
+          <p>
+            JackSockwellP — bio snippets found publicly describe you as JackahhSocks and say you make funny video edits and 3D models.
+          </p>
+          <a class="btn alt" href="https://x.com/JackSockwellP" target="_blank" rel="noopener noreferrer">Open X</a>
+        </article>
+
+        <article class="social-card youtube card">
+          <h3>YouTube</h3>
+          <p>
+            Public results point to a YouTube channel tied to JackahhSocks / JackDoesGamez, with modeling livestreams and the same funny edits + 3D models vibe.
+          </p>
+          <a class="btn" href="https://www.youtube.com/@JackDoesGamez" target="_blank" rel="noopener noreferrer">Open YouTube</a>
+        </article>
+
+        <article class="social-card artstation card">
+          <h3>ArtStation</h3>
+          <p>
+            Your ArtStation appears to be polygonparadise, where the profile says you are a 3D generalist and shows portfolio work like stylized/cartoon projects and commissions.
+          </p>
+          <a class="btn" href="https://www.artstation.com/polygonparadise" target="_blank" rel="noopener noreferrer">Open ArtStation</a>
         </article>
       </section>
 
       <section class="lower">
         <article class="mini-card card">
-          <h3>Section One</h3>
-          <p>Keep the structure blocky and simple so the bright colors feel intentional instead of messy.</p>
+          <h3>Blocky Layout</h3>
+          <p>Everything stays chunky and framed so the bright colors feel like a style choice, not a mess.</p>
         </article>
 
         <article class="mini-card card">
-          <h3>Section Two</h3>
-          <p>We can add hover effects, moving shapes, image frames, or weird art elements next.</p>
+          <h3>Parallax Photos</h3>
+          <p>Your images can move just a little with the mouse. Easy to tune stronger or weaker later.</p>
         </article>
 
         <article class="mini-card card">
-          <h3>Section Three</h3>
-          <p>Once you tell me what the site is actually for, I can turn this into the real version.</p>
+          <h3>Next Step</h3>
+          <p>Replace the placeholder images and I can turn this into your actual homepage with your real projects and links.</p>
         </article>
       </section>
     </div>
   </main>
+
+  <script>
+    const frame = document.getElementById('siteFrame');
+    const parallaxItems = document.querySelectorAll('.parallax-item, .floating-shape');
+    let mouseX = 0;
+    let mouseY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    function updateParallax(){
+      currentX += (mouseX - currentX) * 0.08;
+      currentY += (mouseY - currentY) * 0.08;
+
+      parallaxItems.forEach((item) => {
+        const depth = Number(item.dataset.depth || 10);
+        const moveX = currentX / depth;
+        const moveY = currentY / depth;
+
+        if(item.classList.contains('photo')){
+          const img = item.querySelector('img');
+          if(img){
+            img.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px)) scale(1.03)`;
+          }
+        } else {
+          const baseRotation =
+            item.classList.contains('shape-a') ? ' rotate(12deg)' :
+            item.classList.contains('shape-b') ? ' rotate(-16deg)' :
+            item.classList.contains('shape-c') ? ' rotate(8deg)' : '';
+          item.style.transform = `translate(${moveX}px, ${moveY}px)` + baseRotation;
+        }
+      });
+
+      requestAnimationFrame(updateParallax);
+    }
+
+    frame.addEventListener('mousemove', (event) => {
+      const rect = frame.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      mouseX = ((x / rect.width) - 0.5) * 22;
+      mouseY = ((y / rect.height) - 0.5) * 22;
+    });
+
+    frame.addEventListener('mouseleave', () => {
+      mouseX = 0;
+      mouseY = 0;
+    });
+
+    updateParallax();
+  </script>
 </body>
 </html>
