@@ -929,28 +929,8 @@ button {
   .about-main-card,
   .about-roles,
   .about-meta,
-  .professional-tags,
-  .about-split {
+  .professional-tags {
     grid-template-columns: 1fr;
-  }
-
-  .about-split-divider {
-    min-height: 56px;
-  }
-
-  .about-split-divider::before {
-    left: 0;
-    right: 0;
-    top: 50%;
-    bottom: auto;
-    width: auto;
-    height: 4px;
-    transform: translateY(-50%);
-  }
-
-  .about-split-divider::after {
-    top: 50%;
-    left: 50%;
   }
 
   .about-icon-panel {
@@ -982,6 +962,29 @@ button {
 
   .about-info-panel {
     padding: 18px;
+  }
+
+  .about-split {
+    grid-template-columns: 1fr;
+  }
+
+  .about-split-divider {
+    min-height: 56px;
+  }
+
+  .about-split-divider::before {
+    left: 0;
+    right: 0;
+    top: 50%;
+    bottom: auto;
+    width: auto;
+    height: 4px;
+    transform: translateY(-50%);
+  }
+
+  .about-split-divider::after {
+    top: 50%;
+    left: 50%;
   }
 
   .about-floating-pink {
