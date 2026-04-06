@@ -555,9 +555,9 @@ button {
 
 .about-split {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) auto minmax(220px, 0.95fr);
-  gap: 18px;
-  align-items: stretch;
+  grid-template-columns: minmax(0, 1fr) 28px minmax(240px, 0.9fr);
+  gap: 16px;
+  align-items: start;
   margin-bottom: 24px;
 }
 
@@ -573,18 +573,42 @@ button {
 }
 
 .about-split-divider {
-  display: grid;
-  place-items: center;
-  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
-  font-size: clamp(3.4rem, 8vw, 6rem);
-  line-height: 1;
+  position: relative;
+  align-self: stretch;
+  min-height: 100%;
+}
+
+.about-split-divider::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--pink);
+  transform: translateX(-50%);
+}
+
+.about-split-divider::after {
+  content: "/";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 4px 6px;
+  background: var(--yellow);
   color: var(--ink);
+  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+  font-size: 1.7rem;
+  line-height: 1;
+  border: 3px solid var(--ink);
 }
 
 .about-tools {
   display: grid;
   gap: 10px;
   align-content: start;
+  min-width: 0;
 }
 
 .tool-item {
@@ -594,9 +618,9 @@ button {
   padding: 12px 14px;
   border: 3px solid var(--ink);
   background: linear-gradient(135deg, rgba(57, 255, 20, 0.96), rgba(255, 106, 0, 0.88));
-  font-size: 0.92rem;
+  font-size: 0.85rem;
   font-weight: 900;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.08);
 }
@@ -911,7 +935,22 @@ button {
   }
 
   .about-split-divider {
-    justify-self: start;
+    min-height: 56px;
+  }
+
+  .about-split-divider::before {
+    left: 0;
+    right: 0;
+    top: 50%;
+    bottom: auto;
+    width: auto;
+    height: 4px;
+    transform: translateY(-50%);
+  }
+
+  .about-split-divider::after {
+    top: 50%;
+    left: 50%;
   }
 
   .about-icon-panel {
