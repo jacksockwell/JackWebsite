@@ -7,90 +7,77 @@
   <meta name="description" content="Jack Sockwell portfolio and projects." />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="page-home">
   <main class="site-shell" id="siteShell">
-    <div class="shape shape-coral" data-depth="15"></div>
-    <div class="shape shape-sky" data-depth="11"></div>
-    <div class="shape shape-cream" data-depth="18"></div>
-    <div class="shape shape-gold" data-depth="13"></div>
+    <div class="bg-block bg-block-pink" data-depth="16"></div>
+    <div class="bg-block bg-block-green" data-depth="11"></div>
+    <div class="bg-block bg-block-yellow" data-depth="13"></div>
+    <div class="bg-line bg-line-top" data-depth="18"></div>
+    <div class="bg-line bg-line-right" data-depth="20"></div>
 
-    <section class="landing" aria-label="Homepage">
-      <div class="landing-inner">
-        <p class="name-tag">Jack Sockwell</p>
-        <nav class="home-nav" aria-label="Primary">
-          <button class="home-option" type="button" data-section-target="portfolio">Portfolio</button>
-          <button class="home-option" type="button" data-section-target="dont-fret">Don't Fret</button>
-          <button class="home-option" type="button" data-section-target="about">About Me</button>
+    <section class="hero-home">
+      <div class="hero-stack">
+        <div class="mini-tag">Jack Sockwell</div>
+        <h1 class="hero-name">JACK<br />SOCKWELL</h1>
+
+        <nav class="hero-actions" aria-label="Primary">
+          <a class="action-block block-portfolio" href="portfolio.html">Portfolio</a>
+          <button class="action-block block-fret" type="button" data-section-target="dont-fret">Don't Fret</button>
+          <button class="action-block block-about" type="button" data-section-target="about">About Me</button>
         </nav>
       </div>
     </section>
 
-    <section class="sections" aria-live="polite">
-      <article class="content-panel" id="portfolio" data-section>
-        <div class="panel-head">
-          <p class="panel-kicker">Portfolio</p>
+    <section class="overlay-layer" aria-live="polite">
+      <article class="overlay-panel panel-fret" id="dont-fret" data-section>
+        <div class="panel-toolbar">
+          <p class="panel-label">Featured Game</p>
           <button class="panel-close" type="button" data-close-section aria-label="Close section">Close</button>
         </div>
 
-        <div class="portfolio-grid">
-          <figure class="art-card art-card-large parallax-panel" data-depth="10">
-            <img src="1.png" alt="Portfolio image 1" />
-          </figure>
-          <figure class="art-card art-card-tall parallax-panel" data-depth="14">
-            <img src="2.png" alt="Portfolio image 2" />
-          </figure>
-          <figure class="art-card parallax-panel" data-depth="12">
-            <img src="3.png" alt="Portfolio image 3" />
-          </figure>
-          <figure class="art-card parallax-panel" data-depth="16">
-            <img src="4.png" alt="Portfolio image 4" />
-          </figure>
-          <figure class="art-card art-card-wide parallax-panel" data-depth="11">
-            <img src="5.png" alt="Portfolio image 5" />
-          </figure>
-        </div>
-      </article>
-
-      <article class="content-panel dont-fret-panel" id="dont-fret" data-section>
-        <div class="panel-head">
-          <p class="panel-kicker">Don't Fret</p>
-          <button class="panel-close panel-close-dark" type="button" data-close-section aria-label="Close section">Close</button>
-        </div>
-
-        <div class="dont-fret-grid">
-          <div class="dont-fret-copy">
-            <div class="square-stack" aria-hidden="true">
+        <div class="fret-layout">
+          <div class="fret-copy">
+            <div class="square-banner" aria-hidden="true">
               <span></span>
               <span></span>
               <span></span>
               <span></span>
             </div>
-            <h2>Don't Fret</h2>
-            <a class="fret-link" href="https://store.steampowered.com/app/2716830/Dont_Fret/" target="_blank" rel="noopener noreferrer">Steam</a>
+            <h2>DON'T FRET</h2>
+            <p>Music horror. Puzzle pressure. Loud, tense, strange.</p>
           </div>
 
-          <figure class="dont-fret-visual parallax-panel" data-depth="9">
-            <img src="header.jpg" alt="Don't Fret header art" />
-          </figure>
+          <div class="steam-shell">
+            <iframe
+              class="steam-widget"
+              src="https://store.steampowered.com/widget/2716830/"
+              frameborder="0"
+              width="100%"
+              height="190"
+              loading="lazy"
+              title="Don't Fret on Steam">
+            </iframe>
+          </div>
         </div>
       </article>
 
-      <article class="content-panel about-panel" id="about" data-section>
-        <div class="panel-head">
-          <p class="panel-kicker">About Me</p>
+      <article class="overlay-panel panel-about" id="about" data-section>
+        <div class="panel-toolbar">
+          <p class="panel-label">About</p>
           <button class="panel-close" type="button" data-close-section aria-label="Close section">Close</button>
         </div>
 
         <div class="about-layout">
-          <div class="about-copy">
-            <h2>Jack Sockwell</h2>
-            <p>Visuals, worlds, and sharp little experiments.</p>
+          <div class="about-title-block">
+            <h2>JACK<br />SOCKWELL</h2>
+            <p>Worldbuilding, visuals, and strange little spaces.</p>
           </div>
 
-          <div class="about-blocks">
-            <div class="about-tile soft-coral">Artist</div>
-            <div class="about-tile soft-sky">Builder</div>
-            <div class="about-tile soft-gold">Designer</div>
+          <div class="about-grid">
+            <div class="about-card pink-card">Artist</div>
+            <div class="about-card green-card">Builder</div>
+            <div class="about-card yellow-card">Designer</div>
+            <div class="about-card ink-card">Minimal words. Heavy shapes.</div>
           </div>
         </div>
       </article>
