@@ -1,11 +1,11 @@
 :root {
-  --bg: #d8ff22;
+  --bg: #52ff00;
   --ink: #241b2a;
   --pink: #ff0f7b;
   --green: #39ff14;
-  --yellow: #ff9f00;
+  --yellow: #ffb300;
   --orange: #ff6a00;
-  --paper: #ccff2f;
+  --paper: #52ff00;
   --border: 3px solid var(--ink);
   --shadow: 10px 10px 0 rgba(36, 27, 42, 0.95);
   --shadow-soft: 18px 18px 0 rgba(36, 27, 42, 0.22);
@@ -51,7 +51,7 @@ button {
     linear-gradient(180deg, transparent 0 14%, rgba(45, 255, 0, 0.16) 14% 28%, transparent 28% 100%),
     linear-gradient(90deg, transparent 0 70%, rgba(255, 106, 0, 0.24) 70% 86%, transparent 86% 100%),
     linear-gradient(180deg, transparent 0 64%, rgba(255, 43, 99, 0.12) 64% 78%, transparent 78% 100%),
-    linear-gradient(135deg, #cfff2e, #ff9a18);
+    linear-gradient(135deg, #39ff14, #ff7a00 52%, #ffb300);
 }
 
 .page-home .site-shell {
@@ -91,7 +91,7 @@ button {
 
 .bg-block {
   border: 2px solid rgba(36, 27, 42, 0.4);
-  background: rgba(255, 170, 24, 0.16);
+  background: rgba(255, 106, 0, 0.26);
 }
 
 .bg-block-pink {
@@ -217,7 +217,7 @@ button {
 }
 
 .block-fret {
-  background: linear-gradient(180deg, #ffc23a, #ff7800);
+  background: linear-gradient(180deg, #ffcf00, #ff6a00);
 }
 
 .block-about {
@@ -327,7 +327,7 @@ button {
   min-height: 380px;
   padding: 18px;
   border: 4px solid var(--ink);
-  background: #f5f0e7;
+  background: linear-gradient(135deg, #39ff14, #ffb300 55%, #ff6a00);
   box-shadow: var(--shadow);
   display: grid;
   align-items: start;
@@ -348,7 +348,7 @@ button {
   background:
     linear-gradient(90deg, rgba(255, 43, 99, 0.08) 0 12%, transparent 12% 100%),
     linear-gradient(180deg, rgba(45, 255, 0, 0.08) 0 18%, transparent 18% 100%),
-    linear-gradient(135deg, #cfff2e, #ff9a18);
+    linear-gradient(135deg, #39ff14, #ff7a00 52%, #ffb300);
 }
 
 .page-about .site-shell::before,
@@ -434,7 +434,7 @@ button {
 .about-info-panel {
   position: relative;
   border: 4px solid var(--ink);
-  background: rgba(57, 255, 20, 0.9);
+  background: linear-gradient(135deg, rgba(57, 255, 20, 0.96), rgba(255, 106, 0, 0.9));
   box-shadow: var(--shadow);
 }
 
@@ -476,7 +476,7 @@ button {
   display: grid;
   place-items: center;
   padding: 18px;
-  background: #1381df;
+  background: linear-gradient(135deg, #ffb300, #ff6a00);
   border: 4px solid var(--ink);
   box-shadow: 14px 14px 0 rgba(36, 27, 42, 0.24);
 }
@@ -573,7 +573,7 @@ button {
   gap: 6px;
   padding: 16px 18px;
   border: 3px solid var(--ink);
-  background: rgba(255, 170, 24, 0.9);
+  background: linear-gradient(135deg, rgba(255, 179, 0, 0.96), rgba(255, 106, 0, 0.92));
   box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.1);
 }
 
@@ -645,7 +645,7 @@ button {
 .tag-card {
   padding: 16px 14px;
   border: 3px solid var(--ink);
-  background: rgba(57, 255, 20, 0.88);
+  background: linear-gradient(135deg, rgba(57, 255, 20, 0.96), rgba(255, 179, 0, 0.9));
   font-size: 0.92rem;
   font-weight: 900;
   letter-spacing: 0.08em;
@@ -657,7 +657,7 @@ button {
 .about-note {
   padding: 18px 20px;
   border-left: 6px solid var(--pink);
-  background: rgba(255, 170, 24, 0.9);
+  background: linear-gradient(135deg, rgba(255, 179, 0, 0.96), rgba(255, 106, 0, 0.9));
   font-size: 1rem;
   line-height: 1.45;
   font-weight: 700;
@@ -729,7 +729,7 @@ button {
 
 .icon-card {
   place-items: center;
-  background: #005fd1;
+  background: linear-gradient(135deg, #39ff14, #ff6a00);
   padding: 12px;
 }
 
