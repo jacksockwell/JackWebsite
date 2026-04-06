@@ -3,364 +3,307 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jack Sockwell | 3D Artist</title>
-  <meta name="description" content="Portfolio website for Jack Sockwell, 3D artist and modeler." />
+  <title>Jacksockwell</title>
   <style>
     :root{
-      --bg:#0b0f17;
-      --bg2:#121826;
-      --card:#171f31;
-      --text:#f3f6ff;
-      --muted:#a7b0c2;
-      --accent:#6ea8fe;
-      --accent2:#8b5cf6;
-      --border:rgba(255,255,255,.08);
-      --shadow:0 10px 30px rgba(0,0,0,.25);
-      --max:1100px;
+      --bg:#43496b;
+      --pink:#ef63ab;
+      --yellow:#ffe900;
+      --orange:#ff7a00;
+      --cyan:#00d8ff;
+      --white:#fff8ef;
+      --black:#171717;
     }
+
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
+
     body{
       margin:0;
-      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-      background:linear-gradient(180deg,var(--bg),#09111d 40%, #0d1220 100%);
-      color:var(--text);
-      line-height:1.6;
+      background:var(--bg);
+      color:var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      min-height:100vh;
     }
-    a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
-    .container{width:min(calc(100% - 32px),var(--max));margin:0 auto}
-    .nav{
-      position:sticky;top:0;z-index:1000;
-      backdrop-filter: blur(10px);
-      background:rgba(8,12,20,.7);
-      border-bottom:1px solid var(--border);
+
+    .frame{
+      min-height:100vh;
+      border:4px solid var(--yellow);
+      padding:18px;
+      position:relative;
+      overflow:hidden;
     }
-    .nav-inner{
-      display:flex;align-items:center;justify-content:space-between;
-      gap:16px;padding:14px 0;
+
+    .frame::before,
+    .frame::after{
+      content:"";
+      position:absolute;
+      pointer-events:none;
+      z-index:0;
     }
-    .brand{font-weight:800;letter-spacing:.4px}
-    .nav-links{display:flex;gap:18px;flex-wrap:wrap}
-    .nav-links a{color:var(--muted)}
-    .nav-links a:hover,.nav-links a.active{color:var(--text)}
-    .hero{
-      padding:96px 0 72px;
-      background:
-        radial-gradient(circle at top right, rgba(110,168,254,.18), transparent 28%),
-        radial-gradient(circle at top left, rgba(139,92,246,.16), transparent 22%);
+
+    .frame::before{
+      width:260px;
+      height:260px;
+      right:-80px;
+      top:90px;
+      background:linear-gradient(135deg,var(--orange),var(--pink));
+      opacity:.18;
+      transform:rotate(12deg);
+      border:4px solid var(--yellow);
     }
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1.2fr .8fr;
-      gap:28px;
-      align-items:center;
+
+    .frame::after{
+      width:180px;
+      height:180px;
+      left:-50px;
+      bottom:40px;
+      background:var(--cyan);
+      opacity:.12;
+      transform:rotate(-16deg);
+      border:4px solid var(--yellow);
     }
+
+    .wrap{
+      max-width:1400px;
+      margin:0 auto;
+      position:relative;
+      z-index:1;
+    }
+
+    .top-banner{
+      background:var(--pink);
+      border:4px solid var(--yellow);
+      padding:28px 30px;
+      margin-bottom:28px;
+      box-shadow:12px 12px 0 rgba(0,0,0,.18);
+    }
+
     .eyebrow{
-      display:inline-block;
-      color:#cdd8ff;
-      background:rgba(110,168,254,.12);
-      border:1px solid rgba(110,168,254,.2);
-      border-radius:999px;
-      padding:8px 12px;
-      font-size:.92rem;
-      margin-bottom:16px;
+      color:var(--yellow);
+      font-family: Rockwell, "Rockwell Nova", "Roboto Slab", Georgia, serif;
+      font-size:clamp(1rem,2vw,1.35rem);
+      margin:0 0 10px 0;
+      letter-spacing:.04em;
+      text-transform:uppercase;
     }
-    h1{
-      font-size:clamp(2.4rem,5vw,4.6rem);
-      line-height:1.04;
-      margin:0 0 16px;
-      letter-spacing:-1.8px;
+
+    .title{
+      margin:0;
+      font-family: Rockwell, "Rockwell Nova", "Roboto Slab", Georgia, serif;
+      font-size:clamp(2.2rem,7vw,5.2rem);
+      line-height:.95;
+      color:var(--white);
+      text-transform:uppercase;
+      text-shadow:4px 4px 0 rgba(0,0,0,.18);
     }
-    .lead{
-      font-size:1.1rem;
-      color:var(--muted);
-      max-width:700px;
-      margin:0 0 28px;
+
+    .subtitle{
+      margin:14px 0 0;
+      max-width:850px;
+      font-size:clamp(1rem,2vw,1.2rem);
+      color:#fff1b8;
     }
-    .btn-row{display:flex;gap:14px;flex-wrap:wrap}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;
-      min-height:48px;padding:0 18px;border-radius:14px;
-      border:1px solid var(--border);
-      transition:.2s ease;
-      font-weight:700;
-      box-shadow:var(--shadow);
-    }
-    .btn.primary{
-      background:linear-gradient(135deg,var(--accent),var(--accent2));
-      color:white;border:none;
-    }
-    .btn.secondary{background:rgba(255,255,255,.03)}
-    .btn:hover{transform:translateY(-1px)}
-    .hero-card,.card{
-      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border:1px solid var(--border);
-      border-radius:22px;
-      box-shadow:var(--shadow);
-    }
-    .hero-card{padding:22px}
-    .stat-grid{
+
+    .grid{
       display:grid;
-      grid-template-columns:repeat(2,1fr);
+      grid-template-columns:1.08fr 1fr;
+      gap:34px;
+      align-items:start;
+    }
+
+    .card{
+      border:4px solid var(--yellow);
+      box-shadow:12px 12px 0 rgba(0,0,0,.18);
+    }
+
+    .pink-card{
+      background:var(--pink);
+      min-height:280px;
+      padding:28px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .pink-card h2,
+    .yellow-card h2,
+    .mini-card h3{
+      margin:0 0 14px;
+      font-family: Rockwell, "Rockwell Nova", "Roboto Slab", Georgia, serif;
+      text-transform:uppercase;
+      line-height:1;
+    }
+
+    .pink-card h2{
+      font-size:clamp(1.8rem,4vw,3rem);
+      color:var(--yellow);
+    }
+
+    .pink-card p{
+      margin:0 0 22px;
+      color:#fff8ef;
+      font-size:1.05rem;
+      max-width:560px;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
       gap:14px;
-      margin-top:14px;
     }
-    .stat{
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:16px;
+
+    .btn{
+      text-decoration:none;
+      padding:14px 18px;
+      border:3px solid var(--yellow);
+      color:var(--black);
+      background:var(--yellow);
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+      box-shadow:6px 6px 0 rgba(0,0,0,.18);
+      transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
     }
-    .stat strong{display:block;font-size:1.4rem}
-    section{padding:72px 0}
-    .section-head{
-      display:flex;align-items:end;justify-content:space-between;gap:18px;
-      margin-bottom:24px;
+
+    .btn.alt{
+      background:transparent;
+      color:var(--white);
     }
-    .section-head h2{margin:0;font-size:clamp(1.7rem,3vw,2.5rem)}
-    .section-head p{margin:0;color:var(--muted)}
-    .about-grid,.contact-grid{
-      display:grid;grid-template-columns:1fr 1fr;gap:22px;
+
+    .btn:hover{
+      transform:translate(-3px,-3px);
+      box-shadow:10px 10px 0 rgba(0,0,0,.18);
     }
-    .card{padding:24px}
-    .muted{color:var(--muted)}
-    .skills{
-      display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;
+
+    .yellow-card{
+      background:var(--yellow);
+      color:var(--black);
+      min-height:455px;
+      padding:28px;
+      position:relative;
     }
-    .chip{
-      padding:9px 12px;border-radius:999px;
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--border);
-      color:#dbe5ff;font-size:.95rem;
+
+    .yellow-card h2{
+      font-size:clamp(2rem,4.5vw,3.4rem);
     }
-    .work-grid{
+
+    .yellow-card p{
+      max-width:470px;
+      font-size:1.04rem;
+      line-height:1.5;
+    }
+
+    .tag{
+      display:inline-block;
+      margin-top:10px;
+      padding:10px 14px;
+      border:3px solid var(--black);
+      font-weight:900;
+      text-transform:uppercase;
+      background:var(--pink);
+      color:var(--white);
+    }
+
+    .lower{
+      margin-top:28px;
       display:grid;
       grid-template-columns:repeat(3,1fr);
-      gap:18px;
+      gap:22px;
     }
-    .project{
-      overflow:hidden;
-      padding:0;
+
+    .mini-card{
+      min-height:160px;
+      padding:20px;
+      background:#515779;
+      color:var(--white);
     }
-    .thumb{
-      aspect-ratio:16/10;
-      background:
-        linear-gradient(135deg, rgba(110,168,254,.25), rgba(139,92,246,.18)),
-        linear-gradient(180deg, #182034, #0f1524);
-      border-bottom:1px solid var(--border);
-      display:flex;align-items:center;justify-content:center;
-      color:#d9e4ff;font-weight:800;font-size:1.2rem;
-      letter-spacing:.04em;
+
+    .mini-card:nth-child(2){
+      background:var(--orange);
+      color:var(--black);
     }
-    .project-body{padding:18px}
-    .project h3{margin:0 0 8px;font-size:1.15rem}
-    .project p{margin:0;color:var(--muted)}
-    .project .tags{margin-top:14px}
-    .contact-list{
-      display:grid;gap:12px;margin-top:10px
+
+    .mini-card:nth-child(3){
+      background:#7b39ff;
     }
-    .contact-item{
-      padding:14px 16px;border:1px solid var(--border);border-radius:16px;
-      background:rgba(255,255,255,.03)
+
+    .mini-card h3{
+      font-size:1.35rem;
     }
-    .footer{
-      padding:32px 0 50px;
-      border-top:1px solid var(--border);
-      color:var(--muted);
+
+    .mini-card p{
+      margin:0;
+      line-height:1.45;
     }
-    .small{font-size:.95rem}
+
     @media (max-width: 900px){
-      .hero-grid,.about-grid,.contact-grid,.work-grid{grid-template-columns:1fr}
-      .section-head{align-items:start;flex-direction:column}
+      .grid,
+      .lower{
+        grid-template-columns:1fr;
+      }
+
+      .yellow-card{
+        min-height:320px;
+      }
+
+      .pink-card{
+        min-height:auto;
+      }
     }
   </style>
 </head>
 <body>
-  <header class="nav">
-    <div class="container nav-inner">
-      <a class="brand" href="#top">Jack Sockwell</a>
-      <nav class="nav-links">
-        <a href="#about">About</a>
-        <a href="#work">Work</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
-      </nav>
+  <main class="frame">
+    <div class="wrap">
+      <section class="top-banner card">
+        <p class="eyebrow">Blocky / Artistic / Loud</p>
+        <h1 class="title">This is test text</h1>
+        <p class="subtitle">
+          A first homepage concept based on your sketch — heavy blocks, bright colors, Rockwell-style heading, and a clean chaotic vibe.
+        </p>
+      </section>
+
+      <section class="grid">
+        <article class="pink-card card">
+          <div>
+            <h2>About this space</h2>
+            <p>
+              This left section matches the pink block in your concept. Use it for your intro, announcements, links, shop info, art, commissions, music, or whatever the site is actually about.
+            </p>
+          </div>
+
+          <div class="actions">
+            <a class="btn" href="#">Main Link</a>
+            <a class="btn alt" href="#">Second Link</a>
+          </div>
+        </article>
+
+        <article class="yellow-card card">
+          <h2>Big feature block</h2>
+          <p>
+            This matches the big yellow block from your drawing. It is good for a featured image, latest project, gallery preview, embedded video, or a huge callout.
+          </p>
+          <span class="tag">Put anything loud here</span>
+        </article>
+      </section>
+
+      <section class="lower">
+        <article class="mini-card card">
+          <h3>Section One</h3>
+          <p>Keep the structure blocky and simple so the bright colors feel intentional instead of messy.</p>
+        </article>
+
+        <article class="mini-card card">
+          <h3>Section Two</h3>
+          <p>We can add hover effects, moving shapes, image frames, or weird art elements next.</p>
+        </article>
+
+        <article class="mini-card card">
+          <h3>Section Three</h3>
+          <p>Once you tell me what the site is actually for, I can turn this into the real version.</p>
+        </article>
+      </section>
     </div>
-  </header>
-
-  <main id="top">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <div class="eyebrow">3D Artist • Modeler • Game Asset Creator</div>
-          <h1>Clean, stylized 3D work built for games and content.</h1>
-          <p class="lead">
-            I create 3D models, characters, props, and game-ready assets with a focus on strong shapes,
-            readable design, and polished presentation.
-          </p>
-          <div class="btn-row">
-            <a class="btn primary" href="#work">View My Work</a>
-            <a class="btn secondary" href="#contact">Contact Me</a>
-          </div>
-        </div>
-
-        <div class="hero-card">
-          <h3 style="margin:0 0 10px;">Quick intro</h3>
-          <p class="muted" style="margin:0;">
-            This starter site is ready for your real work, images, links, and contact info. We can swap out every part of it.
-          </p>
-          <div class="stat-grid">
-            <div class="stat">
-              <strong>3D Modeling</strong>
-              <span class="muted">Characters, props, stylized assets</span>
-            </div>
-            <div class="stat">
-              <strong>Game Ready</strong>
-              <span class="muted">Built for presentation and pipelines</span>
-            </div>
-            <div class="stat">
-              <strong>Portfolio Site</strong>
-              <span class="muted">Easy to update as you grow</span>
-            </div>
-            <div class="stat">
-              <strong>Fast Setup</strong>
-              <span class="muted">Single-file HTML starter</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="about">
-      <div class="container">
-        <div class="section-head">
-          <h2>About</h2>
-          <p>Tell people what you do and what kind of work you take on.</p>
-        </div>
-        <div class="about-grid">
-          <div class="card">
-            <h3 style="margin-top:0;">Who I am</h3>
-            <p class="muted">
-              I’m Jack Sockwell, a 3D artist focused on creating stylized and game-ready models.
-              I work on characters, props, and other digital assets for games, content, and creative projects.
-            </p>
-            <p class="muted">
-              This section is a placeholder right now. We can rewrite it to sound more professional, more personal,
-              or more client-focused.
-            </p>
-          </div>
-          <div class="card" id="skills">
-            <h3 style="margin-top:0;">Skills & tools</h3>
-            <p class="muted">Replace or add anything here.</p>
-            <div class="skills">
-              <span class="chip">Blender</span>
-              <span class="chip">Substance Painter</span>
-              <span class="chip">Unreal Engine</span>
-              <span class="chip">Roblox Studio</span>
-              <span class="chip">Game Assets</span>
-              <span class="chip">Character Modeling</span>
-              <span class="chip">Stylized Art</span>
-              <span class="chip">UVs & Texturing</span>
-              <span class="chip">Rigging</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="work">
-      <div class="container">
-        <div class="section-head">
-          <h2>Featured Work</h2>
-          <p>Add real project renders, names, and descriptions here.</p>
-        </div>
-
-        <div class="work-grid">
-          <article class="card project">
-            <div class="thumb">PROJECT 01</div>
-            <div class="project-body">
-              <h3>Stylized Character</h3>
-              <p>Short description of the model, what it was made for, and what makes it stand out.</p>
-              <div class="skills tags">
-                <span class="chip">Character</span>
-                <span class="chip">Stylized</span>
-                <span class="chip">Game Ready</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="card project">
-            <div class="thumb">PROJECT 02</div>
-            <div class="project-body">
-              <h3>Prop / Asset Set</h3>
-              <p>Use this for a prop pack, environment asset, or any piece you want to showcase.</p>
-              <div class="skills tags">
-                <span class="chip">Props</span>
-                <span class="chip">Texturing</span>
-                <span class="chip">Presentation</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="card project">
-            <div class="thumb">PROJECT 03</div>
-            <div class="project-body">
-              <h3>Game Model</h3>
-              <p>Another placeholder card for your work. We can add image thumbnails and project links next.</p>
-              <div class="skills tags">
-                <span class="chip">Modeling</span>
-                <span class="chip">Realtime</span>
-                <span class="chip">Portfolio</span>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="container">
-        <div class="section-head">
-          <h2>Contact</h2>
-          <p>Put your real links here when you're ready.</p>
-        </div>
-        <div class="contact-grid">
-          <div class="card">
-            <h3 style="margin-top:0;">Work with me</h3>
-            <p class="muted">
-              Use this section for commissions, freelance inquiries, or business contact details.
-            </p>
-            <div class="contact-list">
-              <div class="contact-item"><strong>Email:</strong> your@email.com</div>
-              <div class="contact-item"><strong>Instagram:</strong> @yourhandle</div>
-              <div class="contact-item"><strong>Twitter/X:</strong> @yourhandle</div>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3 style="margin-top:0;">What we can do next</h3>
-            <p class="muted small">
-              Next, we can replace the placeholders with your actual bio, social links, project images,
-              commission info, colors, and sections.
-            </p>
-            <p class="muted small" style="margin-bottom:0;">
-              Then you upload this file to Netlify and your site updates.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
-
-  <footer class="footer">
-    <div class="container small">
-      © <span id="year"></span> Jack Sockwell. All rights reserved.
-    </div>
-  </footer>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
