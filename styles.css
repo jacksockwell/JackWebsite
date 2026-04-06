@@ -254,6 +254,15 @@ button {
     linear-gradient(135deg, #190000 0%, #430008 30%, #8a0d19 58%, #140000 100%);
 }
 
+.page-fret {
+  background: linear-gradient(135deg, #120000, #4a000a 48%, #090000);
+}
+
+.page-fret .bg-block,
+.page-fret .bg-line {
+  display: none;
+}
+
 .page-fret .site-shell::before {
   background:
     linear-gradient(rgba(255, 85, 85, 0.08) 1px, transparent 1px),
@@ -363,6 +372,17 @@ button {
 
 .page-fret .steam-shell {
   background: linear-gradient(135deg, #290004, #640012 52%, #0d0000);
+}
+
+.page-fret .portfolio-heading p,
+.page-fret .portfolio-heading h1 {
+  color: #ffb3b3;
+  text-shadow: 0 0 18px rgba(255, 50, 80, 0.18);
+}
+
+.page-fret .back-link {
+  background: linear-gradient(135deg, #5a000d, #120000);
+  color: #ffb300;
 }
 
 .steam-widget {
