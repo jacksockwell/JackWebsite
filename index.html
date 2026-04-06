@@ -4,96 +4,97 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jack Sockwell</title>
-  <meta name="description" content="Jack Sockwell models, renders, visuals." />
+  <meta name="description" content="Jack Sockwell portfolio and projects." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="site" id="siteFrame">
-    <div class="shape shape-red" data-depth="13"></div>
-    <div class="shape shape-green" data-depth="9"></div>
-    <div class="shape shape-white" data-depth="11"></div>
+  <main class="site-shell" id="siteShell">
+    <div class="shape shape-coral" data-depth="15"></div>
+    <div class="shape shape-sky" data-depth="11"></div>
+    <div class="shape shape-cream" data-depth="18"></div>
+    <div class="shape shape-gold" data-depth="13"></div>
 
-    <div class="wrap">
-      <section class="hero section">
-        <article class="hero-copy panel panel-red">
-          <div>
-            <p class="tiny">Jack Sockwell</p>
-            <h1>Models<br>Renders<br>Visuals</h1>
-            <p class="sub">Minimal text. More visuals.</p>
+    <section class="landing" aria-label="Homepage">
+      <div class="landing-inner">
+        <p class="name-tag">Jack Sockwell</p>
+        <nav class="home-nav" aria-label="Primary">
+          <button class="home-option" type="button" data-section-target="portfolio">Portfolio</button>
+          <button class="home-option" type="button" data-section-target="dont-fret">Don't Fret</button>
+          <button class="home-option" type="button" data-section-target="about">About Me</button>
+        </nav>
+      </div>
+    </section>
+
+    <section class="sections" aria-live="polite">
+      <article class="content-panel" id="portfolio" data-section>
+        <div class="panel-head">
+          <p class="panel-kicker">Portfolio</p>
+          <button class="panel-close" type="button" data-close-section aria-label="Close section">Close</button>
+        </div>
+
+        <div class="portfolio-grid">
+          <figure class="art-card art-card-large parallax-panel" data-depth="10">
+            <img src="1.png" alt="Portfolio image 1" />
+          </figure>
+          <figure class="art-card art-card-tall parallax-panel" data-depth="14">
+            <img src="2.png" alt="Portfolio image 2" />
+          </figure>
+          <figure class="art-card parallax-panel" data-depth="12">
+            <img src="3.png" alt="Portfolio image 3" />
+          </figure>
+          <figure class="art-card parallax-panel" data-depth="16">
+            <img src="4.png" alt="Portfolio image 4" />
+          </figure>
+          <figure class="art-card art-card-wide parallax-panel" data-depth="11">
+            <img src="5.png" alt="Portfolio image 5" />
+          </figure>
+        </div>
+      </article>
+
+      <article class="content-panel dont-fret-panel" id="dont-fret" data-section>
+        <div class="panel-head">
+          <p class="panel-kicker">Don't Fret</p>
+          <button class="panel-close panel-close-dark" type="button" data-close-section aria-label="Close section">Close</button>
+        </div>
+
+        <div class="dont-fret-grid">
+          <div class="dont-fret-copy">
+            <div class="square-stack" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <h2>Don't Fret</h2>
+            <a class="fret-link" href="https://store.steampowered.com/app/2716830/Dont_Fret/" target="_blank" rel="noopener noreferrer">Steam</a>
           </div>
 
-          <div class="hero-links">
-            <a class="btn btn-yellow" href="#work">Work</a>
-            <a class="btn btn-clear" href="#dont-fret">Don't Fret</a>
-            <a class="btn btn-clear" href="#links">Links</a>
+          <figure class="dont-fret-visual parallax-panel" data-depth="9">
+            <img src="header.jpg" alt="Don't Fret header art" />
+          </figure>
+        </div>
+      </article>
+
+      <article class="content-panel about-panel" id="about" data-section>
+        <div class="panel-head">
+          <p class="panel-kicker">About Me</p>
+          <button class="panel-close" type="button" data-close-section aria-label="Close section">Close</button>
+        </div>
+
+        <div class="about-layout">
+          <div class="about-copy">
+            <h2>Jack Sockwell</h2>
+            <p>Visuals, worlds, and sharp little experiments.</p>
           </div>
-        </article>
 
-        <article class="hero-visual panel parallax-card" data-depth="13">
-          <img src="header.jpg" alt="Header render by Jack Sockwell" style="object-position:center 42%;" />
-          <div class="badge">Header</div>
-        </article>
-      </section>
-
-      <section class="work-grid section" id="work">
-        <article class="gallery-card gallery-wide panel parallax-card" data-depth="10">
-          <img src="1.png" alt="Render 1" style="object-position:center 45%;" />
-          <div class="label">01</div>
-        </article>
-
-        <article class="gallery-card panel parallax-card" data-depth="15">
-          <img src="2.png" alt="Render 2" style="object-position:center 35%;" />
-          <div class="label">02</div>
-        </article>
-
-        <article class="gallery-card panel parallax-card" data-depth="12">
-          <img src="3.png" alt="Render 3" style="object-position:center 50%;" />
-          <div class="label">03</div>
-        </article>
-
-        <article class="gallery-card panel parallax-card" data-depth="17">
-          <img src="4.png" alt="Render 4" style="object-position:center 42%;" />
-          <div class="label">04</div>
-        </article>
-
-        <article class="gallery-card panel parallax-card" data-depth="14">
-          <img src="5.png" alt="Render 5" style="object-position:center 50%;" />
-          <div class="label">05</div>
-        </article>
-      </section>
-
-      <section class="dont-fret section" id="dont-fret">
-        <article class="dont-fret-copy panel">
-          <p class="tiny tiny-dark">Featured</p>
-          <h2>Don't<br>Fret</h2>
-          <div class="dont-fret-links">
-            <a class="btn btn-black" href="https://store.steampowered.com/app/2716830/Dont_Fret/" target="_blank" rel="noopener noreferrer">Steam Page</a>
+          <div class="about-blocks">
+            <div class="about-tile soft-coral">Artist</div>
+            <div class="about-tile soft-sky">Builder</div>
+            <div class="about-tile soft-gold">Designer</div>
           </div>
-        </article>
-
-        <article class="dont-fret-visual panel parallax-card" data-depth="11">
-          <img src="header.jpg" alt="Don't Fret header art" style="object-position:center 50%;" />
-          <div class="badge">Don't Fret</div>
-        </article>
-      </section>
-
-      <section class="links-grid section" id="links">
-        <a class="link-card panel panel-red" href="https://x.com/JackSockwellP" target="_blank" rel="noopener noreferrer">
-          <h3>X</h3>
-          <p>Updates</p>
-        </a>
-
-        <a class="link-card panel panel-green" href="https://www.youtube.com/@JackDoesGamez" target="_blank" rel="noopener noreferrer">
-          <h3>YouTube</h3>
-          <p>Videos</p>
-        </a>
-
-        <a class="link-card panel panel-white" href="https://www.artstation.com/polygonparadise" target="_blank" rel="noopener noreferrer">
-          <h3>ArtStation</h3>
-          <p>Portfolio</p>
-        </a>
-      </section>
-    </div>
+        </div>
+      </article>
+    </section>
   </main>
 
   <script src="script.js"></script>
