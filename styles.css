@@ -590,18 +590,7 @@ button {
 }
 
 .about-split-divider::after {
-  content: "/";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 4px 6px;
-  background: var(--yellow);
-  color: var(--ink);
-  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
-  font-size: 1.7rem;
-  line-height: 1;
-  border: 3px solid var(--ink);
+  content: none;
 }
 
 .about-tools {
@@ -633,10 +622,14 @@ button {
   place-items: center;
   border: 3px solid var(--ink);
   border-radius: 999px;
-  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
-  font-size: 0.95rem;
-  line-height: 1;
   box-shadow: 4px 4px 0 rgba(36, 27, 42, 0.15);
+  overflow: hidden;
+}
+
+.tool-icon img {
+  display: block;
+  width: 22px;
+  height: 22px;
 }
 
 .tool-icon-blender {
