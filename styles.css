@@ -1,10 +1,11 @@
 :root {
-  --bg: #f4f0e8;
+  --bg: #d8ff22;
   --ink: #241b2a;
-  --pink: #ff2b63;
-  --green: #2dff00;
-  --yellow: #fff200;
-  --paper: #f8f5ef;
+  --pink: #ff0f7b;
+  --green: #39ff14;
+  --yellow: #ff9f00;
+  --orange: #ff6a00;
+  --paper: #ccff2f;
   --border: 3px solid var(--ink);
   --shadow: 10px 10px 0 rgba(36, 27, 42, 0.95);
   --shadow-soft: 18px 18px 0 rgba(36, 27, 42, 0.22);
@@ -44,13 +45,13 @@ button {
   position: relative;
   overflow: hidden;
   padding: 28px;
-  border-top: 6px solid #6d7d5e;
+  border-top: 6px solid #1ec700;
   background:
     linear-gradient(90deg, transparent 0 8%, rgba(255, 43, 99, 0.18) 8% 22%, transparent 22% 100%),
     linear-gradient(180deg, transparent 0 14%, rgba(45, 255, 0, 0.16) 14% 28%, transparent 28% 100%),
-    linear-gradient(90deg, transparent 0 70%, rgba(255, 242, 0, 0.2) 70% 86%, transparent 86% 100%),
+    linear-gradient(90deg, transparent 0 70%, rgba(255, 106, 0, 0.24) 70% 86%, transparent 86% 100%),
     linear-gradient(180deg, transparent 0 64%, rgba(255, 43, 99, 0.12) 64% 78%, transparent 78% 100%),
-    linear-gradient(135deg, #f8f4eb, #f0eadf);
+    linear-gradient(135deg, #cfff2e, #ff9a18);
 }
 
 .page-home .site-shell {
@@ -76,7 +77,7 @@ button {
 
 .site-shell::after {
   background:
-    linear-gradient(135deg, transparent 0 48%, rgba(255, 242, 0, 0.16) 48% 60%, transparent 60% 100%),
+    linear-gradient(135deg, transparent 0 48%, rgba(255, 106, 0, 0.24) 48% 60%, transparent 60% 100%),
     linear-gradient(135deg, transparent 0 26%, rgba(45, 255, 0, 0.12) 26% 40%, transparent 40% 100%);
   opacity: 0.55;
 }
@@ -90,7 +91,7 @@ button {
 
 .bg-block {
   border: 2px solid rgba(36, 27, 42, 0.4);
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 170, 24, 0.16);
 }
 
 .bg-block-pink {
@@ -124,7 +125,7 @@ button {
   inset: 0 auto auto 0;
   width: 100%;
   height: 6px;
-  background: #607157;
+  background: #1ec700;
 }
 
 .bg-line-right {
@@ -155,7 +156,7 @@ button {
   align-self: start;
   padding: 8px 14px;
   border: var(--border);
-  background: #ffffff;
+  background: var(--green);
   font-size: 0.72rem;
   font-weight: 900;
   letter-spacing: 0.18em;
@@ -195,7 +196,7 @@ button {
   text-transform: uppercase;
   font-weight: 900;
   letter-spacing: 0.1em;
-  background: #fff;
+  background: var(--green);
   box-shadow: var(--shadow-soft);
   transition: transform 0.14s ease, box-shadow 0.14s ease;
 }
@@ -212,15 +213,15 @@ button {
 }
 
 .block-portfolio {
-  background: #fff;
+  background: var(--green);
 }
 
 .block-fret {
-  background: linear-gradient(180deg, #fff9c9, #fff3ab);
+  background: linear-gradient(180deg, #ffc23a, #ff7800);
 }
 
 .block-about {
-  background: #fff;
+  background: var(--orange);
 }
 
 .panel-close,
@@ -230,7 +231,7 @@ button {
   min-height: 52px;
   padding: 12px 16px;
   border: var(--border);
-  background: #fff;
+  background: var(--orange);
   text-decoration: none;
   text-transform: uppercase;
   font-size: 0.82rem;
@@ -295,7 +296,7 @@ button {
 
 .square-banner span {
   aspect-ratio: 1;
-  border: 3px solid #fff;
+  border: 3px solid var(--orange);
 }
 
 .square-banner span:nth-child(1),
@@ -339,7 +340,7 @@ button {
 
 .panel-about {
   background:
-    linear-gradient(135deg, var(--pink) 0 52%, var(--yellow) 52% 70%, #ffffff 70% 100%);
+    linear-gradient(135deg, var(--pink) 0 45%, var(--yellow) 45% 72%, var(--green) 72% 100%);
 }
 
 .page-about .site-shell {
@@ -347,7 +348,7 @@ button {
   background:
     linear-gradient(90deg, rgba(255, 43, 99, 0.08) 0 12%, transparent 12% 100%),
     linear-gradient(180deg, rgba(45, 255, 0, 0.08) 0 18%, transparent 18% 100%),
-    linear-gradient(135deg, #f8f4eb, #f1ece2);
+    linear-gradient(135deg, #cfff2e, #ff9a18);
 }
 
 .page-about .site-shell::before,
@@ -368,7 +369,7 @@ button {
 
 .page-about .site-shell::after {
   background:
-    linear-gradient(90deg, transparent 0 62%, rgba(255, 242, 0, 0.18) 62% 78%, transparent 78% 100%),
+    linear-gradient(90deg, transparent 0 62%, rgba(255, 106, 0, 0.24) 62% 78%, transparent 78% 100%),
     linear-gradient(180deg, transparent 0 18%, rgba(255, 43, 99, 0.16) 18% 34%, transparent 34% 100%),
     linear-gradient(180deg, transparent 0 58%, rgba(45, 255, 0, 0.14) 58% 74%, transparent 74% 100%);
   opacity: 0.7;
@@ -433,7 +434,7 @@ button {
 .about-info-panel {
   position: relative;
   border: 4px solid var(--ink);
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(57, 255, 20, 0.9);
   box-shadow: var(--shadow);
 }
 
@@ -572,7 +573,7 @@ button {
   gap: 6px;
   padding: 16px 18px;
   border: 3px solid var(--ink);
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 170, 24, 0.9);
   box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.1);
 }
 
@@ -644,7 +645,7 @@ button {
 .tag-card {
   padding: 16px 14px;
   border: 3px solid var(--ink);
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(57, 255, 20, 0.88);
   font-size: 0.92rem;
   font-weight: 900;
   letter-spacing: 0.08em;
@@ -656,7 +657,7 @@ button {
 .about-note {
   padding: 18px 20px;
   border-left: 6px solid var(--pink);
-  background: rgba(255, 255, 255, 0.86);
+  background: rgba(255, 170, 24, 0.9);
   font-size: 1rem;
   line-height: 1.45;
   font-weight: 700;
@@ -676,7 +677,7 @@ button {
 
 .about-title-block {
   padding: 24px;
-  background: #ffffff;
+  background: var(--green);
 }
 
 .about-title-block h2 {
@@ -769,7 +770,7 @@ button {
   overflow: hidden;
   border: 4px solid var(--ink);
   box-shadow: var(--shadow);
-  background: #fff;
+  background: var(--orange);
 }
 
 .portfolio-piece-large {
