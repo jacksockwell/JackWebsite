@@ -45,11 +45,40 @@ button {
   overflow: hidden;
   padding: 28px;
   border-top: 6px solid #6d7d5e;
+  background:
+    linear-gradient(90deg, transparent 0 8%, rgba(255, 43, 99, 0.18) 8% 22%, transparent 22% 100%),
+    linear-gradient(180deg, transparent 0 14%, rgba(45, 255, 0, 0.16) 14% 28%, transparent 28% 100%),
+    linear-gradient(90deg, transparent 0 70%, rgba(255, 242, 0, 0.2) 70% 86%, transparent 86% 100%),
+    linear-gradient(180deg, transparent 0 64%, rgba(255, 43, 99, 0.12) 64% 78%, transparent 78% 100%),
+    linear-gradient(135deg, #f8f4eb, #f0eadf);
 }
 
 .page-home .site-shell {
   display: grid;
   place-items: center;
+}
+
+.site-shell::before,
+.site-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.site-shell::before {
+  background:
+    linear-gradient(rgba(36, 27, 42, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 27, 42, 0.05) 1px, transparent 1px);
+  background-size: 92px 92px;
+  opacity: 0.28;
+}
+
+.site-shell::after {
+  background:
+    linear-gradient(135deg, transparent 0 48%, rgba(255, 242, 0, 0.16) 48% 60%, transparent 60% 100%),
+    linear-gradient(135deg, transparent 0 26%, rgba(45, 255, 0, 0.12) 26% 40%, transparent 40% 100%);
+  opacity: 0.55;
 }
 
 .bg-block,
