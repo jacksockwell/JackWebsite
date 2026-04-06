@@ -5,7 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Don't Fret | Jack Sockwell</title>
   <meta name="description" content="Don't Fret by Jack Sockwell." />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=20260406-fret-clean" />
+  <style>
+    body.page-fret {
+      margin: 0;
+      background: #c40018;
+    }
+
+    .page-fret .site-shell {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #c40018;
+    }
+
+    .page-fret .site-shell::before,
+    .page-fret .site-shell::after {
+      content: none;
+    }
+
+    .fret-steam-only {
+      width: min(720px, 100%);
+    }
+
+    .page-fret .steam-shell {
+      min-height: auto;
+      padding: 18px;
+      background: #8e0012;
+      border: 4px solid #1a0004;
+      box-shadow: 14px 14px 0 rgba(26, 0, 4, 0.3);
+    }
+  </style>
 </head>
 <body class="page-fret">
   <main class="site-shell" id="siteShell">
