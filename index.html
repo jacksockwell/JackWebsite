@@ -3,487 +3,165 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jacksockwell</title>
+  <title>Jack Sockwell</title>
+  <meta name="description" content="Jack Sockwell - 3D modeling, edits, art, and portfolio links." />
   <style>
     :root{
-      --bg:#43496b;
-      --pink:#ef63ab;
-      --yellow:#ffe900;
-      --orange:#ff7a00;
-      --cyan:#00d8ff;
+      --bg:#404768;
+      --panel:#4b5277;
+      --pink:#f45fad;
+      --yellow:#ffea00;
+      --orange:#ff7b00;
+      --cyan:#00d7ff;
       --purple:#7b39ff;
-      --white:#fff8ef;
-      --black:#171717;
+      --text:#fff7ef;
+      --black:#161616;
+      --shadow:12px 12px 0 rgba(0,0,0,.2);
+      --border:4px solid var(--yellow);
     }
-
     *{box-sizing:border-box}
-
-    html{
-      scroll-behavior:smooth;
-    }
-
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--white);
-      font-family: Arial, Helvetica, sans-serif;
-      min-height:100vh;
-    }
-
-    a{
-      color:inherit;
-    }
-
-    .frame{
-      min-height:100vh;
-      border:4px solid var(--yellow);
-      padding:18px;
-      position:relative;
-      overflow:hidden;
-      isolation:isolate;
-    }
-
-    .floating-shape{
-      position:absolute;
-      border:4px solid var(--yellow);
-      pointer-events:none;
-      opacity:.16;
-      will-change:transform;
-      transition:transform .08s linear;
-      z-index:0;
-    }
-
-    .shape-a{
-      width:260px;
-      height:260px;
-      right:-80px;
-      top:90px;
-      background:linear-gradient(135deg,var(--orange),var(--pink));
-      transform:rotate(12deg);
-    }
-
-    .shape-b{
-      width:180px;
-      height:180px;
-      left:-50px;
-      bottom:40px;
-      background:var(--cyan);
-      transform:rotate(-16deg);
-    }
-
-    .shape-c{
-      width:120px;
-      height:120px;
-      right:16%;
-      bottom:11%;
-      background:var(--purple);
-      opacity:.12;
-      transform:rotate(8deg);
-    }
-
-    .wrap{
-      max-width:1400px;
-      margin:0 auto;
-      position:relative;
-      z-index:1;
-    }
-
-    .top-banner{
-      background:var(--pink);
-      border:4px solid var(--yellow);
-      padding:28px 30px;
-      margin-bottom:28px;
-      box-shadow:12px 12px 0 rgba(0,0,0,.18);
-    }
-
-    .eyebrow{
-      color:var(--yellow);
-      font-family: Rockwell, "Rockwell Nova", "Roboto Slab", Georgia, serif;
-      font-size:clamp(1rem,2vw,1.35rem);
-      margin:0 0 10px 0;
-      letter-spacing:.04em;
-      text-transform:uppercase;
-    }
-
-    .title{
-      margin:0;
-      font-family: Rockwell, "Rockwell Nova", "Roboto Slab", Georgia, serif;
-      font-size:clamp(2.2rem,7vw,5.2rem);
-      line-height:.95;
-      color:var(--white);
-      text-transform:uppercase;
-      text-shadow:4px 4px 0 rgba(0,0,0,.18);
-    }
-
-    .subtitle{
-      margin:14px 0 0;
-      max-width:850px;
-      font-size:clamp(1rem,2vw,1.2rem);
-      color:#fff1b8;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:1.08fr 1fr;
-      gap:34px;
-      align-items:start;
-    }
-
-    .card{
-      border:4px solid var(--yellow);
-      box-shadow:12px 12px 0 rgba(0,0,0,.18);
-    }
-
-    .pink-card{
-      background:var(--pink);
-      min-height:280px;
-      padding:28px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-    }
-
-    .pink-card h2,
-    .yellow-card h2,
-    .gallery-title,
-    .mini-card h3{
-      margin:0 0 14px;
-      font-family: Rockwell, "Rockwell Nova", "Roboto Slab", Georgia, serif;
-      text-transform:uppercase;
-      line-height:1;
-    }
-
-    .pink-card h2{
-      font-size:clamp(1.8rem,4vw,3rem);
-      color:var(--yellow);
-    }
-
-    .pink-card p{
-      margin:0 0 22px;
-      color:#fff8ef;
-      font-size:1.05rem;
-      max-width:560px;
-    }
-
-    .actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:14px;
-    }
-
-    .btn{
-      text-decoration:none;
-      padding:14px 18px;
-      border:3px solid var(--yellow);
-      color:var(--black);
-      background:var(--yellow);
-      font-weight:800;
-      text-transform:uppercase;
-      letter-spacing:.04em;
-      box-shadow:6px 6px 0 rgba(0,0,0,.18);
-      transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
-      display:inline-block;
-    }
-
-    .btn.alt{
-      background:transparent;
-      color:var(--white);
-    }
-
-    .btn:hover{
-      transform:translate(-3px,-3px);
-      box-shadow:10px 10px 0 rgba(0,0,0,.18);
-    }
-
-    .yellow-card{
-      background:var(--yellow);
-      color:var(--black);
-      min-height:455px;
-      padding:28px;
-      position:relative;
-    }
-
-    .yellow-card h2{
-      font-size:clamp(2rem,4.5vw,3.4rem);
-    }
-
-    .yellow-card p{
-      max-width:470px;
-      font-size:1.04rem;
-      line-height:1.5;
-    }
-
-    .tag{
-      display:inline-block;
-      margin-top:10px;
-      padding:10px 14px;
-      border:3px solid var(--black);
-      font-weight:900;
-      text-transform:uppercase;
-      background:var(--pink);
-      color:var(--white);
-    }
-
-    .gallery{
-      margin-top:30px;
-      padding:28px;
-      background:#4e5377;
-    }
-
-    .gallery-title{
-      font-size:clamp(1.8rem,4vw,3rem);
-      color:var(--yellow);
-      margin-bottom:10px;
-    }
-
-    .gallery-sub{
-      margin:0 0 20px;
-      max-width:850px;
-      line-height:1.5;
-    }
-
-    .photo-grid{
-      display:grid;
-      grid-template-columns:repeat(3, minmax(0,1fr));
-      gap:22px;
-    }
-
-    .photo{
-      background:#2f3452;
-      min-height:240px;
-      position:relative;
-      overflow:hidden;
-      will-change:transform;
-      transition:transform .15s ease;
-    }
-
-    .photo:hover{
-      transform:translate(-2px,-2px);
-    }
-
-    .photo img{
-      width:112%;
-      height:112%;
-      object-fit:cover;
-      position:absolute;
-      left:50%;
-      top:50%;
-      transform:translate(-50%,-50%);
-      transition:transform .08s linear;
-      will-change:transform;
-    }
-
-    .photo-label{
-      position:absolute;
-      left:14px;
-      bottom:14px;
-      background:rgba(23,23,23,.78);
-      color:var(--yellow);
-      border:3px solid var(--yellow);
-      padding:8px 10px;
-      font-weight:800;
-      text-transform:uppercase;
-      letter-spacing:.04em;
-      z-index:2;
-    }
-
-    .socials{
-      margin-top:28px;
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:22px;
-    }
-
-    .social-card{
-      min-height:180px;
-      padding:22px;
-    }
-
-    .social-card h3{
-      margin:0 0 12px;
-      font-family: Rockwell, "Rockwell Nova", "Roboto Slab", Georgia, serif;
-      text-transform:uppercase;
-      line-height:1;
-      font-size:1.4rem;
-    }
-
-    .social-card p{
-      margin:0 0 16px;
-      line-height:1.5;
-    }
-
-    .social-card.x{
-      background:var(--pink);
-      color:var(--white);
-    }
-
-    .social-card.youtube{
-      background:var(--yellow);
-      color:var(--black);
-    }
-
-    .social-card.artstation{
-      background:var(--orange);
-      color:var(--black);
-    }
-
-    .lower{
-      margin-top:28px;
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:22px;
-    }
-
-    .mini-card{
-      min-height:160px;
-      padding:20px;
-      background:#515779;
-      color:var(--white);
-    }
-
-    .mini-card:nth-child(2){
-      background:var(--orange);
-      color:var(--black);
-    }
-
-    .mini-card:nth-child(3){
-      background:var(--purple);
-    }
-
-    .mini-card h3{
-      font-size:1.35rem;
-    }
-
-    .mini-card p{
-      margin:0;
-      line-height:1.45;
-    }
-
-    @media (max-width: 1000px){
-      .grid,
-      .photo-grid,
-      .socials,
-      .lower{
-        grid-template-columns:1fr;
-      }
-
-      .yellow-card{
-        min-height:320px;
-      }
-
-      .pink-card{
-        min-height:auto;
-      }
-
-      .photo{
-        min-height:300px;
-      }
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Arial, Helvetica, sans-serif}
+    a{color:inherit;text-decoration:none}
+    .site{min-height:100vh;border:4px solid var(--yellow);padding:18px;position:relative;overflow:hidden;isolation:isolate}
+    .shape{position:absolute;border:var(--border);opacity:.14;pointer-events:none;z-index:0;will-change:transform;transition:transform .08s linear}
+    .shape.one{width:240px;height:240px;top:90px;right:-60px;background:linear-gradient(135deg,var(--orange),var(--pink));transform:rotate(14deg)}
+    .shape.two{width:170px;height:170px;left:-45px;bottom:40px;background:var(--cyan);transform:rotate(-14deg)}
+    .shape.three{width:110px;height:110px;right:13%;bottom:16%;background:var(--purple);transform:rotate(10deg)}
+    .wrap{max-width:1380px;margin:0 auto;position:relative;z-index:1}
+    .block{border:var(--border);box-shadow:var(--shadow)}
+    .hero{background:var(--pink);padding:28px;margin-bottom:28px}
+    .eyebrow{margin:0 0 10px;color:var(--yellow);font-family:Rockwell, "Rockwell Nova", "Roboto Slab", Georgia, serif;font-size:clamp(1rem, 2vw, 1.2rem);text-transform:uppercase;letter-spacing:.06em}
+    .hero h1{margin:0;color:var(--text);font-family:Rockwell, "Rockwell Nova", "Roboto Slab", Georgia, serif;text-transform:uppercase;line-height:.92;font-size:clamp(2.8rem, 8vw, 6.2rem);text-shadow:4px 4px 0 rgba(0,0,0,.16)}
+    .hero p{margin:14px 0 0;max-width:850px;font-size:clamp(1rem, 1.6vw, 1.15rem);color:#fff4bc;line-height:1.5}
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px}
+    .btn{display:inline-block;padding:14px 18px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;border:3px solid var(--yellow);box-shadow:6px 6px 0 rgba(0,0,0,.18);transition:transform .15s ease, box-shadow .15s ease, background .15s ease}
+    .btn.primary{background:var(--yellow);color:var(--black)}
+    .btn.secondary{background:transparent;color:var(--text)}
+    .btn:hover{transform:translate(-3px,-3px);box-shadow:10px 10px 0 rgba(0,0,0,.18)}
+    .main-grid{display:grid;grid-template-columns:1.03fr 1fr;gap:30px;margin-bottom:30px}
+    .about{background:var(--pink);padding:26px;min-height:290px;display:flex;flex-direction:column;justify-content:space-between}
+    .about h2,.feature h2,.section-title,.social-card h3,.footer-card h3{margin:0 0 14px;font-family:Rockwell, "Rockwell Nova", "Roboto Slab", Georgia, serif;text-transform:uppercase;line-height:1}
+    .about h2{font-size:clamp(1.9rem, 4vw, 3rem);color:var(--yellow)}
+    .about p{margin:0;max-width:560px;line-height:1.55;font-size:1.03rem}
+    .feature{background:var(--yellow);color:var(--black);padding:18px;min-height:290px;display:grid;grid-template-rows:auto 1fr auto;gap:14px}
+    .feature h2{font-size:clamp(2rem, 4vw, 3.3rem)}
+    .feature-image{position:relative;overflow:hidden;border:3px solid var(--black);min-height:170px;background:#111}
+    .feature-image img{width:108%;height:108%;object-fit:cover;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);will-change:transform;transition:transform .08s linear}
+    .feature-tag{display:inline-block;background:var(--pink);color:var(--text);border:3px solid var(--black);padding:10px 12px;font-size:.92rem;text-transform:uppercase;font-weight:900;width:max-content}
+    .gallery{background:var(--panel);padding:26px;margin-bottom:30px}
+    .section-title{font-size:clamp(1.9rem, 4vw, 3rem);color:var(--yellow)}
+    .section-sub{margin:0 0 20px;max-width:880px;line-height:1.55}
+    .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .photo-card{position:relative;min-height:260px;overflow:hidden;background:#20253a}
+    .photo-card img{width:112%;height:112%;object-fit:cover;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);will-change:transform;transition:transform .08s linear}
+    .label{position:absolute;left:14px;bottom:14px;padding:8px 10px;background:rgba(22,22,22,.82);color:var(--yellow);border:3px solid var(--yellow);font-size:.9rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+    .socials{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:30px}
+    .social-card{min-height:200px;padding:22px}
+    .social-card p{margin:0 0 18px;line-height:1.55}
+    .social-card.x{background:var(--pink)}
+    .social-card.youtube{background:var(--yellow);color:var(--black)}
+    .social-card.artstation{background:var(--orange);color:var(--black)}
+    .footer-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px}
+    .footer-card{padding:22px;min-height:170px}
+    .footer-card.left{background:var(--purple)}
+    .footer-card.right{background:#556082}
+    .footer-card p{margin:0;line-height:1.55}
+    .small-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+    @media (max-width:1000px){
+      .main-grid,.photo-grid,.socials,.footer-grid{grid-template-columns:1fr}
+      .photo-card{min-height:310px}
     }
   </style>
 </head>
 <body>
-  <main class="frame" id="siteFrame">
-    <div class="floating-shape shape-a" data-depth="14"></div>
-    <div class="floating-shape shape-b" data-depth="8"></div>
-    <div class="floating-shape shape-c" data-depth="12"></div>
+  <main class="site" id="siteFrame">
+    <div class="shape one" data-depth="14"></div>
+    <div class="shape two" data-depth="9"></div>
+    <div class="shape three" data-depth="12"></div>
 
     <div class="wrap">
-      <section class="top-banner card">
-        <p class="eyebrow">Blocky / Artistic / Loud</p>
-        <h1 class="title">Jack Sockwell</h1>
-        <p class="subtitle">
-          3D models, weird art, funny edits, and loud visuals in one place.
-        </p>
+      <section class="hero block">
+        <p class="eyebrow">3D / Art / Edits</p>
+        <h1>Jack Sockwell</h1>
+        <p>3D models, edits, art, and other stuff I make. This is the main spot for my work, links, and whatever I’m working on.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#work">See Work</a>
+          <a class="btn secondary" href="#socials">Socials</a>
+        </div>
       </section>
 
-      <section class="grid">
-        <article class="pink-card card">
+      <section class="main-grid">
+        <article class="about block">
           <div>
-            <h2>About this space</h2>
-            <p>
-              This layout keeps the rough blocky shape from your sketch, but now it is built to hold real content. Use this area as your intro, updates, commission info, or whatever you want people to see first.
-            </p>
+            <h2>About Me</h2>
+            <p>I’m Jack Sockwell. I do 3D modeling, art, and edits. I like bold colors, blocky layouts, and stuff that feels a little chaotic without looking messy. This site is just a place to put my work and links.</p>
           </div>
-
-          <div class="actions">
-            <a class="btn" href="#gallery">See Work</a>
-            <a class="btn alt" href="#socials">Socials</a>
+          <div class="hero-actions">
+            <a class="btn primary" href="https://www.artstation.com/polygonparadise" target="_blank" rel="noopener noreferrer">Portfolio</a>
+            <a class="btn secondary" href="https://x.com/JackSockwellP" target="_blank" rel="noopener noreferrer">X</a>
           </div>
         </article>
 
-        <article class="yellow-card card">
-          <h2>Featured block</h2>
-          <p>
-            This big square is perfect for a featured project, hero image, newest model, or some really loud artwork that reacts slightly to the mouse.
-          </p>
-          <span class="tag">Mouse parallax ready</span>
+        <article class="feature block">
+          <div><h2>Featured Work</h2></div>
+          <div class="feature-image parallax-card" data-depth="14">
+            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1400&q=80" alt="Featured artwork style image" />
+          </div>
+          <span class="feature-tag">Slight mouse shift</span>
         </article>
       </section>
 
-      <section class="gallery card" id="gallery">
-        <h2 class="gallery-title">Art / Models / Photos</h2>
-        <p class="gallery-sub">
-          Drop your own images into these blocks and they will shift very slightly with your mouse. The effect is intentionally subtle so it feels clean instead of gimmicky.
-        </p>
-
+      <section class="gallery block" id="work">
+        <h2 class="section-title">Work</h2>
+        <p class="section-sub">A few image blocks to make the page feel finished right now. Swap these for your real renders later and the parallax effect will stay in place.</p>
         <div class="photo-grid">
-          <figure class="photo card parallax-item" data-depth="10">
-            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80" alt="Placeholder artwork 1" />
-            <figcaption class="photo-label">Project One</figcaption>
-          </figure>
-
-          <figure class="photo card parallax-item" data-depth="14">
-            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="Placeholder artwork 2" />
-            <figcaption class="photo-label">Project Two</figcaption>
-          </figure>
-
-          <figure class="photo card parallax-item" data-depth="18">
-            <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1200&q=80" alt="Placeholder artwork 3" />
-            <figcaption class="photo-label">Project Three</figcaption>
-          </figure>
+          <article class="photo-card block parallax-card" data-depth="10">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80" alt="Creative technology image" />
+            <div class="label">Piece 01</div>
+          </article>
+          <article class="photo-card block parallax-card" data-depth="14">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80" alt="Creative screen image" />
+            <div class="label">Piece 02</div>
+          </article>
+          <article class="photo-card block parallax-card" data-depth="18">
+            <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1400&q=80" alt="Creative workspace image" />
+            <div class="label">Piece 03</div>
+          </article>
         </div>
       </section>
 
       <section class="socials" id="socials">
-        <article class="social-card x card">
+        <article class="social-card x block">
           <h3>X / Twitter</h3>
-          <p>
-            JackSockwellP — bio snippets found publicly describe you as JackahhSocks and say you make funny video edits and 3D models.
-          </p>
-          <a class="btn alt" href="https://x.com/JackSockwellP" target="_blank" rel="noopener noreferrer">Open X</a>
+          <p>Posts, updates, and random stuff.</p>
+          <a class="btn secondary" href="https://x.com/JackSockwellP" target="_blank" rel="noopener noreferrer">Open X</a>
         </article>
-
-        <article class="social-card youtube card">
+        <article class="social-card youtube block">
           <h3>YouTube</h3>
-          <p>
-            Public results point to a YouTube channel tied to JackahhSocks / JackDoesGamez, with modeling livestreams and the same funny edits + 3D models vibe.
-          </p>
-          <a class="btn" href="https://www.youtube.com/@JackDoesGamez" target="_blank" rel="noopener noreferrer">Open YouTube</a>
+          <p>Videos, streams, and whatever I upload.</p>
+          <a class="btn primary" href="https://www.youtube.com/@JackDoesGamez" target="_blank" rel="noopener noreferrer">Open YouTube</a>
         </article>
-
-        <article class="social-card artstation card">
+        <article class="social-card artstation block">
           <h3>ArtStation</h3>
-          <p>
-            Your ArtStation appears to be polygonparadise, where the profile says you are a 3D generalist and shows portfolio work like stylized/cartoon projects and commissions.
-          </p>
-          <a class="btn" href="https://www.artstation.com/polygonparadise" target="_blank" rel="noopener noreferrer">Open ArtStation</a>
+          <p>Portfolio and finished work.</p>
+          <a class="btn primary" href="https://www.artstation.com/polygonparadise" target="_blank" rel="noopener noreferrer">Open ArtStation</a>
         </article>
       </section>
 
-      <section class="lower">
-        <article class="mini-card card">
-          <h3>Blocky Layout</h3>
-          <p>Everything stays chunky and framed so the bright colors feel like a style choice, not a mess.</p>
+      <section class="footer-grid">
+        <article class="footer-card left block">
+          <h3>Need Real Renders Here?</h3>
+          <p>Replace the three image URLs in the code with your own images and this page is basically ready. The layout and motion are already set up.</p>
         </article>
-
-        <article class="mini-card card">
-          <h3>Parallax Photos</h3>
-          <p>Your images can move just a little with the mouse. Easy to tune stronger or weaker later.</p>
-        </article>
-
-        <article class="mini-card card">
-          <h3>Next Step</h3>
-          <p>Replace the placeholder images and I can turn this into your actual homepage with your real projects and links.</p>
+        <article class="footer-card right block">
+          <h3>Contact / Links</h3>
+          <p>Best places to find my work and updates are linked here.</p>
+          <div class="small-links">
+            <a class="btn secondary" href="https://x.com/JackSockwellP" target="_blank" rel="noopener noreferrer">X</a>
+            <a class="btn secondary" href="https://www.youtube.com/@JackDoesGamez" target="_blank" rel="noopener noreferrer">YouTube</a>
+            <a class="btn secondary" href="https://www.artstation.com/polygonparadise" target="_blank" rel="noopener noreferrer">ArtStation</a>
+          </div>
         </article>
       </section>
     </div>
@@ -491,44 +169,44 @@
 
   <script>
     const frame = document.getElementById('siteFrame');
-    const parallaxItems = document.querySelectorAll('.parallax-item, .floating-shape');
+    const items = document.querySelectorAll('.parallax-card, .shape');
     let mouseX = 0;
     let mouseY = 0;
     let currentX = 0;
     let currentY = 0;
 
-    function updateParallax(){
+    function animate(){
       currentX += (mouseX - currentX) * 0.08;
       currentY += (mouseY - currentY) * 0.08;
 
-      parallaxItems.forEach((item) => {
+      items.forEach((item) => {
         const depth = Number(item.dataset.depth || 10);
         const moveX = currentX / depth;
         const moveY = currentY / depth;
 
-        if(item.classList.contains('photo')){
+        if(item.classList.contains('parallax-card')){
           const img = item.querySelector('img');
           if(img){
             img.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px)) scale(1.03)`;
           }
         } else {
-          const baseRotation =
-            item.classList.contains('shape-a') ? ' rotate(12deg)' :
-            item.classList.contains('shape-b') ? ' rotate(-16deg)' :
-            item.classList.contains('shape-c') ? ' rotate(8deg)' : '';
-          item.style.transform = `translate(${moveX}px, ${moveY}px)` + baseRotation;
+          const rotation =
+            item.classList.contains('one') ? ' rotate(14deg)' :
+            item.classList.contains('two') ? ' rotate(-14deg)' :
+            item.classList.contains('three') ? ' rotate(10deg)' : '';
+          item.style.transform = `translate(${moveX}px, ${moveY}px)` + rotation;
         }
       });
 
-      requestAnimationFrame(updateParallax);
+      requestAnimationFrame(animate);
     }
 
-    frame.addEventListener('mousemove', (event) => {
+    frame.addEventListener('mousemove', (e) => {
       const rect = frame.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      mouseX = ((x / rect.width) - 0.5) * 22;
-      mouseY = ((y / rect.height) - 0.5) * 22;
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      mouseX = ((x / rect.width) - 0.5) * 24;
+      mouseY = ((y / rect.height) - 0.5) * 24;
     });
 
     frame.addEventListener('mouseleave', () => {
@@ -536,7 +214,7 @@
       mouseY = 0;
     });
 
-    updateParallax();
+    animate();
   </script>
 </body>
 </html>
