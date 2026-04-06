@@ -281,7 +281,7 @@ button {
   border: 4px solid var(--ink);
   background:
     linear-gradient(180deg, #111 0 32%, #ff173f 32% 66%, #111 66% 100%);
-  color: #fff;
+  color: var(--yellow);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -523,7 +523,7 @@ button {
 
 .chip-pink {
   background: var(--pink);
-  color: #fff;
+  color: var(--yellow);
 }
 
 .chip-yellow {
@@ -536,7 +536,7 @@ button {
 
 .chip-ink {
   background: var(--ink);
-  color: #fff;
+  color: var(--green);
 }
 
 .about-info-panel h2 {
@@ -616,7 +616,7 @@ button {
 
 .role-pink {
   background: var(--pink);
-  color: #fff;
+  color: var(--yellow);
 }
 
 .role-green {
@@ -630,7 +630,7 @@ button {
 .statement-block {
   padding: 20px 22px;
   background: var(--ink);
-  color: #fff;
+  color: var(--green);
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   line-height: 0.95;
 }
@@ -711,7 +711,7 @@ button {
 
 .pink-card {
   background: var(--pink);
-  color: #fff;
+  color: var(--yellow);
 }
 
 .green-card {
@@ -724,7 +724,11 @@ button {
 
 .ink-card {
   background: var(--ink);
-  color: #fff;
+  color: var(--green);
+}
+
+.fret-copy .square-banner span {
+  border-color: var(--yellow);
 }
 
 .icon-card {
