@@ -313,6 +313,234 @@ button {
     linear-gradient(135deg, var(--pink) 0 52%, var(--yellow) 52% 70%, #ffffff 70% 100%);
 }
 
+.page-about .site-shell {
+  overflow: hidden;
+}
+
+.about-topbar {
+  margin-bottom: 18px;
+}
+
+.about-heading h1 {
+  font-size: clamp(4rem, 10vw, 8rem);
+}
+
+.about-remix {
+  position: relative;
+  min-height: 680px;
+  padding: 18px 0 24px;
+}
+
+.about-floating {
+  position: absolute;
+  border: 2px solid var(--ink);
+  opacity: 0.95;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.about-floating-pink {
+  top: 70px;
+  left: 44%;
+  width: 210px;
+  height: 150px;
+  background: var(--pink);
+}
+
+.about-floating-green {
+  right: 8%;
+  top: 120px;
+  width: 160px;
+  height: 110px;
+  background: var(--green);
+}
+
+.about-floating-yellow {
+  left: 54%;
+  bottom: 72px;
+  width: 190px;
+  height: 130px;
+  background: var(--yellow);
+}
+
+.about-main-card {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.about-icon-panel,
+.about-info-panel {
+  position: relative;
+  border: 4px solid var(--ink);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow);
+}
+
+.about-icon-panel {
+  min-height: 540px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.about-icon-panel::before,
+.about-icon-panel::after,
+.about-info-panel::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.about-icon-panel::before {
+  inset: 28px auto auto 28px;
+  width: 140px;
+  height: 140px;
+  background: var(--yellow);
+}
+
+.about-icon-panel::after {
+  right: 26px;
+  bottom: 30px;
+  width: 170px;
+  height: 120px;
+  background: var(--pink);
+}
+
+.icon-frame {
+  position: relative;
+  z-index: 1;
+  width: min(82%, 360px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: #1381df;
+  border: 4px solid var(--ink);
+  box-shadow: 14px 14px 0 rgba(36, 27, 42, 0.24);
+}
+
+.about-icon-large {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.about-info-panel {
+  padding: 28px;
+}
+
+.about-info-panel::before {
+  top: 22px;
+  right: 22px;
+  width: 120px;
+  height: 120px;
+  background:
+    linear-gradient(90deg, var(--pink) 0 50%, var(--green) 50% 100%);
+  opacity: 0.18;
+}
+
+.bio-chip {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border: 3px solid var(--ink);
+  font-size: 0.84rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 6px 6px 0 rgba(36, 27, 42, 0.12);
+}
+
+.chip-pink {
+  background: var(--pink);
+  color: #fff;
+}
+
+.chip-yellow {
+  background: var(--yellow);
+}
+
+.chip-green {
+  background: var(--green);
+}
+
+.chip-ink {
+  background: var(--ink);
+  color: #fff;
+}
+
+.about-info-panel h2 {
+  margin: 4px 0 20px;
+  max-width: 9ch;
+  font-size: clamp(3rem, 7vw, 5.8rem);
+  line-height: 0.88;
+}
+
+.bio-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.about-blurb {
+  margin: 0 0 24px;
+  max-width: 28ch;
+  font-size: 1.18rem;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.about-roles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.role-block,
+.statement-block {
+  border: 4px solid var(--ink);
+  box-shadow: var(--shadow);
+  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+  text-transform: uppercase;
+}
+
+.role-block {
+  min-height: 104px;
+  padding: 14px;
+  display: grid;
+  align-items: end;
+  font-size: clamp(1.9rem, 3vw, 2.8rem);
+  line-height: 0.9;
+}
+
+.role-pink {
+  background: var(--pink);
+  color: #fff;
+}
+
+.role-green {
+  background: var(--green);
+}
+
+.role-yellow {
+  background: var(--yellow);
+}
+
+.statement-block {
+  padding: 20px 22px;
+  background: var(--ink);
+  color: #fff;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 0.95;
+}
+
 .about-layout {
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
@@ -481,6 +709,19 @@ button {
   .about-grid {
     grid-template-columns: 1fr;
   }
+
+  .about-main-card,
+  .about-roles {
+    grid-template-columns: 1fr;
+  }
+
+  .about-icon-panel {
+    min-height: 360px;
+  }
+
+  .about-remix {
+    min-height: auto;
+  }
 }
 
 @media (max-width: 700px) {
@@ -499,5 +740,29 @@ button {
   .page-topbar,
   .portfolio-topbar {
     flex-direction: column;
+  }
+
+  .about-info-panel {
+    padding: 18px;
+  }
+
+  .about-floating-pink {
+    width: 120px;
+    height: 90px;
+    left: auto;
+    right: 12%;
+  }
+
+  .about-floating-green {
+    width: 90px;
+    height: 90px;
+    top: 210px;
+  }
+
+  .about-floating-yellow {
+    width: 110px;
+    height: 80px;
+    left: 48%;
+    bottom: 36px;
   }
 }
