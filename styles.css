@@ -252,7 +252,6 @@ button {
     radial-gradient(circle at 78% 22%, rgba(255, 20, 70, 0.18) 0 16%, transparent 16% 100%),
     linear-gradient(180deg, rgba(255, 52, 52, 0.2) 0 22%, transparent 22% 100%),
     linear-gradient(135deg, #190000 0%, #430008 30%, #8a0d19 58%, #140000 100%);
-  animation: fret-background-fade 1.4s ease-out both;
 }
 
 .page-fret {
@@ -266,11 +265,15 @@ button {
 
 .page-fret .site-shell::before {
   background:
+    radial-gradient(circle at 18% 14%, rgba(255, 140, 40, 0.52) 0 16%, transparent 16% 100%),
+    radial-gradient(circle at 78% 20%, rgba(255, 60, 30, 0.34) 0 16%, transparent 16% 100%),
+    linear-gradient(180deg, rgba(255, 100, 60, 0.36) 0 24%, transparent 24% 100%),
+    linear-gradient(135deg, rgba(185, 18, 18, 0.92) 0%, rgba(255, 76, 24, 0.48) 42%, rgba(40, 0, 0, 0.08) 100%),
     linear-gradient(rgba(255, 85, 85, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 85, 85, 0.08) 1px, transparent 1px);
   background-size: 92px 92px;
-  opacity: 0.24;
-  animation: fret-grid-fade 1.2s ease-out both;
+  opacity: 0.9;
+  animation: fret-wash-fade 1.6s ease-out both;
 }
 
 .page-fret .site-shell::after {
@@ -388,27 +391,9 @@ button {
   color: #ffb300;
 }
 
-@keyframes fret-background-fade {
+@keyframes fret-wash-fade {
   0% {
-    background:
-      radial-gradient(circle at 20% 18%, rgba(255, 140, 40, 0.42) 0 20%, transparent 20% 100%),
-      radial-gradient(circle at 78% 22%, rgba(255, 70, 0, 0.28) 0 18%, transparent 18% 100%),
-      linear-gradient(180deg, rgba(255, 90, 50, 0.3) 0 28%, transparent 28% 100%),
-      linear-gradient(135deg, #5e0800 0%, #b31515 36%, #1f0000 100%);
-  }
-
-  100% {
-    background:
-      radial-gradient(circle at 20% 18%, rgba(255, 44, 44, 0.34) 0 18%, transparent 18% 100%),
-      radial-gradient(circle at 78% 22%, rgba(255, 20, 70, 0.18) 0 16%, transparent 16% 100%),
-      linear-gradient(180deg, rgba(255, 52, 52, 0.2) 0 22%, transparent 22% 100%),
-      linear-gradient(135deg, #190000 0%, #430008 30%, #8a0d19 58%, #140000 100%);
-  }
-}
-
-@keyframes fret-grid-fade {
-  0% {
-    opacity: 0;
+    opacity: 0.96;
   }
 
   100% {
