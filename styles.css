@@ -655,11 +655,14 @@ button {
 }
 
 .social-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
+  display: grid;
+  justify-items: start;
   gap: 16px;
   margin-bottom: 22px;
+  padding: 18px 20px;
+  border: 4px solid var(--ink);
+  background: linear-gradient(135deg, rgba(57, 255, 20, 0.94), rgba(255, 179, 0, 0.9));
+  box-shadow: 10px 10px 0 rgba(36, 27, 42, 0.14);
 }
 
 .social-header p {
@@ -677,7 +680,7 @@ button {
 
 .social-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 16px;
 }
 
@@ -689,6 +692,15 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  text-decoration: none;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+.social-card:hover,
+.social-card:focus-visible {
+  transform: translate(-4px, -4px);
+  box-shadow: 14px 14px 0 rgba(36, 27, 42, 0.18);
+  outline: none;
 }
 
 .social-label,
@@ -726,6 +738,10 @@ button {
 .social-card-ink {
   background: var(--ink);
   color: var(--green);
+}
+
+.social-card-yellow {
+  background: var(--yellow);
 }
 
 .about-meta {
@@ -1041,13 +1057,11 @@ button {
     flex-direction: column;
   }
 
-  .social-header,
   .social-grid {
     grid-template-columns: 1fr;
   }
 
   .social-header {
-    display: grid;
     align-items: start;
   }
 
