@@ -553,12 +553,78 @@ button {
   margin-bottom: 20px;
 }
 
+.about-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) auto minmax(220px, 0.95fr);
+  gap: 18px;
+  align-items: stretch;
+  margin-bottom: 24px;
+}
+
 .about-blurb {
-  margin: 0 0 24px;
-  max-width: 28ch;
-  font-size: 1.18rem;
-  line-height: 1.15;
+  margin: 0;
+  padding: 18px 20px;
+  border: 3px solid var(--ink);
+  background: linear-gradient(135deg, rgba(255, 179, 0, 0.98), rgba(57, 255, 20, 0.88));
+  font-size: 1.08rem;
+  line-height: 1.2;
   font-weight: 700;
+  box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.1);
+}
+
+.about-split-divider {
+  display: grid;
+  place-items: center;
+  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+  font-size: clamp(3.4rem, 8vw, 6rem);
+  line-height: 1;
+  color: var(--ink);
+}
+
+.about-tools {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.tool-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 3px solid var(--ink);
+  background: linear-gradient(135deg, rgba(57, 255, 20, 0.96), rgba(255, 106, 0, 0.88));
+  font-size: 0.92rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.08);
+}
+
+.tool-icon {
+  flex: 0 0 auto;
+  min-width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1;
+  box-shadow: 4px 4px 0 rgba(36, 27, 42, 0.15);
+}
+
+.tool-icon-blender {
+  background: var(--orange);
+}
+
+.tool-icon-substance {
+  background: var(--yellow);
+}
+
+.tool-icon-unreal {
+  background: var(--green);
 }
 
 .about-meta {
@@ -839,8 +905,13 @@ button {
   .about-main-card,
   .about-roles,
   .about-meta,
-  .professional-tags {
+  .professional-tags,
+  .about-split {
     grid-template-columns: 1fr;
+  }
+
+  .about-split-divider {
+    justify-self: start;
   }
 
   .about-icon-panel {
