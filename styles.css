@@ -428,6 +428,7 @@ button {
   grid-template-columns: 0.9fr 1.1fr;
   gap: 24px;
   align-items: start;
+  margin-bottom: 34px;
 }
 
 .about-icon-panel,
@@ -642,6 +643,89 @@ button {
 
 .tool-icon-unreal {
   background: var(--green);
+}
+
+.social-panel {
+  position: relative;
+  z-index: 1;
+  padding: 28px;
+  border: 4px solid var(--ink);
+  background: linear-gradient(135deg, rgba(255, 179, 0, 0.94), rgba(255, 106, 0, 0.94));
+  box-shadow: var(--shadow);
+}
+
+.social-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.social-header p {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.social-header h2 {
+  margin: 0;
+  font-size: clamp(2.7rem, 6vw, 5rem);
+}
+
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.social-card {
+  min-height: 138px;
+  padding: 18px;
+  border: 4px solid var(--ink);
+  box-shadow: 10px 10px 0 rgba(36, 27, 42, 0.14);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.social-label,
+.social-handle {
+  display: block;
+}
+
+.social-label {
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.social-handle {
+  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.social-card-pink {
+  background: var(--pink);
+  color: var(--yellow);
+}
+
+.social-card-green {
+  background: var(--green);
+}
+
+.social-card-orange {
+  background: var(--orange);
+}
+
+.social-card-ink {
+  background: var(--ink);
+  color: var(--green);
 }
 
 .about-meta {
@@ -926,6 +1010,10 @@ button {
     grid-template-columns: 1fr;
   }
 
+  .social-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .about-icon-panel {
     min-height: 360px;
   }
@@ -951,6 +1039,16 @@ button {
   .page-topbar,
   .portfolio-topbar {
     flex-direction: column;
+  }
+
+  .social-header,
+  .social-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .social-header {
+    display: grid;
+    align-items: start;
   }
 
   .about-info-panel {
