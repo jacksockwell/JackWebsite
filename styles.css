@@ -1032,75 +1032,111 @@ button {
   font-size: clamp(3.8rem, 9vw, 7.8rem);
 }
 
-.portfolio-grid {
+.portfolio-showcase {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 18px;
 }
 
-.portfolio-piece {
-  grid-column: span 4;
-  min-height: 260px;
+.portfolio-stage {
+  position: relative;
+  padding: 20px;
+  border: 4px solid var(--ink);
+  background: linear-gradient(135deg, rgba(57, 255, 20, 0.92), rgba(255, 179, 0, 0.9) 52%, rgba(255, 106, 0, 0.92));
+  box-shadow: var(--shadow);
+}
+
+.portfolio-hero {
+  margin: 0;
+  min-height: 620px;
   position: relative;
   overflow: hidden;
   border: 4px solid var(--ink);
-  box-shadow: var(--shadow);
-  background: var(--orange);
+  background: #180f1d;
 }
 
-.portfolio-piece-large {
-  grid-column: span 7;
-  min-height: 420px;
-}
-
-.portfolio-piece-tall {
-  grid-column: span 5;
-  min-height: 420px;
-}
-
-.portfolio-piece-wide {
-  grid-column: span 8;
-}
-
-.portfolio-piece img {
+.portfolio-hero::after {
+  content: "";
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 112%;
-  height: 112%;
+  inset: auto 0 0 0;
+  height: 120px;
+  background: linear-gradient(180deg, transparent, rgba(24, 15, 29, 0.38));
+  pointer-events: none;
+}
+
+.portfolio-hero-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 620px;
   object-fit: cover;
-  transform: translate(-50%, -50%) scale(1.03);
-  will-change: transform;
 }
 
-.piece-label {
+.portfolio-controls {
   position: absolute;
-  left: 14px;
-  bottom: 14px;
-  z-index: 2;
-  padding: 10px 12px;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  gap: 12px;
+}
+
+.portfolio-arrow {
+  min-width: 110px;
+  padding: 12px 18px;
   border: 3px solid var(--ink);
-  background: var(--yellow);
-  font-size: 0.78rem;
-  font-weight: 900;
-  letter-spacing: 0.14em;
+  background: var(--pink);
+  color: var(--yellow);
   text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.16);
+  transition: transform 0.14s ease, box-shadow 0.14s ease, background 0.14s ease;
+}
+
+.portfolio-arrow:hover,
+.portfolio-arrow:focus-visible {
+  transform: translate(-4px, -4px);
+  box-shadow: 12px 12px 0 rgba(36, 27, 42, 0.18);
+  background: var(--orange);
+  outline: none;
+}
+
+.portfolio-thumbs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.portfolio-thumb {
+  padding: 0;
+  border: 4px solid var(--ink);
+  background: linear-gradient(135deg, rgba(255, 179, 0, 0.96), rgba(255, 106, 0, 0.94));
+  box-shadow: 10px 10px 0 rgba(36, 27, 42, 0.12);
+  overflow: hidden;
+  transition: transform 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease;
+}
+
+.portfolio-thumb img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.portfolio-thumb:hover,
+.portfolio-thumb:focus-visible,
+.portfolio-thumb.is-active {
+  transform: translate(-4px, -4px);
+  box-shadow: 14px 14px 0 rgba(36, 27, 42, 0.16);
+  border-color: var(--pink);
+  outline: none;
 }
 
 @media (max-width: 980px) {
   .hero-actions,
   .fret-layout,
   .about-layout,
-  .portfolio-grid {
+  .portfolio-thumbs {
     grid-template-columns: 1fr;
-  }
-
-  .portfolio-piece,
-  .portfolio-piece-large,
-  .portfolio-piece-tall,
-  .portfolio-piece-wide {
-    grid-column: auto;
-    min-height: 300px;
   }
 
   .about-grid {
@@ -1121,6 +1157,11 @@ button {
   .about-remix {
     min-height: auto;
   }
+
+  .portfolio-hero,
+  .portfolio-hero-image {
+    min-height: 420px;
+  }
 }
 
 @media (max-width: 700px) {
@@ -1139,6 +1180,21 @@ button {
   .page-topbar,
   .portfolio-topbar {
     flex-direction: column;
+  }
+
+  .portfolio-stage {
+    padding: 14px;
+  }
+
+  .portfolio-controls {
+    position: static;
+    margin-top: 14px;
+    justify-content: stretch;
+  }
+
+  .portfolio-arrow {
+    flex: 1 1 0;
+    min-width: 0;
   }
 
   .social-grid {

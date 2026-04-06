@@ -58,3 +58,54 @@ if (shell) {
 
   animateParallax();
 }
+
+const portfolioHeroImage = document.getElementById("portfolioHeroImage");
+const portfolioThumbs = Array.from(document.querySelectorAll(".portfolio-thumb"));
+const portfolioPrev = document.getElementById("portfolioPrev");
+const portfolioNext = document.getElementById("portfolioNext");
+
+if (portfolioHeroImage && portfolioThumbs.length) {
+  let activeIndex = portfolioThumbs.findIndex((thumb) => thumb.classList.contains("is-active"));
+
+  if (activeIndex < 0) {
+    activeIndex = 0;
+  }
+
+  function setPortfolioImage(index) {
+    const nextIndex = (index + portfolioThumbs.length) % portfolioThumbs.length;
+    const activeThumb = portfolioThumbs[nextIndex];
+    const nextImage = activeThumb.dataset.image;
+    const nextAlt = activeThumb.dataset.alt || "Portfolio featured image";
+
+    portfolioHeroImage.src = nextImage;
+    portfolioHeroImage.alt = nextAlt;
+
+    portfolioThumbs.forEach((thumb, thumbIndex) => {
+      const isActive = thumbIndex === nextIndex;
+      thumb.classList.toggle("is-active", isActive);
+      thumb.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+
+    activeIndex = nextIndex;
+  }
+
+  portfolioThumbs.forEach((thumb, index) => {
+    thumb.addEventListener("click", () => {
+      setPortfolioImage(index);
+    });
+  });
+
+  if (portfolioPrev) {
+    portfolioPrev.addEventListener("click", () => {
+      setPortfolioImage(activeIndex - 1);
+    });
+  }
+
+  if (portfolioNext) {
+    portfolioNext.addEventListener("click", () => {
+      setPortfolioImage(activeIndex + 1);
+    });
+  }
+
+  setPortfolioImage(activeIndex);
+}

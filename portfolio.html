@@ -25,32 +25,40 @@
         <a class="back-link" href="index.html">Back Home</a>
       </div>
 
-      <div class="portfolio-grid">
-        <figure class="portfolio-piece portfolio-piece-large parallax-panel" data-depth="10">
-          <img src="1.png" alt="Portfolio image 1" />
-          <figcaption class="piece-label">01</figcaption>
-        </figure>
+      <section class="portfolio-showcase" aria-label="Portfolio gallery">
+        <div class="portfolio-stage">
+          <figure class="portfolio-hero">
+            <img
+              id="portfolioHeroImage"
+              class="portfolio-hero-image"
+              src="1.png"
+              alt="Portfolio featured image 1" />
+          </figure>
 
-        <figure class="portfolio-piece portfolio-piece-tall parallax-panel" data-depth="14">
-          <img src="2.png" alt="Portfolio image 2" />
-          <figcaption class="piece-label">02</figcaption>
-        </figure>
+          <div class="portfolio-controls">
+            <button class="portfolio-arrow" id="portfolioPrev" type="button" aria-label="Previous image">Prev</button>
+            <button class="portfolio-arrow" id="portfolioNext" type="button" aria-label="Next image">Next</button>
+          </div>
+        </div>
 
-        <figure class="portfolio-piece parallax-panel" data-depth="12">
-          <img src="3.png" alt="Portfolio image 3" />
-          <figcaption class="piece-label">03</figcaption>
-        </figure>
-
-        <figure class="portfolio-piece parallax-panel" data-depth="16">
-          <img src="4.png" alt="Portfolio image 4" />
-          <figcaption class="piece-label">04</figcaption>
-        </figure>
-
-        <figure class="portfolio-piece portfolio-piece-wide parallax-panel" data-depth="11">
-          <img src="5.png" alt="Portfolio image 5" />
-          <figcaption class="piece-label">05</figcaption>
-        </figure>
-      </div>
+        <div class="portfolio-thumbs" aria-label="Choose portfolio image">
+          <button class="portfolio-thumb is-active" type="button" data-image="1.png" data-alt="Portfolio featured image 1" aria-pressed="true">
+            <img src="1.png" alt="Portfolio thumbnail 1" />
+          </button>
+          <button class="portfolio-thumb" type="button" data-image="2.png" data-alt="Portfolio featured image 2" aria-pressed="false">
+            <img src="2.png" alt="Portfolio thumbnail 2" />
+          </button>
+          <button class="portfolio-thumb" type="button" data-image="3.png" data-alt="Portfolio featured image 3" aria-pressed="false">
+            <img src="3.png" alt="Portfolio thumbnail 3" />
+          </button>
+          <button class="portfolio-thumb" type="button" data-image="4.png" data-alt="Portfolio featured image 4" aria-pressed="false">
+            <img src="4.png" alt="Portfolio thumbnail 4" />
+          </button>
+          <button class="portfolio-thumb" type="button" data-image="5.png" data-alt="Portfolio featured image 5" aria-pressed="false">
+            <img src="5.png" alt="Portfolio thumbnail 5" />
+          </button>
+        </div>
+      </section>
     </section>
   </main>
 
