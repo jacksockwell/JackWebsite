@@ -1,9 +1,6 @@
 const shell = document.getElementById("siteShell");
 const shapes = document.querySelectorAll(".bg-block, .bg-line");
 const panels = document.querySelectorAll(".parallax-panel");
-const sectionPanels = document.querySelectorAll("[data-section]");
-const openButtons = document.querySelectorAll("[data-section-target]");
-const closeButtons = document.querySelectorAll("[data-close-section]");
 
 let targetX = 0;
 let targetY = 0;
@@ -16,30 +13,6 @@ const baseTransforms = new Map([
   ["bg-block-yellow", "rotate(-8deg)"],
   ["bg-line-right", "skew(-16deg)"],
 ]);
-
-function setActiveSection(sectionId) {
-  sectionPanels.forEach((panel) => {
-    panel.classList.toggle("is-open", panel.id === sectionId);
-  });
-}
-
-openButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    setActiveSection(button.dataset.sectionTarget);
-  });
-});
-
-closeButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    setActiveSection("");
-  });
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    setActiveSection("");
-  }
-});
 
 function animateParallax() {
   currentX += (targetX - currentX) * 0.08;

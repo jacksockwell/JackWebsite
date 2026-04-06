@@ -135,7 +135,7 @@ button {
 }
 
 .hero-name,
-.overlay-panel h2,
+.page-panel h2,
 .portfolio-heading h1 {
   margin: 0;
   font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
@@ -194,46 +194,6 @@ button {
   background: #fff;
 }
 
-.overlay-layer {
-  position: fixed;
-  inset: 18px;
-  display: grid;
-  place-items: center;
-  pointer-events: none;
-  z-index: 8;
-}
-
-.overlay-panel {
-  width: min(1080px, 100%);
-  max-height: calc(100vh - 36px);
-  overflow: auto;
-  display: none;
-  padding: 24px;
-  border: 4px solid var(--ink);
-  box-shadow: var(--shadow);
-  pointer-events: auto;
-}
-
-.overlay-panel.is-open {
-  display: block;
-}
-
-.panel-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.panel-label {
-  margin: 0;
-  font-size: 0.78rem;
-  font-weight: 900;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
 .panel-close,
 .back-link {
   display: inline-grid;
@@ -253,6 +213,29 @@ button {
 .panel-fret {
   background:
     linear-gradient(90deg, var(--pink) 0 33%, var(--green) 33% 66%, var(--yellow) 66% 100%);
+}
+
+.page-panel {
+  padding: 24px;
+  border: 4px solid var(--ink);
+  box-shadow: var(--shadow);
+}
+
+.standalone-page,
+.portfolio-page {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.page-topbar,
+.portfolio-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 28px;
 }
 
 .fret-layout {
@@ -394,23 +377,22 @@ button {
   color: #fff;
 }
 
+.icon-card {
+  place-items: center;
+  background: #005fd1;
+  padding: 12px;
+}
+
+.about-icon {
+  display: block;
+  width: min(100%, 260px);
+  height: auto;
+  object-fit: contain;
+  box-shadow: 10px 10px 0 rgba(36, 27, 42, 0.35);
+}
+
 .page-portfolio .site-shell {
   overflow: visible;
-}
-
-.portfolio-page {
-  position: relative;
-  z-index: 1;
-  max-width: 1280px;
-  margin: 0 auto;
-}
-
-.portfolio-topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 28px;
 }
 
 .portfolio-heading p {
@@ -506,18 +488,15 @@ button {
     padding: 18px;
   }
 
-  .overlay-layer {
-    inset: 10px;
-  }
-
-  .overlay-panel {
-    padding: 16px;
-  }
-
   .square-banner {
     grid-template-columns: repeat(2, 58px);
   }
 
+  .page-panel {
+    padding: 16px;
+  }
+
+  .page-topbar,
   .portfolio-topbar {
     flex-direction: column;
   }
