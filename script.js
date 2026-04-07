@@ -8,7 +8,7 @@ let currentX = 0;
 let currentY = 0;
 
 const decorPalette = ["#ff2452", "#29ff3f", "#fff200", "#00e5ff", "#ff00a8", "#ff8a00"];
-const homePastelPalette = ["#ffb8d7", "#ffd7a8", "#fff3a8", "#c7f7c2", "#afeeff", "#d7c8ff"];
+const homePastelPalette = ["#ff3ea5", "#ff9f1c", "#fff14a", "#42ff71", "#32e6ff", "#7f5cff"];
 
 function randomBetween(min, max) {
   return min + Math.random() * (max - min);
