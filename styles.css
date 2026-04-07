@@ -1359,6 +1359,7 @@ button {
   aspect-ratio: 1 / 1;
   overflow: hidden;
   background: #0f1015;
+  position: relative;
 }
 
 .portfolio-post-image img {
@@ -1376,7 +1377,7 @@ button {
 
 .portfolio-post-copy {
   display: grid;
-  gap: 6px;
+  gap: 10px;
   padding: 16px 16px 18px;
 }
 
@@ -1386,10 +1387,44 @@ button {
   font-weight: 800;
 }
 
+.portfolio-post-counter {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 7px 10px;
+  border: 1px solid #ffffff;
+  border-radius: 999px;
+  background: rgba(11, 12, 18, 0.84);
+  color: #ffffff;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .portfolio-post-meta {
   color: #8f95a3;
   font-size: 0.88rem;
   font-weight: 700;
+  line-height: 1.45;
+}
+
+.portfolio-post-software {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.portfolio-software-tag {
+  padding: 6px 10px;
+  border: 1px solid #353b4c;
+  border-radius: 999px;
+  background: #232833;
+  color: #e9edf8;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .portfolio-lightbox {
@@ -1429,8 +1464,45 @@ button {
 
 .portfolio-lightbox-frame figcaption {
   color: #d9dde7;
+}
+
+.portfolio-lightbox-caption {
+  display: grid;
+  gap: 8px;
+}
+
+.portfolio-lightbox-counter,
+.portfolio-lightbox-meta,
+.portfolio-lightbox-details {
+  margin: 0;
+}
+
+.portfolio-lightbox-counter {
+  color: #9aa2b6;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.portfolio-lightbox-title {
+  margin: 0;
+  color: #f4f6fb;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 900;
+}
+
+.portfolio-lightbox-meta {
+  color: #ff8bc6;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.portfolio-lightbox-details {
+  color: #d9dde7;
   font-size: 0.95rem;
   font-weight: 700;
+  line-height: 1.5;
 }
 
 .portfolio-lightbox-nav,

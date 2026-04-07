@@ -158,15 +158,57 @@ const portfolioGrid = document.getElementById("portfolioPostGrid");
 const portfolioLightbox = document.getElementById("portfolioLightbox");
 const portfolioLightboxImage = document.getElementById("portfolioLightboxImage");
 const portfolioLightboxCaption = document.getElementById("portfolioLightboxCaption");
+const portfolioLightboxTitle = document.getElementById("portfolioLightboxTitle");
+const portfolioLightboxMeta = document.getElementById("portfolioLightboxMeta");
+const portfolioLightboxCounter = document.getElementById("portfolioLightboxCounter");
 const portfolioLightboxPrev = document.getElementById("portfolioLightboxPrev");
 const portfolioLightboxNext = document.getElementById("portfolioLightboxNext");
 const portfolioLightboxClose = document.getElementById("portfolioLightboxClose");
 const portfolioData = Array.isArray(window.portfolioItems)
-  ? window.portfolioItems.filter((item) => item?.image && item?.title)
+  ? window.portfolioItems
+      .map((item) => {
+        if (!item?.title) {
+          return null;
+        }
+
+        const images = (Array.isArray(item.images) ? item.images : item.image ? [{ src: item.image, alt: item.alt, caption: item.text }] : [])
+          .map((image, index) => {
+            if (typeof image === "string") {
+              return {
+                src: image,
+                alt: `${item.title} image ${index + 1}`,
+                caption: "",
+              };
+            }
+
+            if (!image?.src) {
+              return null;
+            }
+
+            return {
+              src: image.src,
+              alt: image.alt || `${item.title} image ${index + 1}`,
+              caption: image.caption || "",
+            };
+          })
+          .filter(Boolean);
+
+        if (!images.length) {
+          return null;
+        }
+
+        return {
+          title: item.title,
+          text: item.text || "",
+          madeIn: Array.isArray(item.madeIn) ? item.madeIn.filter(Boolean) : item.madeIn ? [item.madeIn] : [],
+          images,
+        };
+      })
+      .filter(Boolean)
   : [];
 
-function buildPortfolioCaption(item) {
-  return [item.title, item.text].filter(Boolean).join(" / ");
+function buildPortfolioSoftware(item) {
+  return item.madeIn.length ? `Made in: ${item.madeIn.join(", ")}` : "";
 }
 
 function createPortfolioPost(item, index) {
@@ -179,9 +221,16 @@ function createPortfolioPost(item, index) {
   imageShell.className = "portfolio-post-image";
 
   const image = document.createElement("img");
-  image.src = item.image;
-  image.alt = item.alt || `${item.title} portfolio image`;
+  image.src = item.images[0].src;
+  image.alt = item.images[0].alt || `${item.title} portfolio image`;
   imageShell.append(image);
+
+  if (item.images.length > 1) {
+    const counter = document.createElement("span");
+    counter.className = "portfolio-post-counter";
+    counter.textContent = `${item.images.length} photos`;
+    imageShell.append(counter);
+  }
 
   const copy = document.createElement("span");
   copy.className = "portfolio-post-copy";
@@ -198,12 +247,34 @@ function createPortfolioPost(item, index) {
     copy.append(meta);
   }
 
+  if (item.madeIn.length) {
+    const software = document.createElement("span");
+    software.className = "portfolio-post-software";
+
+    item.madeIn.forEach((tool) => {
+      const tag = document.createElement("span");
+      tag.className = "portfolio-software-tag";
+      tag.textContent = tool;
+      software.append(tag);
+    });
+
+    copy.append(software);
+  }
+
   post.append(imageShell, copy);
 
   return post;
 }
 
-if (portfolioGrid && portfolioLightbox && portfolioLightboxImage && portfolioLightboxCaption) {
+if (
+  portfolioGrid &&
+  portfolioLightbox &&
+  portfolioLightboxImage &&
+  portfolioLightboxCaption &&
+  portfolioLightboxTitle &&
+  portfolioLightboxMeta &&
+  portfolioLightboxCounter
+) {
   if (!portfolioData.length) {
     const emptyState = document.createElement("p");
     emptyState.className = "portfolio-empty";
@@ -216,25 +287,28 @@ if (portfolioGrid && portfolioLightbox && portfolioLightboxImage && portfolioLig
   }
 
   const portfolioPosts = Array.from(document.querySelectorAll(".portfolio-post"));
-  const portfolioImages = portfolioData.map((item) => ({
-    src: item.image,
-    alt: item.alt || `${item.title} portfolio image`,
-    caption: buildPortfolioCaption(item),
-  }));
-
   let activePortfolioIndex = 0;
+  let activePortfolioImageIndex = 0;
 
-  function renderPortfolioLightbox(index) {
-    activePortfolioIndex = (index + portfolioImages.length) % portfolioImages.length;
-    const activeImage = portfolioImages[activePortfolioIndex];
+  function renderPortfolioLightbox(postIndex, imageIndex = 0) {
+    activePortfolioIndex = (postIndex + portfolioData.length) % portfolioData.length;
+    const activePost = portfolioData[activePortfolioIndex];
+    activePortfolioImageIndex = (imageIndex + activePost.images.length) % activePost.images.length;
+    const activeImage = activePost.images[activePortfolioImageIndex];
 
     portfolioLightboxImage.src = activeImage.src;
     portfolioLightboxImage.alt = activeImage.alt;
-    portfolioLightboxCaption.textContent = activeImage.caption || "Selected Work";
+    portfolioLightboxTitle.textContent = activePost.title;
+    portfolioLightboxMeta.textContent = buildPortfolioSoftware(activePost);
+    portfolioLightboxCaption.textContent = activeImage.caption || activePost.text || "Selected Work";
+    portfolioLightboxCounter.textContent =
+      activePost.images.length > 1 ? `${activePortfolioImageIndex + 1} / ${activePost.images.length}` : "1 / 1";
+    portfolioLightboxPrev.hidden = activePost.images.length <= 1;
+    portfolioLightboxNext.hidden = activePost.images.length <= 1;
   }
 
   function openPortfolioLightbox(index) {
-    renderPortfolioLightbox(index);
+    renderPortfolioLightbox(index, 0);
     portfolioLightbox.hidden = false;
     document.body.style.overflow = "hidden";
   }
@@ -251,11 +325,11 @@ if (portfolioGrid && portfolioLightbox && portfolioLightboxImage && portfolioLig
   });
 
   portfolioLightboxPrev?.addEventListener("click", () => {
-    renderPortfolioLightbox(activePortfolioIndex - 1);
+    renderPortfolioLightbox(activePortfolioIndex, activePortfolioImageIndex - 1);
   });
 
   portfolioLightboxNext?.addEventListener("click", () => {
-    renderPortfolioLightbox(activePortfolioIndex + 1);
+    renderPortfolioLightbox(activePortfolioIndex, activePortfolioImageIndex + 1);
   });
 
   portfolioLightboxClose?.addEventListener("click", closePortfolioLightbox);
@@ -267,7 +341,7 @@ if (portfolioGrid && portfolioLightbox && portfolioLightboxImage && portfolioLig
   });
 
   document.addEventListener("keydown", (event) => {
-    if (portfolioLightbox.hidden || !portfolioImages.length) {
+    if (portfolioLightbox.hidden || !portfolioData.length) {
       return;
     }
 
@@ -276,11 +350,11 @@ if (portfolioGrid && portfolioLightbox && portfolioLightboxImage && portfolioLig
     }
 
     if (event.key === "ArrowLeft") {
-      renderPortfolioLightbox(activePortfolioIndex - 1);
+      renderPortfolioLightbox(activePortfolioIndex, activePortfolioImageIndex - 1);
     }
 
     if (event.key === "ArrowRight") {
-      renderPortfolioLightbox(activePortfolioIndex + 1);
+      renderPortfolioLightbox(activePortfolioIndex, activePortfolioImageIndex + 1);
     }
   });
 }
