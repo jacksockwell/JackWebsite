@@ -22,6 +22,10 @@ body {
   min-height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   background: var(--paper);
@@ -56,8 +60,10 @@ button {
 }
 
 .page-home .site-shell {
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-block: 44px 34px;
   background:
     linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(255, 255, 255, 0.02)),
     linear-gradient(90deg, #00ff2a 0 32%, #ff7a00 32% 100%);
@@ -183,6 +189,7 @@ button {
   position: relative;
   z-index: 1;
   width: min(780px, 100%);
+  margin-top: auto;
 }
 
 .hero-stack {
@@ -190,6 +197,37 @@ button {
   justify-items: center;
   gap: 18px;
   text-align: center;
+}
+
+.home-bottom-cta {
+  position: relative;
+  z-index: 1;
+  width: min(780px, 100%);
+  display: flex;
+  justify-content: center;
+  margin: clamp(2.5rem, 10vh, 5rem) 0 auto;
+}
+
+.hire-me-link {
+  display: inline-grid;
+  place-items: center;
+  padding: 10px 18px;
+  color: #d10000;
+  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+  font-size: clamp(2.6rem, 7vw, 4.8rem);
+  line-height: 0.92;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-shadow: 3px 3px 0 rgba(255, 236, 153, 0.7);
+  transition: transform 0.14s ease, text-shadow 0.14s ease;
+}
+
+.hire-me-link:hover,
+.hire-me-link:focus-visible {
+  transform: translate(-4px, -4px);
+  text-shadow: 7px 7px 0 rgba(255, 236, 153, 0.75);
+  outline: none;
 }
 
 .mini-tag {
@@ -864,6 +902,7 @@ button {
 .contact-panel {
   position: relative;
   z-index: 1;
+  scroll-margin-top: 28px;
   margin-top: clamp(140px, 18vh, 240px);
   padding: 30px;
   border: 4px solid var(--ink);
@@ -1238,6 +1277,17 @@ button {
   gap: 18px;
 }
 
+.portfolio-empty {
+  margin: 0;
+  padding: 18px 20px;
+  border: 1px solid #272b35;
+  border-radius: 12px;
+  background: #181a21;
+  color: #d9dde7;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
 .portfolio-post {
   padding: 0;
   border: 1px solid #272b35;
@@ -1414,6 +1464,10 @@ button {
     padding: 18px;
   }
 
+  .page-home .site-shell {
+    padding-block: 24px 18px;
+  }
+
   .square-banner {
     grid-template-columns: repeat(2, 58px);
   }
@@ -1446,6 +1500,10 @@ button {
 
   .about-info-panel {
     padding: 18px;
+  }
+
+  .hire-me-link {
+    text-align: center;
   }
 
   .about-split {

@@ -59,26 +59,73 @@ if (shell) {
   animateParallax();
 }
 
-const portfolioPosts = Array.from(document.querySelectorAll(".portfolio-post"));
+const portfolioGrid = document.getElementById("portfolioPostGrid");
 const portfolioLightbox = document.getElementById("portfolioLightbox");
 const portfolioLightboxImage = document.getElementById("portfolioLightboxImage");
 const portfolioLightboxCaption = document.getElementById("portfolioLightboxCaption");
 const portfolioLightboxPrev = document.getElementById("portfolioLightboxPrev");
 const portfolioLightboxNext = document.getElementById("portfolioLightboxNext");
 const portfolioLightboxClose = document.getElementById("portfolioLightboxClose");
+const portfolioData = Array.isArray(window.portfolioItems)
+  ? window.portfolioItems.filter((item) => item?.image && item?.title)
+  : [];
 
-if (portfolioPosts.length && portfolioLightbox && portfolioLightboxImage && portfolioLightboxCaption) {
-  const portfolioImages = portfolioPosts.map((post) => {
-    const image = post.querySelector("img");
-    const title = post.querySelector(".portfolio-post-title");
-    const meta = post.querySelector(".portfolio-post-meta");
+function buildPortfolioCaption(item) {
+  return [item.title, item.text].filter(Boolean).join(" / ");
+}
 
-    return {
-      src: image?.getAttribute("src") || "",
-      alt: image?.getAttribute("alt") || "Portfolio image",
-      caption: [title?.textContent, meta?.textContent].filter(Boolean).join(" / "),
-    };
-  });
+function createPortfolioPost(item, index) {
+  const post = document.createElement("button");
+  post.className = "portfolio-post";
+  post.type = "button";
+  post.dataset.portfolioIndex = String(index);
+
+  const imageShell = document.createElement("span");
+  imageShell.className = "portfolio-post-image";
+
+  const image = document.createElement("img");
+  image.src = item.image;
+  image.alt = item.alt || `${item.title} portfolio image`;
+  imageShell.append(image);
+
+  const copy = document.createElement("span");
+  copy.className = "portfolio-post-copy";
+
+  const title = document.createElement("span");
+  title.className = "portfolio-post-title";
+  title.textContent = item.title;
+  copy.append(title);
+
+  if (item.text) {
+    const meta = document.createElement("span");
+    meta.className = "portfolio-post-meta";
+    meta.textContent = item.text;
+    copy.append(meta);
+  }
+
+  post.append(imageShell, copy);
+
+  return post;
+}
+
+if (portfolioGrid && portfolioLightbox && portfolioLightboxImage && portfolioLightboxCaption) {
+  if (!portfolioData.length) {
+    const emptyState = document.createElement("p");
+    emptyState.className = "portfolio-empty";
+    emptyState.textContent = "Add portfolio items in portfolio-data.js to show your work here.";
+    portfolioGrid.append(emptyState);
+  } else {
+    portfolioData.forEach((item, index) => {
+      portfolioGrid.append(createPortfolioPost(item, index));
+    });
+  }
+
+  const portfolioPosts = Array.from(document.querySelectorAll(".portfolio-post"));
+  const portfolioImages = portfolioData.map((item) => ({
+    src: item.image,
+    alt: item.alt || `${item.title} portfolio image`,
+    caption: buildPortfolioCaption(item),
+  }));
 
   let activePortfolioIndex = 0;
 
@@ -102,9 +149,9 @@ if (portfolioPosts.length && portfolioLightbox && portfolioLightboxImage && port
     document.body.style.overflow = "";
   }
 
-  portfolioPosts.forEach((post, index) => {
+  portfolioPosts.forEach((post) => {
     post.addEventListener("click", () => {
-      openPortfolioLightbox(index);
+      openPortfolioLightbox(Number(post.dataset.portfolioIndex || 0));
     });
   });
 
@@ -125,7 +172,7 @@ if (portfolioPosts.length && portfolioLightbox && portfolioLightboxImage && port
   });
 
   document.addEventListener("keydown", (event) => {
-    if (portfolioLightbox.hidden) {
+    if (portfolioLightbox.hidden || !portfolioImages.length) {
       return;
     }
 
