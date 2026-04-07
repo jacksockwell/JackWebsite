@@ -559,6 +559,7 @@ button {
 }
 
 .support-link {
+  position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -572,6 +573,7 @@ button {
   font-size: clamp(1rem, 2vw, 1.25rem);
   font-weight: 900;
   letter-spacing: 0.09em;
+  overflow: visible;
   box-shadow: 10px 10px 0 rgba(36, 27, 42, 0.2);
   transition: transform 0.14s ease, box-shadow 0.14s ease, background 0.14s ease;
 }
@@ -599,6 +601,26 @@ button {
     2px 2px 0 rgba(12, 20, 10, 0.7),
     0 0 8px rgba(66, 255, 113, 0.65),
     0 0 16px rgba(66, 255, 113, 0.45);
+  opacity: 0;
+  transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  animation: money-drop-fall var(--money-duration, 1s) ease-in forwards;
+}
+
+.heart-drop {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 4;
+  pointer-events: none;
+  color: #ff4f9a;
+  font-family: var(--font-ui);
+  font-size: clamp(1rem, 1.8vw, 1.45rem);
+  font-weight: 900;
+  line-height: 1;
+  text-shadow:
+    2px 2px 0 rgba(72, 10, 40, 0.66),
+    0 0 8px rgba(255, 79, 154, 0.72),
+    0 0 16px rgba(255, 79, 154, 0.48);
   opacity: 0;
   transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
   animation: money-drop-fall var(--money-duration, 1s) ease-in forwards;
@@ -2252,6 +2274,11 @@ button {
   gap: 22px;
 }
 
+.portfolio-section {
+  display: grid;
+  gap: 16px;
+}
+
 .portfolio-summary {
   display: grid;
   gap: 10px;
@@ -2274,6 +2301,12 @@ button {
 .portfolio-post-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.portfolio-credit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 18px;
 }
 
@@ -2304,6 +2337,112 @@ button {
   transform: translateY(-6px);
   border-color: #ff0f7b;
   box-shadow: 0 22px 42px rgba(0, 0, 0, 0.34);
+  outline: none;
+}
+
+.portfolio-credit-card {
+  display: grid;
+  min-height: 100%;
+  border: 1px solid #272b35;
+  border-radius: 16px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 28%),
+    #181a21;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28);
+}
+
+.portfolio-credit-media {
+  aspect-ratio: 16 / 9;
+  background: #0f1015;
+  overflow: hidden;
+}
+
+.portfolio-credit-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portfolio-credit-copy {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+}
+
+.portfolio-credit-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.portfolio-credit-badge {
+  padding: 6px 10px;
+  border: 1px solid #384055;
+  border-radius: 999px;
+  background: #232833;
+  color: #f4f6fb;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.portfolio-credit-badge-status {
+  color: #ff8bc6;
+}
+
+.portfolio-credit-title {
+  margin: 0;
+  color: #f4f6fb;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 900;
+}
+
+.portfolio-credit-role,
+.portfolio-credit-text {
+  margin: 0;
+}
+
+.portfolio-credit-role {
+  color: #ff8bc6;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.portfolio-credit-text {
+  color: #c8cedd;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  font-weight: 700;
+}
+
+.portfolio-credit-link {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 1px solid #ff0f7b;
+  border-radius: 999px;
+  background: #23101d;
+  color: #fff4fb;
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 0.14s ease, background 0.14s ease, border-color 0.14s ease;
+}
+
+.portfolio-credit-link:hover,
+.portfolio-credit-link:focus-visible {
+  transform: translateY(-2px);
+  background: #341527;
+  border-color: #ff5bab;
   outline: none;
 }
 

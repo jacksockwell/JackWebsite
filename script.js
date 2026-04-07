@@ -324,6 +324,67 @@ function initHeroNameJitter() {
   });
 }
 
+function initSymbolRain(targets, options) {
+  const items = Array.from(targets);
+
+  items.forEach((target) => {
+    let rainInterval = null;
+
+    function spawnSymbolDrop(burstMultiplier = 1) {
+      const rect = target.getBoundingClientRect();
+      const availableWidth = Math.max(80, rect.width);
+      const drops = Math.max(1, Math.round(randomBetween(options.dropRange[0], options.dropRange[1]) * burstMultiplier));
+
+      for (let index = 0; index < drops; index += 1) {
+        const symbol = document.createElement("span");
+        symbol.className = options.className;
+        symbol.setAttribute("aria-hidden", "true");
+        symbol.textContent = options.symbol;
+        symbol.style.setProperty("--money-x", `${randomBetween(8, availableWidth - 12).toFixed(1)}px`);
+        symbol.style.setProperty("--money-drift", `${randomBetween(options.driftRange[0], options.driftRange[1]).toFixed(1)}px`);
+        symbol.style.setProperty("--money-fall", `${randomBetween(options.fallRange[0], options.fallRange[1]).toFixed(1)}px`);
+        symbol.style.setProperty("--money-scale", `${randomBetween(options.scaleRange[0], options.scaleRange[1]).toFixed(2)}`);
+        symbol.style.setProperty("--money-rotate", `${randomBetween(options.rotateRange[0], options.rotateRange[1]).toFixed(1)}deg`);
+        symbol.style.setProperty("--money-duration", `${randomBetween(options.durationRange[0], options.durationRange[1]).toFixed(2)}s`);
+
+        target.append(symbol);
+
+        window.setTimeout(() => {
+          symbol.remove();
+        }, options.removeDelay);
+      }
+    }
+
+    function startRain() {
+      if (rainInterval !== null) {
+        return;
+      }
+
+      spawnSymbolDrop(options.hoverBurst);
+      rainInterval = window.setInterval(() => {
+        spawnSymbolDrop(1);
+      }, options.intervalMs);
+    }
+
+    function stopRain() {
+      if (rainInterval === null) {
+        return;
+      }
+
+      window.clearInterval(rainInterval);
+      rainInterval = null;
+    }
+
+    target.addEventListener("pointerenter", startRain);
+    target.addEventListener("pointerleave", stopRain);
+    target.addEventListener("pointerdown", () => {
+      spawnSymbolDrop(options.pressBurst);
+    });
+    target.addEventListener("focus", startRain);
+    target.addEventListener("blur", stopRain);
+  });
+}
+
 function initHireMeMoneyRain() {
   const hireMeLink = document.querySelector(".page-home .hire-me-link");
 
@@ -331,60 +392,43 @@ function initHireMeMoneyRain() {
     return;
   }
 
-  let rainInterval = null;
-
-  function spawnMoneyDrop(burstMultiplier = 1) {
-    const rect = hireMeLink.getBoundingClientRect();
-    const availableWidth = Math.max(80, rect.width);
-    const drops = Math.max(1, Math.round(randomBetween(1, 2.4) * burstMultiplier));
-
-    for (let index = 0; index < drops; index += 1) {
-      const money = document.createElement("span");
-      money.className = "money-drop";
-      money.setAttribute("aria-hidden", "true");
-      money.textContent = "$";
-      money.style.setProperty("--money-x", `${randomBetween(8, availableWidth - 12).toFixed(1)}px`);
-      money.style.setProperty("--money-drift", `${randomBetween(-24, 24).toFixed(1)}px`);
-      money.style.setProperty("--money-fall", `${randomBetween(110, 180).toFixed(1)}px`);
-      money.style.setProperty("--money-scale", `${randomBetween(0.85, 1.25).toFixed(2)}`);
-      money.style.setProperty("--money-rotate", `${randomBetween(-160, 160).toFixed(1)}deg`);
-      money.style.setProperty("--money-duration", `${randomBetween(0.8, 1.25).toFixed(2)}s`);
-
-      hireMeLink.append(money);
-
-      window.setTimeout(() => {
-        money.remove();
-      }, 1400);
-    }
-  }
-
-  function startRain() {
-    if (rainInterval !== null) {
-      return;
-    }
-
-    spawnMoneyDrop(2);
-    rainInterval = window.setInterval(() => {
-      spawnMoneyDrop(1);
-    }, 120);
-  }
-
-  function stopRain() {
-    if (rainInterval === null) {
-      return;
-    }
-
-    window.clearInterval(rainInterval);
-    rainInterval = null;
-  }
-
-  hireMeLink.addEventListener("pointerenter", startRain);
-  hireMeLink.addEventListener("pointerleave", stopRain);
-  hireMeLink.addEventListener("pointerdown", () => {
-    spawnMoneyDrop(3);
+  initSymbolRain([hireMeLink], {
+    className: "money-drop",
+    symbol: "$",
+    dropRange: [1, 2.4],
+    driftRange: [-24, 24],
+    fallRange: [110, 180],
+    scaleRange: [0.85, 1.25],
+    rotateRange: [-160, 160],
+    durationRange: [0.8, 1.25],
+    removeDelay: 1400,
+    hoverBurst: 2,
+    pressBurst: 3,
+    intervalMs: 120,
   });
-  hireMeLink.addEventListener("focus", startRain);
-  hireMeLink.addEventListener("blur", stopRain);
+}
+
+function initDonateHeartRain() {
+  const donateLinks = document.querySelectorAll(".support-link");
+
+  if (!donateLinks.length) {
+    return;
+  }
+
+  initSymbolRain(donateLinks, {
+    className: "heart-drop",
+    symbol: "♥",
+    dropRange: [1, 2.2],
+    driftRange: [-20, 20],
+    fallRange: [96, 168],
+    scaleRange: [0.8, 1.18],
+    rotateRange: [-90, 90],
+    durationRange: [0.9, 1.35],
+    removeDelay: 1500,
+    hoverBurst: 2,
+    pressBurst: 2.8,
+    intervalMs: 140,
+  });
 }
 
 function setSquareStyles(element, containerRect, config) {
@@ -583,6 +627,7 @@ function animateParallax() {
 if (shell) {
   initHeroNameJitter();
   initHireMeMoneyRain();
+  initDonateHeartRain();
   randomizeShellBackground();
   randomizeDecorSquares();
   refreshParallaxShapes();
@@ -606,6 +651,7 @@ if (shell) {
 }
 
 const portfolioGrid = document.getElementById("portfolioPostGrid");
+const portfolioCreditGrid = document.getElementById("portfolioCreditGrid");
 const portfolioLightbox = document.getElementById("portfolioLightbox");
 const portfolioLightboxImage = document.getElementById("portfolioLightboxImage");
 const portfolioLightboxCaption = document.getElementById("portfolioLightboxCaption");
@@ -653,6 +699,27 @@ const portfolioData = Array.isArray(window.portfolioItems)
           text: item.text || "",
           madeIn: Array.isArray(item.madeIn) ? item.madeIn.filter(Boolean) : item.madeIn ? [item.madeIn] : [],
           images,
+        };
+      })
+      .filter(Boolean)
+  : [];
+const portfolioCredits = Array.isArray(window.portfolioCredits)
+  ? window.portfolioCredits
+      .map((item) => {
+        if (!item?.title) {
+          return null;
+        }
+
+        return {
+          title: item.title,
+          type: item.type || "",
+          role: item.role || "",
+          text: item.text || "",
+          image: item.image || "",
+          alt: item.alt || item.title,
+          status: item.status || "",
+          link: item.link || "",
+          linkLabel: item.linkLabel || "Open project",
         };
       })
       .filter(Boolean)
@@ -715,6 +782,98 @@ function createPortfolioPost(item, index) {
   post.append(imageShell, copy);
 
   return post;
+}
+
+function createPortfolioCredit(item) {
+  const card = document.createElement("article");
+  card.className = "portfolio-credit-card";
+
+  if (item.image) {
+    const media = document.createElement("div");
+    media.className = "portfolio-credit-media";
+
+    const image = document.createElement("img");
+    image.src = item.image;
+    image.alt = item.alt || `${item.title} artwork`;
+    media.append(image);
+    card.append(media);
+  }
+
+  const copy = document.createElement("div");
+  copy.className = "portfolio-credit-copy";
+
+  const top = document.createElement("div");
+  top.className = "portfolio-credit-top";
+
+  if (item.type) {
+    const type = document.createElement("span");
+    type.className = "portfolio-credit-badge";
+    type.textContent = item.type;
+    top.append(type);
+  }
+
+  if (item.status) {
+    const status = document.createElement("span");
+    status.className = "portfolio-credit-badge portfolio-credit-badge-status";
+    status.textContent = item.status;
+    top.append(status);
+  }
+
+  if (top.childElementCount) {
+    copy.append(top);
+  }
+
+  const title = document.createElement("h3");
+  title.className = "portfolio-credit-title";
+  title.textContent = item.title;
+  copy.append(title);
+
+  if (item.role) {
+    const role = document.createElement("p");
+    role.className = "portfolio-credit-role";
+    role.textContent = item.role;
+    copy.append(role);
+  }
+
+  if (item.text) {
+    const text = document.createElement("p");
+    text.className = "portfolio-credit-text";
+    text.textContent = item.text;
+    copy.append(text);
+  }
+
+  if (item.link) {
+    const link = document.createElement("a");
+    link.className = "portfolio-credit-link";
+    link.href = item.link;
+    link.textContent = item.linkLabel || "Open project";
+
+    const isExternal = /^https?:\/\//i.test(item.link);
+
+    if (isExternal) {
+      link.target = "_blank";
+      link.rel = "noreferrer";
+    }
+
+    copy.append(link);
+  }
+
+  card.append(copy);
+
+  return card;
+}
+
+if (portfolioCreditGrid) {
+  if (!portfolioCredits.length) {
+    const emptyState = document.createElement("p");
+    emptyState.className = "portfolio-empty";
+    emptyState.textContent = "Add games or videos in portfolio-data.js to show your contributions here.";
+    portfolioCreditGrid.append(emptyState);
+  } else {
+    portfolioCredits.forEach((item) => {
+      portfolioCreditGrid.append(createPortfolioCredit(item));
+    });
+  }
 }
 
 if (

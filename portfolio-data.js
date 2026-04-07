@@ -48,3 +48,31 @@ window.portfolioItems = [
     ],
   },
 ];
+
+window.portfolioCredits = [
+  // This section is for games, videos, and team projects you contributed to.
+  //
+  // Credit card shape:
+  // {
+  //   title: "Project name",
+  //   type: "Game", // or "Video"
+  //   role: "What you did",
+  //   text: "Short description of your contribution.",
+  //   image: "optional-image.jpg", // Optional
+  //   alt: "What the image shows", // Optional
+  //   status: "In Development", // Optional
+  //   link: "https://example.com-or-local-page",
+  //   linkLabel: "View project", // Optional
+  // },
+  {
+    title: "Don't Fret",
+    type: "Game",
+    role: "3D Character Contribution",
+    text: "Contributed character modeling, design tweaks, retopology, optimization, and high poly sculpting work for the project.",
+    image: "header.jpg",
+    alt: "Don't Fret key art",
+    status: "In Development",
+    link: "dont-fret.html",
+    linkLabel: "View project page",
+  },
+];
