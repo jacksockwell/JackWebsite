@@ -5,16 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio | Jack Sockwell</title>
   <meta name="description" content="Portfolio work by Jack Sockwell." />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=20260406-portfolio-gallery" />
 </head>
 <body class="page-portfolio">
   <main class="site-shell" id="siteShell">
-    <div class="bg-block bg-block-pink" data-depth="16"></div>
-    <div class="bg-block bg-block-green" data-depth="11"></div>
-    <div class="bg-block bg-block-yellow" data-depth="13"></div>
-    <div class="bg-line bg-line-top" data-depth="18"></div>
-    <div class="bg-line bg-line-right" data-depth="20"></div>
-
     <section class="portfolio-page">
       <div class="portfolio-topbar">
         <div class="portfolio-heading">
@@ -25,42 +19,76 @@
         <a class="back-link" href="index.html">Back Home</a>
       </div>
 
-      <section class="portfolio-showcase" aria-label="Portfolio gallery">
-        <div class="portfolio-stage">
-          <figure class="portfolio-hero">
-            <img
-              id="portfolioHeroImage"
-              class="portfolio-hero-image"
-              src="1.png"
-              alt="Portfolio featured image 1" />
-          </figure>
-
-          <div class="portfolio-controls">
-            <button class="portfolio-arrow" id="portfolioPrev" type="button" aria-label="Previous image">Prev</button>
-            <button class="portfolio-arrow" id="portfolioNext" type="button" aria-label="Next image">Next</button>
-          </div>
+      <section class="portfolio-rail">
+        <div class="portfolio-summary">
+          <h2>Selected Work</h2>
+          <p>Individual posts for character work, stylized renders, and 3D scenes. Click any post to browse the images.</p>
         </div>
 
-        <div class="portfolio-thumbs" aria-label="Choose portfolio image">
-          <button class="portfolio-thumb is-active" type="button" data-image="1.png" data-alt="Portfolio featured image 1" aria-pressed="true">
-            <img src="1.png" alt="Portfolio thumbnail 1" />
+        <div class="portfolio-post-grid" aria-label="Portfolio posts">
+          <button class="portfolio-post" type="button" data-portfolio-index="0">
+            <span class="portfolio-post-image">
+              <img src="1.png" alt="Portfolio post 1 cover" />
+            </span>
+            <span class="portfolio-post-copy">
+              <span class="portfolio-post-title">Horror Scene Study</span>
+              <span class="portfolio-post-meta">3D Environment / Lighting</span>
+            </span>
           </button>
-          <button class="portfolio-thumb" type="button" data-image="2.png" data-alt="Portfolio featured image 2" aria-pressed="false">
-            <img src="2.png" alt="Portfolio thumbnail 2" />
+
+          <button class="portfolio-post" type="button" data-portfolio-index="1">
+            <span class="portfolio-post-image">
+              <img src="2.png" alt="Portfolio post 2 cover" />
+            </span>
+            <span class="portfolio-post-copy">
+              <span class="portfolio-post-title">Branding Render</span>
+              <span class="portfolio-post-meta">Graphic / Presentation</span>
+            </span>
           </button>
-          <button class="portfolio-thumb" type="button" data-image="3.png" data-alt="Portfolio featured image 3" aria-pressed="false">
-            <img src="3.png" alt="Portfolio thumbnail 3" />
+
+          <button class="portfolio-post" type="button" data-portfolio-index="2">
+            <span class="portfolio-post-image">
+              <img src="3.png" alt="Portfolio post 3 cover" />
+            </span>
+            <span class="portfolio-post-copy">
+              <span class="portfolio-post-title">Creature Portrait</span>
+              <span class="portfolio-post-meta">Character / Stylized</span>
+            </span>
           </button>
-          <button class="portfolio-thumb" type="button" data-image="4.png" data-alt="Portfolio featured image 4" aria-pressed="false">
-            <img src="4.png" alt="Portfolio thumbnail 4" />
+
+          <button class="portfolio-post" type="button" data-portfolio-index="3">
+            <span class="portfolio-post-image">
+              <img src="4.png" alt="Portfolio post 4 cover" />
+            </span>
+            <span class="portfolio-post-copy">
+              <span class="portfolio-post-title">Graphic Illustration</span>
+              <span class="portfolio-post-meta">Poster / Color Study</span>
+            </span>
           </button>
-          <button class="portfolio-thumb" type="button" data-image="5.png" data-alt="Portfolio featured image 5" aria-pressed="false">
-            <img src="5.png" alt="Portfolio thumbnail 5" />
+
+          <button class="portfolio-post" type="button" data-portfolio-index="4">
+            <span class="portfolio-post-image">
+              <img src="5.png" alt="Portfolio post 5 cover" />
+            </span>
+            <span class="portfolio-post-copy">
+              <span class="portfolio-post-title">Worldbuilding Frame</span>
+              <span class="portfolio-post-meta">Mood / Composition</span>
+            </span>
           </button>
         </div>
       </section>
     </section>
   </main>
+
+  <div class="portfolio-lightbox" id="portfolioLightbox" hidden>
+    <button class="portfolio-lightbox-close" id="portfolioLightboxClose" type="button" aria-label="Close viewer">Close</button>
+    <button class="portfolio-lightbox-nav portfolio-lightbox-prev" id="portfolioLightboxPrev" type="button" aria-label="Previous image">Prev</button>
+    <figure class="portfolio-lightbox-frame">
+      <img id="portfolioLightboxImage" src="1.png" alt="Portfolio enlarged image" />
+      <figcaption id="portfolioLightboxCaption">Selected Work</figcaption>
+    </figure>
+    <button class="portfolio-lightbox-nav portfolio-lightbox-next" id="portfolioLightboxNext" type="button" aria-label="Next image">Next</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
