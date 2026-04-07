@@ -799,25 +799,68 @@ button {
 
 .about-story-copy {
   display: flow-root;
-  max-width: 72ch;
+  max-width: none;
+}
+
+.story-block {
+  position: relative;
+  z-index: 1;
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.1);
+}
+
+.story-block::before {
+  content: "";
+  position: absolute;
+  inset: 10px -10px -10px 10px;
+  z-index: -1;
+  background: var(--story-block-color, var(--pink));
+  opacity: 0.88;
+}
+
+.story-block-pink {
+  --story-block-color: var(--pink);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.story-block-green {
+  --story-block-color: var(--green);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.story-block-orange {
+  --story-block-color: var(--orange);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.story-block-yellow {
+  --story-block-color: var(--yellow);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.story-block-cyan {
+  --story-block-color: var(--cyan);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.about-story-photo-card {
+  float: left;
+  width: min(15vw, 150px);
+  min-width: 120px;
+  margin: 6px 22px 18px 0;
+  padding: 8px;
 }
 
 .about-story-photo {
-  float: right;
-  width: min(32vw, 280px);
-  min-width: 180px;
-  margin: 4px 0 18px 22px;
-  border: 4px solid var(--ink);
-  background: var(--pink);
-  box-shadow: 10px 10px 0 rgba(36, 27, 42, 0.14);
+  display: block;
+  width: 100%;
+  height: auto;
   object-fit: cover;
 }
 
 .about-story-copy p {
-  margin: 0 0 18px;
-  padding: 0;
-  border: 0;
-  background: none;
+  margin: 0 0 24px;
+  padding: 18px 20px;
   font-size: 1.08rem;
   line-height: 1.7;
   font-weight: 500;
@@ -976,7 +1019,7 @@ button {
   position: relative;
   z-index: 1;
   scroll-margin-top: 28px;
-  margin-top: clamp(140px, 18vh, 240px);
+  margin-top: 34px;
   padding: 30px;
   border: 4px solid var(--ink);
   background: var(--pink);
@@ -1686,16 +1729,16 @@ button {
     padding: 20px 18px;
   }
 
-  .about-story-photo {
+  .about-story-photo-card {
     float: none;
     display: block;
-    width: min(100%, 320px);
+    width: min(100%, 150px);
     min-width: 0;
     margin: 0 auto 18px;
   }
 
   .contact-panel {
-    margin-top: 96px;
+    margin-top: 24px;
     padding: 20px 18px;
   }
 
