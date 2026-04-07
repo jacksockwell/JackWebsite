@@ -7,7 +7,7 @@ let targetY = 0;
 let currentX = 0;
 let currentY = 0;
 
-const decorPalette = ["#ff0037", "#00ff2a", "#fbff00", "#ffac12", "#ff0f7b", "#1fdcff"];
+const decorPalette = ["#ff2452", "#29ff3f", "#fff200", "#00e5ff", "#ff00a8", "#2f7bff"];
 
 function randomBetween(min, max) {
   return min + Math.random() * (max - min);
@@ -134,7 +134,7 @@ function setSquareStyles(element, containerRect, config) {
   element.style.top = `${top}%`;
   element.style.right = "auto";
   element.style.bottom = "auto";
-  element.style.background = `linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.03)), ${color}`;
+  element.style.background = color;
   element.dataset.baseTransform = "";
 }
 
