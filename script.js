@@ -652,6 +652,10 @@ if (shell) {
 
 const portfolioGrid = document.getElementById("portfolioPostGrid");
 const portfolioCreditGrid = document.getElementById("portfolioCreditGrid");
+const portfolioLauncher = document.getElementById("portfolioLauncher");
+const portfolioContent = document.getElementById("portfolioContent");
+const portfolioViewButtons = Array.from(document.querySelectorAll("[data-portfolio-view]"));
+const portfolioPanels = Array.from(document.querySelectorAll("[data-portfolio-panel]"));
 const portfolioLightbox = document.getElementById("portfolioLightbox");
 const portfolioLightboxImage = document.getElementById("portfolioLightboxImage");
 const portfolioLightboxCaption = document.getElementById("portfolioLightboxCaption");
@@ -874,6 +878,70 @@ if (portfolioCreditGrid) {
       portfolioCreditGrid.append(createPortfolioCredit(item));
     });
   }
+}
+
+function setPortfolioView(view, options = {}) {
+  if (!portfolioLauncher || !portfolioContent || !portfolioPanels.length) {
+    return;
+  }
+
+  const activePanel = portfolioPanels.find((panel) => panel.dataset.portfolioPanel === view);
+
+  if (!activePanel) {
+    return;
+  }
+
+  portfolioLauncher.classList.add("is-docked");
+  portfolioContent.hidden = false;
+
+  portfolioPanels.forEach((panel) => {
+    panel.hidden = panel !== activePanel;
+  });
+
+  portfolioViewButtons.forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.portfolioView === view);
+  });
+
+  if (options.updateHash !== false && window.history?.replaceState) {
+    window.history.replaceState(null, "", `#${view}`);
+  }
+
+  if (options.scroll !== false) {
+    window.requestAnimationFrame(() => {
+      portfolioLauncher.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }
+}
+
+if (portfolioLauncher && portfolioContent && portfolioPanels.length && portfolioViewButtons.length) {
+  portfolioViewButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      setPortfolioView(button.dataset.portfolioView || "");
+    });
+  });
+
+  const initialView = window.location.hash.replace("#", "").trim().toLowerCase();
+
+  if (initialView) {
+    setPortfolioView(initialView, {
+      scroll: false,
+      updateHash: false,
+    });
+  }
+
+  window.addEventListener("hashchange", () => {
+    const nextView = window.location.hash.replace("#", "").trim().toLowerCase();
+
+    if (nextView) {
+      setPortfolioView(nextView, {
+        scroll: false,
+        updateHash: false,
+      });
+    }
+  });
 }
 
 if (
