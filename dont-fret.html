@@ -27,6 +27,8 @@
 
     .fret-steam-only {
       width: min(720px, 100%);
+      display: grid;
+      gap: 16px;
     }
 
     .page-fret .steam-shell {
@@ -36,11 +38,29 @@
       border: 4px solid #1a0004;
       box-shadow: 14px 14px 0 rgba(26, 0, 4, 0.3);
     }
+
+    .fret-home-link {
+      justify-self: start;
+      display: inline-grid;
+      place-items: center;
+      min-height: 52px;
+      padding: 12px 16px;
+      border: 3px solid #1a0004;
+      background: #6a0010;
+      color: #ffcf66;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      box-shadow: 8px 8px 0 rgba(26, 0, 4, 0.22);
+    }
   </style>
 </head>
 <body class="page-fret">
   <main class="site-shell" id="siteShell">
     <section class="fret-steam-only">
+      <a class="fret-home-link" href="index.html">Back Home</a>
       <div class="steam-shell steam-shell-solo">
         <iframe
           class="steam-widget"
