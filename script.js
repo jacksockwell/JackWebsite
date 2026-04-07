@@ -1,5 +1,5 @@
 const shell = document.getElementById("siteShell");
-const shapes = document.querySelectorAll(".bg-block, .bg-line, .about-floating");
+const shapes = document.querySelectorAll(".bg-block, .bg-line-right, .about-floating");
 const panels = document.querySelectorAll(".parallax-panel");
 
 let targetX = 0;
@@ -504,8 +504,9 @@ function animateParallax() {
 
   shapes.forEach((shape) => {
     const depth = Number(shape.dataset.depth || 12);
-    const moveX = currentX / depth;
-    const moveY = currentY / depth;
+    const motionBoost = shape.matches(".about-floating") ? 3.1 : 2.6;
+    const moveX = (currentX / depth) * motionBoost;
+    const moveY = (currentY / depth) * motionBoost;
     const baseTransform = shape.dataset.baseTransform || "";
     shape.style.transform = `translate(${moveX}px, ${moveY}px) ${baseTransform}`.trim();
   });
@@ -534,9 +535,10 @@ if (shell) {
     const rect = shell.getBoundingClientRect();
     const relativeX = event.clientX - rect.left;
     const relativeY = event.clientY - rect.top;
+    const parallaxRange = document.body.classList.contains("page-about") ? 76 : 64;
 
-    targetX = ((relativeX / rect.width) - 0.5) * 32;
-    targetY = ((relativeY / rect.height) - 0.5) * 32;
+    targetX = ((relativeX / rect.width) - 0.5) * parallaxRange;
+    targetY = ((relativeY / rect.height) - 0.5) * parallaxRange;
   });
 
   shell.addEventListener("mouseleave", () => {
