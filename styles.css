@@ -36,6 +36,11 @@ body {
   overflow-x: hidden;
 }
 
+.trolled-letter {
+  color: #000 !important;
+  text-shadow: none !important;
+}
+
 a,
 button {
   font: inherit;
