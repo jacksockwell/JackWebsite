@@ -17,6 +17,72 @@ function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
+function pickRandomColors(count) {
+  const shuffled = [...decorPalette].sort(() => Math.random() - 0.5);
+  const colors = [];
+
+  for (let index = 0; index < count; index += 1) {
+    colors.push(shuffled[index % shuffled.length]);
+  }
+
+  return colors;
+}
+
+function createColorBlockLayer(direction, start, size, color) {
+  const safeStart = clamp(start, 0, 94);
+  const safeEnd = clamp(safeStart + size, safeStart + 6, 100);
+  return `linear-gradient(${direction}deg, transparent 0 ${safeStart}%, ${color} ${safeStart}% ${safeEnd}%, transparent ${safeEnd}% 100%)`;
+}
+
+function randomizeShellBackground() {
+  if (!shell) {
+    return;
+  }
+
+  const body = document.body;
+  const topLine = document.querySelector(".bg-line-top");
+
+  if (body.classList.contains("page-home")) {
+    const [base, leftBlock, rightBlock, topBand, bottomBand, middleBand] = pickRandomColors(6);
+
+    shell.style.background = [
+      createColorBlockLayer(90, randomBetween(0, 14), randomBetween(18, 32), leftBlock),
+      createColorBlockLayer(90, randomBetween(66, 82), randomBetween(12, 22), rightBlock),
+      createColorBlockLayer(180, randomBetween(0, 14), randomBetween(10, 18), topBand),
+      createColorBlockLayer(180, randomBetween(56, 74), randomBetween(16, 26), bottomBand),
+      createColorBlockLayer(90, randomBetween(30, 48), randomBetween(8, 16), middleBand),
+      base,
+    ].join(", ");
+
+    shell.style.borderTopColor = topBand;
+
+    if (topLine) {
+      topLine.style.background = topBand;
+    }
+
+    return;
+  }
+
+  if (body.classList.contains("page-about")) {
+    const [base, leftBlock, rightBlock, topBand, bottomBand, centerBand] = pickRandomColors(6);
+
+    shell.style.background = [
+      createColorBlockLayer(90, randomBetween(0, 16), randomBetween(20, 34), leftBlock),
+      createColorBlockLayer(90, randomBetween(70, 84), randomBetween(12, 20), rightBlock),
+      createColorBlockLayer(180, randomBetween(0, 12), randomBetween(8, 16), topBand),
+      createColorBlockLayer(180, randomBetween(46, 66), randomBetween(18, 28), bottomBand),
+      createColorBlockLayer(90, randomBetween(26, 44), randomBetween(10, 18), centerBand),
+      base,
+    ].join(", ");
+
+    shell.style.borderTopColor = topBand;
+
+    if (topLine) {
+      topLine.style.background = topBand;
+    }
+  }
+}
+
 function initHeroNameJitter() {
   const heroNameLines = document.querySelectorAll(".page-home .hero-name-line");
 
@@ -168,6 +234,7 @@ function animateParallax() {
 
 if (shell) {
   initHeroNameJitter();
+  randomizeShellBackground();
   randomizeDecorSquares();
 
   shell.addEventListener("mousemove", (event) => {
