@@ -258,6 +258,20 @@ button {
     linear-gradient(135deg, #39ff14, #ff7a00 52%, #ffb300);
 }
 
+.bg-mosaic {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-tile {
+  position: absolute;
+  pointer-events: none;
+  will-change: transform;
+}
+
 .page-home .site-shell {
   display: flex;
   flex-direction: column;

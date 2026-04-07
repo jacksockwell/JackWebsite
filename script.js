@@ -1,5 +1,5 @@
 const shell = document.getElementById("siteShell");
-const shapes = document.querySelectorAll(".bg-block, .bg-line-right, .about-floating");
+let shapes = [];
 const panels = document.querySelectorAll(".parallax-panel");
 
 let targetX = 0;
@@ -34,17 +34,7 @@ function pickRandomColors(count, palette = decorPalette) {
   return colors;
 }
 
-function createColorBlockLayer(direction, start, size, color) {
-  const safeStart = clamp(start, 0, 94);
-  const safeEnd = clamp(safeStart + size, safeStart + 6, 100);
-  return `linear-gradient(${direction}deg, transparent 0 ${safeStart}%, ${color} ${safeStart}% ${safeEnd}%, transparent ${safeEnd}% 100%)`;
-}
-
-function createSolidBlockLayer(x, y, width, height, color) {
-  return `linear-gradient(${color} 0 0) ${x}px ${y}px / ${width}px ${height}px no-repeat`;
-}
-
-function createGridBlockLayer(config) {
+function resolveGridBlock(config) {
   const colSpan = clamp(randomInt(config.colSpanRange[0], config.colSpanRange[1]), 1, config.cols);
   const rowSpan = clamp(randomInt(config.rowSpanRange[0], config.rowSpanRange[1]), 1, config.rows);
   const maxColStart = Math.max(0, config.cols - colSpan);
@@ -52,13 +42,65 @@ function createGridBlockLayer(config) {
   const colStart = clamp(randomInt(config.colRange[0], config.colRange[1]), 0, maxColStart);
   const rowStart = clamp(randomInt(config.rowRange[0], config.rowRange[1]), 0, maxRowStart);
 
-  return createSolidBlockLayer(
-    colStart * config.cellSize,
-    rowStart * config.cellSize,
-    colSpan * config.cellSize,
-    rowSpan * config.cellSize,
-    config.color,
-  );
+  return {
+    x: colStart * config.cellSize,
+    y: rowStart * config.cellSize,
+    width: colSpan * config.cellSize,
+    height: rowSpan * config.cellSize,
+    color: config.color,
+    depth: config.depth || randomInt(9, 18),
+  };
+}
+
+function ensureMosaicLayer() {
+  if (!shell) {
+    return null;
+  }
+
+  let mosaicLayer = shell.querySelector(".bg-mosaic");
+
+  if (!mosaicLayer) {
+    mosaicLayer = document.createElement("div");
+    mosaicLayer.className = "bg-mosaic";
+    mosaicLayer.setAttribute("aria-hidden", "true");
+    shell.insertBefore(mosaicLayer, shell.firstChild);
+  }
+
+  return mosaicLayer;
+}
+
+function renderMosaicTiles(tiles) {
+  const mosaicLayer = ensureMosaicLayer();
+
+  if (!mosaicLayer) {
+    return;
+  }
+
+  mosaicLayer.replaceChildren();
+
+  const fragment = document.createDocumentFragment();
+
+  tiles.forEach((tile, index) => {
+    const tileElement = document.createElement("div");
+    tileElement.className = "bg-tile";
+    tileElement.style.left = `${tile.x}px`;
+    tileElement.style.top = `${tile.y}px`;
+    tileElement.style.width = `${tile.width}px`;
+    tileElement.style.height = `${tile.height}px`;
+    tileElement.style.background = tile.color;
+    tileElement.dataset.depth = String(tile.depth || 12);
+    tileElement.dataset.baseTransform = "";
+    tileElement.style.opacity = typeof tile.opacity === "number" ? String(tile.opacity) : "0.96";
+    tileElement.style.zIndex = String(tile.zIndex || 0);
+    tileElement.style.setProperty("--tile-order", String(index));
+    fragment.appendChild(tileElement);
+  });
+
+  mosaicLayer.appendChild(fragment);
+}
+
+function refreshParallaxShapes() {
+  shapes = Array.from(document.querySelectorAll(".bg-block, .bg-line-right, .about-floating, .bg-tile"));
 }
 
 function buildHomePixelBackground(shellRect) {
@@ -111,20 +153,22 @@ function buildHomePixelBackground(shellRect) {
     },
   ];
 
-  const layers = blockConfigs.map((config, index) =>
-    createGridBlockLayer({
+  const tiles = blockConfigs.map((config, index) =>
+    resolveGridBlock({
       ...config,
       cols,
       rows,
       cellSize,
       color: colors[index + 1],
+      depth: randomInt(9, 16),
     }),
   );
 
   return {
-    background: [...layers, colors[0]].join(", "),
+    baseColor: colors[0],
     cellSize,
     accent: colors[2],
+    tiles,
   };
 }
 
@@ -184,20 +228,22 @@ function buildAboutPixelBackground(shellRect) {
     },
   ];
 
-  const layers = blockConfigs.map((config, index) =>
-    createGridBlockLayer({
+  const tiles = blockConfigs.map((config, index) =>
+    resolveGridBlock({
       ...config,
       cols,
       rows,
       cellSize,
       color: colors[index + 1],
+      depth: randomInt(10, 18),
     }),
   );
 
   return {
-    background: [...layers, colors[0]].join(", "),
+    baseColor: colors[0],
     cellSize,
     accent: colors[2],
+    tiles,
   };
 }
 
@@ -209,13 +255,15 @@ function randomizeShellBackground() {
   const body = document.body;
   const topLine = document.querySelector(".bg-line-top");
   const shellRect = shell.getBoundingClientRect();
+  const mosaicLayer = ensureMosaicLayer();
 
   if (body.classList.contains("page-home")) {
     const homeBackground = buildHomePixelBackground(shellRect);
 
-    shell.style.background = homeBackground.background;
+    shell.style.background = homeBackground.baseColor;
     shell.style.setProperty("--pixel-grid-size", `${homeBackground.cellSize}px`);
     shell.style.borderTopColor = homeBackground.accent;
+    renderMosaicTiles(homeBackground.tiles);
 
     if (topLine) {
       topLine.style.background = homeBackground.accent;
@@ -227,13 +275,20 @@ function randomizeShellBackground() {
   if (body.classList.contains("page-about")) {
     const aboutBackground = buildAboutPixelBackground(shellRect);
 
-    shell.style.background = aboutBackground.background;
+    shell.style.background = aboutBackground.baseColor;
     shell.style.setProperty("--pixel-grid-size", `${aboutBackground.cellSize}px`);
     shell.style.borderTopColor = aboutBackground.accent;
+    renderMosaicTiles(aboutBackground.tiles);
 
     if (topLine) {
       topLine.style.background = aboutBackground.accent;
     }
+
+    return;
+  }
+
+  if (mosaicLayer) {
+    mosaicLayer.replaceChildren();
   }
 }
 
@@ -504,7 +559,7 @@ function animateParallax() {
 
   shapes.forEach((shape) => {
     const depth = Number(shape.dataset.depth || 12);
-    const motionBoost = shape.matches(".about-floating") ? 3.1 : 2.6;
+    const motionBoost = shape.matches(".about-floating") ? 3.1 : shape.matches(".bg-tile") ? 2.95 : 2.6;
     const moveX = (currentX / depth) * motionBoost;
     const moveY = (currentY / depth) * motionBoost;
     const baseTransform = shape.dataset.baseTransform || "";
@@ -530,6 +585,7 @@ if (shell) {
   initHireMeMoneyRain();
   randomizeShellBackground();
   randomizeDecorSquares();
+  refreshParallaxShapes();
 
   shell.addEventListener("mousemove", (event) => {
     const rect = shell.getBoundingClientRect();
