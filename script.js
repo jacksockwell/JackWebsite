@@ -189,3 +189,36 @@ if (portfolioGrid && portfolioLightbox && portfolioLightboxImage && portfolioLig
     }
   });
 }
+
+const contactForm = document.getElementById("contactForm");
+
+if (contactForm) {
+  const contactName = document.getElementById("contactName");
+  const contactReplyEmail = document.getElementById("contactReplyEmail");
+  const contactSubject = document.getElementById("contactSubject");
+  const contactMessage = document.getElementById("contactMessage");
+
+  contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const subject = contactSubject?.value.trim() || "";
+    const message = contactMessage?.value.trim() || "";
+
+    if (!subject || !message) {
+      contactForm.reportValidity();
+      return;
+    }
+
+    const body = [
+      contactName?.value.trim() ? `Name: ${contactName.value.trim()}` : "",
+      contactReplyEmail?.value.trim() ? `Reply Email: ${contactReplyEmail.value.trim()}` : "",
+      "",
+      message,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const mailtoUrl = `mailto:jackplaygames1@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoUrl;
+  });
+}

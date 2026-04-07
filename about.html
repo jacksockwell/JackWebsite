@@ -130,22 +130,13 @@
                 <span class="social-handle">@JackSockwellP</span>
               </span>
             </a>
-            <a class="social-card social-card-yellow" href="mailto:jackplaygames1@gmail.com">
-              <span class="social-icon" aria-hidden="true">
-                <img src="email-icon.svg" alt="" />
-              </span>
-              <span class="social-copy">
-                <span class="social-label">Email</span>
-                <span class="social-handle">jackplaygames1@gmail.com</span>
-              </span>
-            </a>
           </div>
         </section>
 
         <section class="contact-panel" id="contact-panel" aria-labelledby="contact-heading">
           <div class="contact-header">
             <p>Reach Out</p>
-            <h2 id="contact-heading">Contact Me</h2>
+            <h2 id="contact-heading">Send Me an Email</h2>
           </div>
 
           <div class="contact-layout">
@@ -154,14 +145,34 @@
                 If you want to talk about 3D art, character work, game development, or freelance projects, reach out here.
               </p>
               <a class="contact-email" href="mailto:jackplaygames1@gmail.com">jackplaygames1@gmail.com</a>
+              <p class="contact-note">
+                Fill this out and it will open your email app with the message ready to send.
+              </p>
             </div>
 
-            <div class="contact-links" aria-label="Contact links">
-              <a class="contact-link-card" href="https://x.com/JackSockwellP" target="_blank" rel="noreferrer">X / @JackSockwellP</a>
-              <a class="contact-link-card" href="https://www.instagram.com/jacksockwell/" target="_blank" rel="noreferrer">Instagram / @jacksockwell</a>
-              <a class="contact-link-card" href="https://www.tiktok.com/@jacksockingwell" target="_blank" rel="noreferrer">TikTok / @jacksockingwell</a>
-              <a class="contact-link-card" href="https://www.artstation.com/polygonparadise" target="_blank" rel="noreferrer">ArtStation / polygonparadise</a>
-            </div>
+            <form class="contact-form" id="contactForm" aria-label="Send Jack an email">
+              <label class="contact-field" for="contactName">
+                <span>Your Name</span>
+                <input class="contact-input" id="contactName" name="name" type="text" placeholder="Your name" />
+              </label>
+
+              <label class="contact-field" for="contactReplyEmail">
+                <span>Your Email</span>
+                <input class="contact-input" id="contactReplyEmail" name="replyEmail" type="email" placeholder="your@email.com" />
+              </label>
+
+              <label class="contact-field" for="contactSubject">
+                <span>Subject</span>
+                <input class="contact-input" id="contactSubject" name="subject" type="text" placeholder="What do you want to talk about?" required />
+              </label>
+
+              <label class="contact-field" for="contactMessage">
+                <span>Message</span>
+                <textarea class="contact-textarea" id="contactMessage" name="message" rows="6" placeholder="Tell me about your project..." required></textarea>
+              </label>
+
+              <button class="contact-submit" type="submit">Open Email Draft</button>
+            </form>
           </div>
         </section>
       </section>

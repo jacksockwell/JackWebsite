@@ -484,6 +484,8 @@ button {
 
 .about-heading h1 {
   font-size: clamp(4rem, 10vw, 8rem);
+  line-height: 0.96;
+  padding-top: 0.08em;
 }
 
 .about-remix {
@@ -940,7 +942,7 @@ button {
 
 .contact-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.95fr);
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
   gap: 22px;
   align-items: start;
 }
@@ -961,6 +963,17 @@ button {
   box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.12);
 }
 
+.contact-note {
+  margin: 0;
+  padding: 14px 16px;
+  border: 3px solid var(--ink);
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 0.96rem;
+  line-height: 1.4;
+  font-weight: 700;
+  box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.1);
+}
+
 .contact-email {
   display: inline-grid;
   justify-self: start;
@@ -972,47 +985,80 @@ button {
   font-size: clamp(1.35rem, 3vw, 2rem);
   line-height: 0.96;
   text-decoration: none;
+  overflow-wrap: anywhere;
   box-shadow: 10px 10px 0 rgba(36, 27, 42, 0.14);
   transition: transform 0.14s ease, box-shadow 0.14s ease;
 }
 
 .contact-email:hover,
 .contact-email:focus-visible,
-.contact-link-card:hover,
-.contact-link-card:focus-visible {
+.contact-submit:hover,
+.contact-submit:focus-visible {
   transform: translate(-4px, -4px);
   box-shadow: 14px 14px 0 rgba(36, 27, 42, 0.18);
   outline: none;
 }
 
-.contact-links {
+.contact-form {
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
-.contact-link-card {
-  padding: 16px 18px;
+.contact-field {
+  display: grid;
+  gap: 8px;
+}
+
+.contact-field span {
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.contact-input,
+.contact-textarea {
+  width: 100%;
+  padding: 14px 16px;
   border: 3px solid var(--ink);
+  background: #fff7d6;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  resize: vertical;
+  box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.1);
+}
+
+.contact-input::placeholder,
+.contact-textarea::placeholder {
+  color: rgba(36, 27, 42, 0.62);
+}
+
+.contact-input:focus-visible,
+.contact-textarea:focus-visible {
+  outline: none;
+  transform: translate(-2px, -2px);
+  box-shadow: 10px 10px 0 rgba(36, 27, 42, 0.14);
+}
+
+.contact-textarea {
+  min-height: 170px;
+}
+
+.contact-submit {
+  justify-self: start;
+  min-height: 58px;
+  padding: 14px 20px;
+  border: 4px solid var(--ink);
   background: var(--green);
   color: var(--ink);
-  text-decoration: none;
-  font-size: 0.98rem;
-  font-weight: 900;
-  letter-spacing: 0.03em;
-  box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.1);
+  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+  line-height: 0.94;
+  text-transform: uppercase;
+  box-shadow: 10px 10px 0 rgba(36, 27, 42, 0.14);
   transition: transform 0.14s ease, box-shadow 0.14s ease;
-}
-
-.contact-link-card:nth-child(2) {
-  background: var(--orange);
-}
-
-.contact-link-card:nth-child(3) {
-  background: var(--yellow);
-}
-
-.contact-link-card:nth-child(4) {
-  background: var(--cyan);
 }
 
 .about-meta {
