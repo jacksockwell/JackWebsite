@@ -212,21 +212,22 @@ button {
   display: inline-grid;
   place-items: center;
   padding: 10px 18px;
-  color: #d10000;
+  color: #ff0000;
   font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
   font-size: clamp(2.6rem, 7vw, 4.8rem);
   line-height: 0.92;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
-  text-shadow: 3px 3px 0 rgba(255, 236, 153, 0.7);
-  transition: transform 0.14s ease, text-shadow 0.14s ease;
+  text-shadow: 3px 3px 0 rgba(255, 255, 255, 0.55);
+  transition: transform 0.14s ease, text-shadow 0.14s ease, color 0.14s ease;
 }
 
 .hire-me-link:hover,
 .hire-me-link:focus-visible {
   transform: translate(-4px, -4px);
-  text-shadow: 7px 7px 0 rgba(255, 236, 153, 0.75);
+  color: #ff1f1f;
+  text-shadow: 7px 7px 0 rgba(255, 255, 255, 0.65);
   outline: none;
 }
 
