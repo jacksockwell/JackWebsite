@@ -876,6 +876,8 @@ button {
   overflow: hidden;
   background: #35d6ff;
   isolation: isolate;
+  border: 0;
+  box-shadow: none;
 }
 
 .about-icon-panel::before,
@@ -910,15 +912,15 @@ button {
 .icon-frame {
   position: relative;
   z-index: 1;
-  width: min(82%, 360px);
+  width: min(88%, 390px);
   aspect-ratio: 1;
   display: grid;
   place-items: center;
-  padding: 18px;
+  padding: 0;
   background: transparent;
-  border: 4px solid var(--ink);
-  box-shadow: 14px 14px 0 rgba(7, 17, 43, 0.24);
-  overflow: hidden;
+  border: 0;
+  box-shadow: none;
+  overflow: visible;
 }
 
 @keyframes icon-block-shift-a {
