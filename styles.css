@@ -2447,6 +2447,10 @@ button {
   gap: 16px;
 }
 
+.portfolio-panel {
+  scroll-margin-top: 104px;
+}
+
 .portfolio-summary {
   display: grid;
   gap: 10px;
@@ -2468,14 +2472,16 @@ button {
 
 .portfolio-post-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 320px));
   gap: 18px;
+  justify-content: start;
 }
 
 .portfolio-credit-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 360px));
   gap: 18px;
+  justify-content: start;
 }
 
 .portfolio-empty {
@@ -2521,7 +2527,7 @@ button {
 }
 
 .portfolio-credit-media {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 2.35 / 1;
   background: #0f1015;
   overflow: hidden;
 }
@@ -2646,7 +2652,7 @@ button {
 
 .portfolio-post-image {
   display: block;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 5 / 6;
   overflow: hidden;
   background: #0f1015;
   position: relative;
@@ -2687,6 +2693,21 @@ button {
   background: rgba(11, 12, 18, 0.84);
   color: #ffffff;
   font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.portfolio-post-open {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 7px 10px;
+  border: 1px solid #ff8bc6;
+  border-radius: 999px;
+  background: rgba(19, 13, 26, 0.88);
+  color: #fff4fb;
+  font-size: 0.74rem;
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;

@@ -754,6 +754,11 @@ function createPortfolioPost(item, index) {
     imageShell.append(counter);
   }
 
+  const openHint = document.createElement("span");
+  openHint.className = "portfolio-post-open";
+  openHint.textContent = "Open Full";
+  imageShell.append(openHint);
+
   const copy = document.createElement("span");
   copy.className = "portfolio-post-copy";
 
@@ -908,7 +913,7 @@ function setPortfolioView(view, options = {}) {
 
   if (options.scroll !== false) {
     window.requestAnimationFrame(() => {
-      portfolioLauncher.scrollIntoView({
+      activePanel.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
