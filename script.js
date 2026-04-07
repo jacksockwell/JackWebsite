@@ -8,7 +8,8 @@ let currentX = 0;
 let currentY = 0;
 
 const decorPalette = ["#ff2452", "#29ff3f", "#fff200", "#00e5ff", "#ff00a8", "#ff8a00"];
-const neonGridPalette = ["#ff3ea5", "#ff9f1c", "#fff14a", "#42ff71", "#32e6ff", "#7f5cff"];
+const homeGridPalette = ["#20d5e9", "#ff032d", "#ff9108", "#00ff18"];
+const aboutGridPalette = ["#12efd4", "#31ff00", "#dcff00"];
 
 function randomBetween(min, max) {
   return min + Math.random() * (max - min);
@@ -64,7 +65,7 @@ function buildHomePixelBackground(shellRect) {
   const cellSize = Math.round(clamp(Math.min(shellRect.width, shellRect.height) / 8.5, 72, 118));
   const cols = Math.max(8, Math.ceil(shellRect.width / cellSize));
   const rows = Math.max(7, Math.ceil(shellRect.height / cellSize));
-  const colors = pickRandomColors(8, neonGridPalette);
+  const colors = pickRandomColors(8, homeGridPalette);
   const blockConfigs = [
     {
       colRange: [0, 1],
@@ -131,7 +132,7 @@ function buildAboutPixelBackground(shellRect) {
   const cellSize = Math.round(clamp(Math.min(shellRect.width, shellRect.height) / 9, 72, 112));
   const cols = Math.max(8, Math.ceil(shellRect.width / cellSize));
   const rows = Math.max(10, Math.ceil(shellRect.height / cellSize));
-  const colors = pickRandomColors(10, neonGridPalette);
+  const colors = pickRandomColors(10, aboutGridPalette);
   const blockConfigs = [
     {
       colRange: [0, 1],
@@ -421,7 +422,7 @@ function randomizeDecorSquares() {
           square,
           shellRect,
           shellConfigs[index] || shellConfigs[shellConfigs.length - 1],
-          neonGridPalette,
+          homeGridPalette,
           cellSize,
         );
       });
@@ -490,7 +491,7 @@ function randomizeDecorSquares() {
         square,
         remixRect,
         aboutConfigs[index] || aboutConfigs[aboutConfigs.length - 1],
-        neonGridPalette,
+        aboutGridPalette,
         aboutCellSize,
       );
     });

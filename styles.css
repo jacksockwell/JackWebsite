@@ -14,6 +14,20 @@
   --shadow-soft: 18px 18px 0 rgba(36, 27, 42, 0.22);
   --font-ui: "Space Grotesk", sans-serif;
   --pixel-grid-size: 88px;
+  --home-cyan: #20d5e9;
+  --home-red: #ff032d;
+  --home-orange: #ff9108;
+  --home-green: #00ff18;
+  --about-aqua: #12efd4;
+  --about-green: #31ff00;
+  --about-lime: #dcff00;
+  --story-purple: #9400ff;
+  --story-red: #ff0b11;
+  --story-pink: #ff00a8;
+  --story-orange: #ff6a00;
+  --contact-blue: #1557ff;
+  --contact-cyan: #20d5e9;
+  --contact-violet: #735cff;
 }
 
 * {
@@ -249,7 +263,7 @@ button {
   flex-direction: column;
   align-items: center;
   padding-block: 44px 34px;
-  background: #ff3ea5;
+  background: var(--home-red);
 }
 
 .page-home .site-shell::before {
@@ -591,13 +605,13 @@ button {
   padding: 0.06em 0.2em 0.12em;
   border: 4px solid #fff9ff;
   background: rgba(20, 15, 32, 0.94);
-  color: #fff14a;
+  color: var(--home-green);
   text-shadow:
-    0 0 10px rgba(255, 241, 74, 0.48),
-    3px 3px 0 #ff00a8;
+    0 0 10px rgba(0, 255, 24, 0.48),
+    2px 2px 0 var(--home-red);
   box-shadow:
-    12px 12px 0 rgba(255, 0, 168, 0.22),
-    0 0 20px rgba(50, 230, 255, 0.18);
+    12px 12px 0 rgba(255, 3, 45, 0.22),
+    0 0 20px rgba(32, 213, 233, 0.18);
   isolation: isolate;
 }
 
@@ -615,10 +629,10 @@ button {
 
 .hero-name-line-bottom {
   transform: translateX(2%);
-  color: #32e6ff;
+  color: var(--home-cyan);
   text-shadow:
-    0 0 10px rgba(50, 230, 255, 0.52),
-    3px 3px 0 #7f5cff;
+    0 0 10px rgba(32, 213, 233, 0.52),
+    2px 2px 0 var(--home-orange);
 }
 
 .hero-letter {
@@ -713,7 +727,7 @@ button {
 }
 
 .block-portfolio {
-  background: #2cff4d;
+  background: var(--home-green);
 }
 
 .block-portfolio .action-label {
@@ -722,7 +736,7 @@ button {
 }
 
 .block-fret {
-  background: #ff2b57;
+  background: var(--home-red);
 }
 
 .block-fret .action-label {
@@ -731,7 +745,7 @@ button {
 }
 
 .block-about {
-  background: #25e9ff;
+  background: var(--home-cyan);
 }
 
 .block-about .action-label {
@@ -917,7 +931,7 @@ button {
 
 .page-about .site-shell {
   overflow: hidden;
-  background: #ff3ea5;
+  background: var(--about-green);
 }
 
 .page-about .site-shell::before {
@@ -962,7 +976,7 @@ button {
   left: 44%;
   width: 180px;
   height: 180px;
-  background: var(--pink);
+  background: var(--about-aqua);
 }
 
 .about-floating-green {
@@ -970,7 +984,7 @@ button {
   top: 120px;
   width: 120px;
   height: 120px;
-  background: var(--green);
+  background: var(--about-green);
 }
 
 .about-floating-yellow {
@@ -978,7 +992,7 @@ button {
   bottom: 72px;
   width: 150px;
   height: 150px;
-  background: var(--yellow);
+  background: var(--about-lime);
 }
 
 .about-main-card {
@@ -995,7 +1009,7 @@ button {
 .about-info-panel {
   position: relative;
   border: 4px solid var(--ink);
-  background: var(--green);
+  background: var(--about-green);
   box-shadow: var(--shadow);
 }
 
@@ -1004,7 +1018,7 @@ button {
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: #35d6ff;
+  background: var(--about-aqua);
   isolation: isolate;
   border: 0;
   box-shadow: none;
@@ -1022,7 +1036,7 @@ button {
   inset: 28px auto auto 28px;
   width: 140px;
   height: 140px;
-  background: #1f7fdb;
+  background: var(--about-green);
   opacity: 0.92;
   z-index: 0;
   animation: icon-block-shift-a 8s ease-in-out infinite alternate;
@@ -1033,7 +1047,7 @@ button {
   bottom: 30px;
   width: 170px;
   height: 120px;
-  background: #ff3db8;
+  background: var(--about-lime);
   opacity: 0.92;
   z-index: 0;
   animation: icon-block-shift-b 9.5s ease-in-out infinite alternate;
@@ -1164,7 +1178,7 @@ button {
   right: 22px;
   width: 120px;
   height: 120px;
-  background: var(--orange);
+  background: var(--about-lime);
   opacity: 0.18;
 }
 
@@ -1198,7 +1212,7 @@ button {
   padding: 8px 10px 8px 14px;
   border: 3px solid #fff8ff;
   background: rgba(20, 15, 32, 0.94);
-  color: #fff14a;
+  color: var(--about-lime);
   transform: rotate(-0.25deg);
   box-shadow: 6px 6px 0 rgba(36, 27, 42, 0.18);
 }
@@ -1218,8 +1232,8 @@ button {
   display: inline-block;
   padding: 6px 10px 7px;
   border: 2px solid #fff8ff;
-  background: #ff00a8;
-  color: #fff8ff;
+  background: var(--about-aqua);
+  color: #11131b;
   box-shadow: 4px 4px 0 rgba(36, 27, 42, 0.24);
   transform: none;
 }
@@ -1286,8 +1300,8 @@ button {
   background: rgba(20, 15, 32, 0.94);
   line-height: 0.92;
   box-shadow:
-    8px 8px 0 rgba(255, 0, 168, 0.16),
-    0 0 14px rgba(50, 230, 255, 0.1);
+    8px 8px 0 rgba(18, 239, 212, 0.18),
+    0 0 14px rgba(49, 255, 0, 0.1);
 }
 
 .about-hero-word::before {
@@ -1311,41 +1325,41 @@ button {
 }
 
 .about-hero-word-pink {
-  color: #fff14a;
+  color: var(--about-lime);
   text-shadow:
-    0 0 8px rgba(255, 241, 74, 0.42),
-    2px 2px 0 rgba(255, 0, 168, 0.88);
+    0 0 8px rgba(220, 255, 0, 0.42),
+    2px 2px 0 rgba(49, 255, 0, 0.88);
   transform: rotate(-0.45deg);
 }
 
 .about-hero-word-paper {
-  color: #32e6ff;
+  color: var(--about-aqua);
   text-shadow:
-    0 0 8px rgba(50, 230, 255, 0.42),
-    2px 2px 0 rgba(127, 92, 255, 0.9);
+    0 0 8px rgba(18, 239, 212, 0.42),
+    2px 2px 0 rgba(49, 255, 0, 0.88);
   transform: rotate(0.25deg);
 }
 
 .about-hero-word-cyan {
-  color: #ff9f1c;
+  color: var(--about-aqua);
   text-shadow:
-    0 0 8px rgba(255, 159, 28, 0.42),
-    2px 2px 0 rgba(255, 36, 82, 0.85);
+    0 0 8px rgba(18, 239, 212, 0.42),
+    2px 2px 0 rgba(220, 255, 0, 0.85);
 }
 
 .about-hero-word-yellow {
-  color: #ff3ea5;
+  color: var(--about-lime);
   text-shadow:
-    0 0 8px rgba(255, 62, 165, 0.42),
-    2px 2px 0 rgba(255, 241, 74, 0.88);
+    0 0 8px rgba(220, 255, 0, 0.42),
+    2px 2px 0 rgba(18, 239, 212, 0.88);
   transform: rotate(0.35deg);
 }
 
 .about-hero-word-ink {
-  color: #42ff71;
+  color: var(--about-green);
   text-shadow:
-    0 0 8px rgba(66, 255, 113, 0.42),
-    2px 2px 0 rgba(127, 92, 255, 0.88);
+    0 0 8px rgba(49, 255, 0, 0.42),
+    2px 2px 0 rgba(18, 239, 212, 0.88);
   transform: rotate(-0.2deg);
 }
 
@@ -1418,7 +1432,7 @@ button {
   margin: 0;
   padding: 18px 20px;
   border: 3px solid var(--ink);
-  background: var(--yellow);
+  background: var(--about-lime);
   color: #17131e;
   font-size: 1.12rem;
   line-height: 1.35;
@@ -1439,7 +1453,7 @@ button {
   gap: 12px;
   padding: 12px 14px;
   border: 3px solid var(--ink);
-  background: var(--orange);
+  background: var(--about-aqua);
   color: #17131e;
   font-size: 0.94rem;
   font-weight: 900;
@@ -1450,11 +1464,11 @@ button {
 }
 
 .tool-item:nth-child(2) {
-  background: var(--yellow);
+  background: var(--about-green);
 }
 
 .tool-item:nth-child(3) {
-  background: var(--green);
+  background: var(--about-lime);
 }
 
 .tool-icon {
@@ -1483,7 +1497,7 @@ button {
   margin-bottom: 34px;
   padding: 18px 18px 16px;
   border: 4px solid var(--ink);
-  background: var(--yellow);
+  background: var(--story-orange);
   box-shadow: var(--shadow);
 }
 
@@ -1491,8 +1505,8 @@ button {
   display: inline-block;
   margin-bottom: 14px;
   padding: 10px 38px 12px;
-  border: 4px solid var(--yellow);
-  background: var(--pink);
+  border: 4px solid var(--story-red);
+  background: var(--story-purple);
   box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.18);
 }
 
@@ -1509,7 +1523,7 @@ button {
   min-height: 520px;
   padding: 26px 28px 34px;
   border: 4px solid var(--ink);
-  background: var(--cyan);
+  background: linear-gradient(rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.68)), var(--story-pink);
   box-shadow: 10px 10px 0 rgba(36, 27, 42, 0.18);
 }
 
@@ -1519,7 +1533,7 @@ button {
   min-width: 120px;
   margin: 10px 18px 12px 0;
   padding: 0;
-  border: 4px solid #ff2727;
+  border: 4px solid var(--story-red);
   background: rgba(255, 255, 255, 0.82);
   box-shadow: none;
 }
@@ -1567,7 +1581,7 @@ button {
   z-index: 1;
   padding: 28px;
   border: 4px solid var(--ink);
-  background: var(--orange);
+  background: var(--story-purple);
   box-shadow: var(--shadow);
 }
 
@@ -1690,27 +1704,27 @@ button {
 }
 
 .social-card-pink {
-  background: var(--pink);
+  background: var(--story-red);
   color: #fff8ff;
-  --social-accent: #fff14a;
+  --social-accent: #fff8ff;
 }
 
 .social-card-green {
-  background: var(--green);
-  color: #17131e;
-  --social-accent: #141824;
+  background: var(--story-pink);
+  color: #fff8ff;
+  --social-accent: #fff8ff;
 }
 
 .social-card-orange {
-  background: var(--orange);
+  background: var(--story-orange);
   color: #17131e;
   --social-accent: #11131b;
 }
 
 .social-card-ink {
-  background: var(--ink);
+  background: var(--story-purple);
   color: #fff8ff;
-  --social-accent: #42ff71;
+  --social-accent: #ffc2f1;
 }
 
 .social-card-yellow {
@@ -1724,7 +1738,7 @@ button {
   margin-top: 34px;
   padding: 30px;
   border: 4px solid var(--ink);
-  background: var(--pink);
+  background: var(--contact-blue);
   box-shadow: var(--shadow);
 }
 
@@ -1771,7 +1785,8 @@ button {
   margin: 0;
   padding: 20px 22px;
   border: 3px solid var(--ink);
-  background: var(--yellow);
+  background: var(--contact-cyan);
+  color: #0d1b42;
   font-size: 1.08rem;
   line-height: 1.35;
   font-weight: 700;
@@ -1782,7 +1797,8 @@ button {
   margin: 0;
   padding: 14px 16px;
   border: 3px solid var(--ink);
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(115, 92, 255, 0.32);
+  color: #f6f7ff;
   font-size: 0.96rem;
   line-height: 1.4;
   font-weight: 700;
@@ -1794,8 +1810,9 @@ button {
   justify-self: start;
   padding: 14px 18px;
   border: 4px solid var(--ink);
-  background: var(--pink);
-  color: var(--yellow);
+  border-color: #fff8ff;
+  background: var(--contact-violet);
+  color: #fff8ff;
   font-family: var(--font-ui);
   font-size: clamp(1.35rem, 3vw, 2rem);
   line-height: 0.96;
@@ -1825,6 +1842,7 @@ button {
 }
 
 .contact-field span {
+  color: #f7f8ff;
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.14em;
@@ -1835,9 +1853,9 @@ button {
 .contact-textarea {
   width: 100%;
   padding: 14px 16px;
-  border: 3px solid var(--ink);
-  background: #fff7d6;
-  color: var(--ink);
+  border: 3px solid #0f1942;
+  background: #e2fbff;
+  color: #0f1942;
   font: inherit;
   font-size: 1rem;
   font-weight: 700;
@@ -1847,7 +1865,7 @@ button {
 
 .contact-input::placeholder,
 .contact-textarea::placeholder {
-  color: rgba(36, 27, 42, 0.62);
+  color: rgba(15, 25, 66, 0.58);
 }
 
 .contact-input:focus-visible,
@@ -1865,9 +1883,9 @@ button {
   justify-self: start;
   min-height: 58px;
   padding: 14px 20px;
-  border: 4px solid var(--ink);
-  background: var(--green);
-  color: var(--ink);
+  border: 4px solid #fff8ff;
+  background: var(--contact-cyan);
+  color: #0f1942;
   font-family: var(--font-ui);
   font-size: clamp(1.25rem, 2vw, 1.7rem);
   line-height: 0.94;
@@ -1888,8 +1906,12 @@ button {
   gap: 6px;
   padding: 16px 18px;
   border: 3px solid var(--ink);
-  background: var(--orange);
+  background: var(--about-aqua);
   box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.1);
+}
+
+.meta-card:nth-child(2) {
+  background: var(--about-lime);
 }
 
 .meta-label {
