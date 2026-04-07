@@ -460,11 +460,13 @@ button {
 }
 
 .hire-me-link {
+  position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   padding: 0;
   text-decoration: none;
+  overflow: visible;
   transition: transform 0.14s ease;
 }
 
@@ -475,6 +477,8 @@ button {
 }
 
 .hire-me-label {
+  position: relative;
+  z-index: 2;
   display: inline-block;
   padding: 0.18em 0.34em 0.2em;
   border: 3px solid #fff2f5;
@@ -501,6 +505,51 @@ button {
     0 0 24px rgba(255, 0, 38, 0.95),
     0 0 48px rgba(255, 0, 38, 0.78),
     14px 14px 0 rgba(88, 0, 18, 0.3);
+}
+
+.money-drop {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  pointer-events: none;
+  color: #42ff71;
+  font-family: var(--font-ui);
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  font-weight: 900;
+  line-height: 1;
+  text-shadow:
+    0 0 8px rgba(66, 255, 113, 0.65),
+    0 0 16px rgba(66, 255, 113, 0.45);
+  opacity: 0;
+  transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  animation: money-drop-fall var(--money-duration, 1s) ease-in forwards;
+}
+
+@keyframes money-drop-fall {
+  0% {
+    opacity: 0;
+    transform:
+      translate3d(calc(var(--money-x, 0px)), -10px, 0)
+      rotate(0deg)
+      scale(var(--money-scale, 1));
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translate3d(
+        calc(var(--money-x, 0px) + var(--money-drift, 0px)),
+        var(--money-fall, 150px),
+        0
+      )
+      rotate(var(--money-rotate, 140deg))
+      scale(calc(var(--money-scale, 1) * 0.92));
+  }
 }
 
 .mini-tag {

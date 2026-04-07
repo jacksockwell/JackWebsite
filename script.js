@@ -268,6 +268,69 @@ function initHeroNameJitter() {
   });
 }
 
+function initHireMeMoneyRain() {
+  const hireMeLink = document.querySelector(".page-home .hire-me-link");
+
+  if (!hireMeLink) {
+    return;
+  }
+
+  let rainInterval = null;
+
+  function spawnMoneyDrop(burstMultiplier = 1) {
+    const rect = hireMeLink.getBoundingClientRect();
+    const availableWidth = Math.max(80, rect.width);
+    const drops = Math.max(1, Math.round(randomBetween(1, 2.4) * burstMultiplier));
+
+    for (let index = 0; index < drops; index += 1) {
+      const money = document.createElement("span");
+      money.className = "money-drop";
+      money.setAttribute("aria-hidden", "true");
+      money.textContent = "$";
+      money.style.setProperty("--money-x", `${randomBetween(8, availableWidth - 12).toFixed(1)}px`);
+      money.style.setProperty("--money-drift", `${randomBetween(-24, 24).toFixed(1)}px`);
+      money.style.setProperty("--money-fall", `${randomBetween(110, 180).toFixed(1)}px`);
+      money.style.setProperty("--money-scale", `${randomBetween(0.85, 1.25).toFixed(2)}`);
+      money.style.setProperty("--money-rotate", `${randomBetween(-160, 160).toFixed(1)}deg`);
+      money.style.setProperty("--money-duration", `${randomBetween(0.8, 1.25).toFixed(2)}s`);
+
+      hireMeLink.append(money);
+
+      window.setTimeout(() => {
+        money.remove();
+      }, 1400);
+    }
+  }
+
+  function startRain() {
+    if (rainInterval !== null) {
+      return;
+    }
+
+    spawnMoneyDrop(2);
+    rainInterval = window.setInterval(() => {
+      spawnMoneyDrop(1);
+    }, 120);
+  }
+
+  function stopRain() {
+    if (rainInterval === null) {
+      return;
+    }
+
+    window.clearInterval(rainInterval);
+    rainInterval = null;
+  }
+
+  hireMeLink.addEventListener("pointerenter", startRain);
+  hireMeLink.addEventListener("pointerleave", stopRain);
+  hireMeLink.addEventListener("pointerdown", () => {
+    spawnMoneyDrop(3);
+  });
+  hireMeLink.addEventListener("focus", startRain);
+  hireMeLink.addEventListener("blur", stopRain);
+}
+
 function setSquareStyles(element, containerRect, config) {
   const minDimension = Math.min(containerRect.width, containerRect.height);
   const size = Math.round(
@@ -462,6 +525,7 @@ function animateParallax() {
 
 if (shell) {
   initHeroNameJitter();
+  initHireMeMoneyRain();
   randomizeShellBackground();
   randomizeDecorSquares();
 
