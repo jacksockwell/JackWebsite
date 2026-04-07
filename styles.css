@@ -1409,32 +1409,23 @@ button {
 
 .tool-icon {
   flex: 0 0 auto;
-  min-width: 42px;
-  height: 42px;
+  min-width: 52px;
+  height: 52px;
   display: grid;
   place-items: center;
-  border: 3px solid var(--ink);
+  border: 3px solid #fff8ff;
   border-radius: 999px;
-  box-shadow: 4px 4px 0 rgba(36, 27, 42, 0.15);
+  background: rgba(20, 15, 32, 0.94);
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.1),
+    4px 4px 0 rgba(36, 27, 42, 0.16);
   overflow: hidden;
 }
 
 .tool-icon img {
   display: block;
-  width: 22px;
-  height: 22px;
-}
-
-.tool-icon-blender {
-  background: var(--orange);
-}
-
-.tool-icon-substance {
-  background: var(--yellow);
-}
-
-.tool-icon-unreal {
-  background: var(--green);
+  width: 24px;
+  height: 24px;
 }
 
 .about-story-panel {
