@@ -17,6 +17,38 @@ function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
+function initHeroNameJitter() {
+  const heroNameLines = document.querySelectorAll(".page-home .hero-name-line");
+
+  heroNameLines.forEach((line) => {
+    if (line.dataset.jitterReady === "true") {
+      return;
+    }
+
+    const text = (line.textContent || "").trim();
+
+    if (!text) {
+      return;
+    }
+
+    line.textContent = "";
+
+    [...text].forEach((character, index) => {
+      const letter = document.createElement("span");
+      letter.className = "hero-letter";
+      letter.textContent = character;
+      letter.style.setProperty("--jitter-x", `${randomBetween(-1.8, 1.8).toFixed(2)}px`);
+      letter.style.setProperty("--jitter-y", `${randomBetween(-1.6, 1.6).toFixed(2)}px`);
+      letter.style.setProperty("--jitter-rotate", `${randomBetween(-1.4, 1.4).toFixed(2)}deg`);
+      letter.style.setProperty("--jitter-duration", `${randomBetween(2.4, 4.8).toFixed(2)}s`);
+      letter.style.setProperty("--jitter-delay", `${(index * 0.05 + randomBetween(0, 0.4)).toFixed(2)}s`);
+      line.append(letter);
+    });
+
+    line.dataset.jitterReady = "true";
+  });
+}
+
 function setSquareStyles(element, containerRect, config) {
   const minDimension = Math.min(containerRect.width, containerRect.height);
   const size = Math.round(
@@ -135,6 +167,7 @@ function animateParallax() {
 }
 
 if (shell) {
+  initHeroNameJitter();
   randomizeDecorSquares();
 
   shell.addEventListener("mousemove", (event) => {
