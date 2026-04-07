@@ -760,6 +760,73 @@ button {
   background: var(--green);
 }
 
+.about-story-panel {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 34px;
+  padding: 30px;
+  border: 4px solid var(--ink);
+  background: var(--yellow);
+  box-shadow: var(--shadow);
+}
+
+.about-story-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.about-story-header p {
+  margin: 0;
+  padding: 8px 12px;
+  border: 3px solid var(--ink);
+  background: var(--ink);
+  color: var(--green);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  box-shadow: 6px 6px 0 rgba(36, 27, 42, 0.12);
+}
+
+.about-story-header h2 {
+  margin: 0;
+  font-size: clamp(2.3rem, 5vw, 4.2rem);
+  line-height: 0.94;
+}
+
+.about-story-copy {
+  display: flow-root;
+  max-width: 72ch;
+}
+
+.about-story-photo {
+  float: right;
+  width: min(32vw, 280px);
+  min-width: 180px;
+  margin: 4px 0 18px 22px;
+  border: 4px solid var(--ink);
+  background: var(--pink);
+  box-shadow: 10px 10px 0 rgba(36, 27, 42, 0.14);
+  object-fit: cover;
+}
+
+.about-story-copy p {
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 1.08rem;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.about-story-copy p:last-child {
+  margin-bottom: 0;
+}
+
 .social-panel {
   position: relative;
   z-index: 1;
@@ -1613,6 +1680,18 @@ button {
 
   .social-header {
     align-items: flex-start;
+  }
+
+  .about-story-panel {
+    padding: 20px 18px;
+  }
+
+  .about-story-photo {
+    float: none;
+    display: block;
+    width: min(100%, 320px);
+    min-width: 0;
+    margin: 0 auto 18px;
   }
 
   .contact-panel {
