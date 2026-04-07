@@ -8,7 +8,7 @@ let currentX = 0;
 let currentY = 0;
 
 const decorPalette = ["#ff2452", "#29ff3f", "#fff200", "#00e5ff", "#ff00a8", "#ff8a00"];
-const homePastelPalette = ["#ff3ea5", "#ff9f1c", "#fff14a", "#42ff71", "#32e6ff", "#7f5cff"];
+const neonGridPalette = ["#ff3ea5", "#ff9f1c", "#fff14a", "#42ff71", "#32e6ff", "#7f5cff"];
 
 function randomBetween(min, max) {
   return min + Math.random() * (max - min);
@@ -64,7 +64,7 @@ function buildHomePixelBackground(shellRect) {
   const cellSize = Math.round(clamp(Math.min(shellRect.width, shellRect.height) / 8.5, 72, 118));
   const cols = Math.max(8, Math.ceil(shellRect.width / cellSize));
   const rows = Math.max(7, Math.ceil(shellRect.height / cellSize));
-  const colors = pickRandomColors(8, homePastelPalette);
+  const colors = pickRandomColors(8, neonGridPalette);
   const blockConfigs = [
     {
       colRange: [0, 1],
@@ -127,6 +127,79 @@ function buildHomePixelBackground(shellRect) {
   };
 }
 
+function buildAboutPixelBackground(shellRect) {
+  const cellSize = Math.round(clamp(Math.min(shellRect.width, shellRect.height) / 9, 72, 112));
+  const cols = Math.max(8, Math.ceil(shellRect.width / cellSize));
+  const rows = Math.max(10, Math.ceil(shellRect.height / cellSize));
+  const colors = pickRandomColors(10, neonGridPalette);
+  const blockConfigs = [
+    {
+      colRange: [0, 1],
+      rowRange: [0, 2],
+      colSpanRange: [2, 3],
+      rowSpanRange: [4, 6],
+    },
+    {
+      colRange: [Math.max(2, Math.floor(cols * 0.28)), Math.max(3, Math.floor(cols * 0.4))],
+      rowRange: [0, 1],
+      colSpanRange: [2, 3],
+      rowSpanRange: [1, 2],
+    },
+    {
+      colRange: [Math.max(4, cols - 4), Math.max(5, cols - 2)],
+      rowRange: [0, 2],
+      colSpanRange: [2, 3],
+      rowSpanRange: [4, 6],
+    },
+    {
+      colRange: [Math.max(2, Math.floor(cols * 0.18)), Math.max(3, Math.floor(cols * 0.3))],
+      rowRange: [Math.max(4, Math.floor(rows * 0.24)), Math.max(5, Math.floor(rows * 0.34))],
+      colSpanRange: [2, 3],
+      rowSpanRange: [2, 4],
+    },
+    {
+      colRange: [Math.max(4, Math.floor(cols * 0.56)), Math.max(5, Math.floor(cols * 0.72))],
+      rowRange: [Math.max(5, Math.floor(rows * 0.28)), Math.max(6, Math.floor(rows * 0.4))],
+      colSpanRange: [2, 3],
+      rowSpanRange: [2, 4],
+    },
+    {
+      colRange: [0, 2],
+      rowRange: [Math.max(8, rows - 6), Math.max(9, rows - 4)],
+      colSpanRange: [2, 4],
+      rowSpanRange: [2, 4],
+    },
+    {
+      colRange: [Math.max(3, Math.floor(cols * 0.3)), Math.max(4, Math.floor(cols * 0.48))],
+      rowRange: [Math.max(10, rows - 5), Math.max(11, rows - 3)],
+      colSpanRange: [2, 4],
+      rowSpanRange: [1, 2],
+    },
+    {
+      colRange: [Math.max(4, cols - 4), Math.max(5, cols - 2)],
+      rowRange: [Math.max(8, rows - 7), Math.max(9, rows - 5)],
+      colSpanRange: [2, 3],
+      rowSpanRange: [3, 5],
+    },
+  ];
+
+  const layers = blockConfigs.map((config, index) =>
+    createGridBlockLayer({
+      ...config,
+      cols,
+      rows,
+      cellSize,
+      color: colors[index + 1],
+    }),
+  );
+
+  return {
+    background: [...layers, colors[0]].join(", "),
+    cellSize,
+    accent: colors[2],
+  };
+}
+
 function randomizeShellBackground() {
   if (!shell) {
     return;
@@ -151,21 +224,14 @@ function randomizeShellBackground() {
   }
 
   if (body.classList.contains("page-about")) {
-    const [base, leftBlock, rightBlock, topBand, bottomBand, centerBand] = pickRandomColors(6, decorPalette);
+    const aboutBackground = buildAboutPixelBackground(shellRect);
 
-    shell.style.background = [
-      createColorBlockLayer(90, randomBetween(0, 16), randomBetween(20, 34), leftBlock),
-      createColorBlockLayer(90, randomBetween(70, 84), randomBetween(12, 20), rightBlock),
-      createColorBlockLayer(180, randomBetween(0, 12), randomBetween(8, 16), topBand),
-      createColorBlockLayer(180, randomBetween(46, 66), randomBetween(18, 28), bottomBand),
-      createColorBlockLayer(90, randomBetween(26, 44), randomBetween(10, 18), centerBand),
-      base,
-    ].join(", ");
-
-    shell.style.borderTopColor = topBand;
+    shell.style.background = aboutBackground.background;
+    shell.style.setProperty("--pixel-grid-size", `${aboutBackground.cellSize}px`);
+    shell.style.borderTopColor = aboutBackground.accent;
 
     if (topLine) {
-      topLine.style.background = topBand;
+      topLine.style.background = aboutBackground.accent;
     }
   }
 }
@@ -292,7 +358,7 @@ function randomizeDecorSquares() {
           square,
           shellRect,
           shellConfigs[index] || shellConfigs[shellConfigs.length - 1],
-          homePastelPalette,
+          neonGridPalette,
           cellSize,
         );
       });
@@ -332,29 +398,38 @@ function randomizeDecorSquares() {
 
   if (aboutRemix && aboutSquares.length) {
     const remixRect = aboutRemix.getBoundingClientRect();
+    const aboutCellSize = Math.round(clamp(Math.min(remixRect.width, remixRect.height) / 8.5, 62, 96));
+    const remixCols = Math.max(8, Math.ceil(remixRect.width / aboutCellSize));
+    const remixRows = Math.max(8, Math.ceil(remixRect.height / aboutCellSize));
     const aboutConfigs = [
       {
-        sizeRange: [0.14, 0.22],
-        pixelRange: [110, 210],
-        leftRange: [48, 62],
-        topRange: [4, 16],
+        colRange: [Math.max(3, Math.floor(remixCols * 0.42)), Math.max(4, Math.floor(remixCols * 0.56))],
+        rowRange: [1, 2],
+        colSpanRange: [1, 2],
+        rowSpanRange: [1, 2],
       },
       {
-        sizeRange: [0.1, 0.16],
-        pixelRange: [90, 150],
-        leftRange: [76, 86],
-        topRange: [16, 30],
+        colRange: [Math.max(5, remixCols - 3), Math.max(6, remixCols - 2)],
+        rowRange: [2, 3],
+        colSpanRange: [1, 2],
+        rowSpanRange: [1, 2],
       },
       {
-        sizeRange: [0.12, 0.18],
-        pixelRange: [100, 170],
-        leftRange: [50, 64],
-        topRange: [72, 82],
+        colRange: [Math.max(4, Math.floor(remixCols * 0.48)), Math.max(5, Math.floor(remixCols * 0.62))],
+        rowRange: [Math.max(5, remixRows - 3), Math.max(6, remixRows - 2)],
+        colSpanRange: [1, 2],
+        rowSpanRange: [1, 2],
       },
     ];
 
     aboutSquares.forEach((square, index) => {
-      setSquareStyles(square, remixRect, aboutConfigs[index] || aboutConfigs[aboutConfigs.length - 1]);
+      setGridSquareStyles(
+        square,
+        remixRect,
+        aboutConfigs[index] || aboutConfigs[aboutConfigs.length - 1],
+        neonGridPalette,
+        aboutCellSize,
+      );
     });
   }
 }
