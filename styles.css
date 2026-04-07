@@ -1565,6 +1565,7 @@ button {
 }
 
 .social-card {
+  --social-accent: #fff14a;
   min-height: 96px;
   padding: 16px 18px;
   border: 4px solid var(--ink);
@@ -1589,14 +1590,16 @@ button {
 
 .social-icon {
   flex: 0 0 auto;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   display: grid;
   place-items: center;
-  border: 3px solid var(--ink);
+  border: 3px solid #fff8ff;
   border-radius: 999px;
-  background: var(--yellow);
-  box-shadow: 4px 4px 0 rgba(36, 27, 42, 0.12);
+  background: rgba(20, 15, 32, 0.94);
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.1),
+    4px 4px 0 rgba(36, 27, 42, 0.16);
 }
 
 .social-icon img {
@@ -1616,6 +1619,7 @@ button {
 }
 
 .social-label {
+  color: var(--social-accent);
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.16em;
@@ -1647,40 +1651,30 @@ button {
 
 .social-card-pink {
   background: var(--pink);
-  color: var(--yellow);
+  color: #fff8ff;
+  --social-accent: #fff14a;
 }
 
 .social-card-green {
   background: var(--green);
+  color: #17131e;
+  --social-accent: #141824;
 }
 
 .social-card-orange {
   background: var(--orange);
+  color: #17131e;
+  --social-accent: #11131b;
 }
 
 .social-card-ink {
   background: var(--ink);
-  color: var(--green);
+  color: #fff8ff;
+  --social-accent: #42ff71;
 }
 
 .social-card-yellow {
   background: var(--yellow);
-}
-
-.social-card-pink .social-icon {
-  background: #ffd400;
-}
-
-.social-card-green .social-icon {
-  background: #ff5c8a;
-}
-
-.social-card-orange .social-icon {
-  background: #35e6ff;
-}
-
-.social-card-ink .social-icon {
-  background: #ff9f1a;
 }
 
 .contact-panel {
