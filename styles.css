@@ -1036,10 +1036,10 @@ button {
   inset: 28px auto auto 28px;
   width: 140px;
   height: 140px;
-  background: var(--about-green);
+  background: #1e88e5;
   opacity: 0.92;
   z-index: 0;
-  animation: icon-block-shift-a 8s ease-in-out infinite alternate;
+  animation: icon-block-shift-a 5.6s ease-in-out infinite alternate;
 }
 
 .about-icon-panel::after {
@@ -1047,10 +1047,10 @@ button {
   bottom: 30px;
   width: 170px;
   height: 120px;
-  background: var(--about-lime);
+  background: #735cff;
   opacity: 0.92;
   z-index: 0;
-  animation: icon-block-shift-b 9.5s ease-in-out infinite alternate;
+  animation: icon-block-shift-b 6.4s ease-in-out infinite alternate;
 }
 
 .icon-frame {
@@ -1073,11 +1073,11 @@ button {
   }
 
   50% {
-    transform: translate(10px, -8px) rotate(1.6deg);
+    transform: translate(18px, -16px) rotate(3.2deg);
   }
 
   100% {
-    transform: translate(-6px, 8px) rotate(-1.1deg);
+    transform: translate(-14px, 14px) rotate(-2.6deg);
   }
 }
 
@@ -1087,11 +1087,11 @@ button {
   }
 
   50% {
-    transform: translate(-10px, 6px) rotate(-1.4deg);
+    transform: translate(-18px, 12px) rotate(-2.8deg);
   }
 
   100% {
-    transform: translate(8px, -7px) rotate(1deg);
+    transform: translate(14px, -14px) rotate(2.2deg);
   }
 }
 
@@ -1113,19 +1113,19 @@ button {
 }
 
 .about-icon-layer-bg {
-  animation: icon-layer-bg-float 8s ease-in-out infinite alternate;
+  animation: icon-layer-bg-float 5.8s ease-in-out infinite alternate;
 }
 
 .about-icon-layer-plate {
-  animation: icon-layer-plate-float 9.2s ease-in-out infinite alternate;
+  animation: icon-layer-plate-float 6.2s ease-in-out infinite alternate;
 }
 
 .about-icon-layer-j {
-  animation: icon-layer-j-float 6.8s ease-in-out infinite alternate;
+  animation: icon-layer-j-float 4.9s ease-in-out infinite alternate;
 }
 
 .about-icon-layer-s {
-  animation: icon-layer-s-float 7.3s ease-in-out infinite alternate;
+  animation: icon-layer-s-float 5.2s ease-in-out infinite alternate;
 }
 
 @keyframes icon-layer-bg-float {
@@ -1134,7 +1134,7 @@ button {
   }
 
   100% {
-    transform: translate3d(-5px, 6px, 0);
+    transform: translate3d(-11px, 12px, 0);
   }
 }
 
@@ -1144,7 +1144,7 @@ button {
   }
 
   100% {
-    transform: translate3d(8px, -6px, 0);
+    transform: translate3d(16px, -12px, 0);
   }
 }
 
@@ -1154,7 +1154,7 @@ button {
   }
 
   100% {
-    transform: translate3d(-3px, 2px, 0);
+    transform: translate3d(-8px, 5px, 0);
   }
 }
 
@@ -1164,7 +1164,7 @@ button {
   }
 
   100% {
-    transform: translate3d(4px, -2px, 0);
+    transform: translate3d(10px, -6px, 0);
   }
 }
 
