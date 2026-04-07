@@ -8,17 +8,22 @@ let currentX = 0;
 let currentY = 0;
 
 const decorPalette = ["#ff2452", "#29ff3f", "#fff200", "#00e5ff", "#ff00a8", "#ff8a00"];
+const homePastelPalette = ["#ffb8d7", "#ffd7a8", "#fff3a8", "#c7f7c2", "#afeeff", "#d7c8ff"];
 
 function randomBetween(min, max) {
   return min + Math.random() * (max - min);
+}
+
+function randomInt(min, max) {
+  return Math.floor(randomBetween(min, max + 1));
 }
 
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
-function pickRandomColors(count) {
-  const shuffled = [...decorPalette].sort(() => Math.random() - 0.5);
+function pickRandomColors(count, palette = decorPalette) {
+  const shuffled = [...palette].sort(() => Math.random() - 0.5);
   const colors = [];
 
   for (let index = 0; index < count; index += 1) {
@@ -34,6 +39,94 @@ function createColorBlockLayer(direction, start, size, color) {
   return `linear-gradient(${direction}deg, transparent 0 ${safeStart}%, ${color} ${safeStart}% ${safeEnd}%, transparent ${safeEnd}% 100%)`;
 }
 
+function createSolidBlockLayer(x, y, width, height, color) {
+  return `linear-gradient(${color} 0 0) ${x}px ${y}px / ${width}px ${height}px no-repeat`;
+}
+
+function createGridBlockLayer(config) {
+  const colSpan = clamp(randomInt(config.colSpanRange[0], config.colSpanRange[1]), 1, config.cols);
+  const rowSpan = clamp(randomInt(config.rowSpanRange[0], config.rowSpanRange[1]), 1, config.rows);
+  const maxColStart = Math.max(0, config.cols - colSpan);
+  const maxRowStart = Math.max(0, config.rows - rowSpan);
+  const colStart = clamp(randomInt(config.colRange[0], config.colRange[1]), 0, maxColStart);
+  const rowStart = clamp(randomInt(config.rowRange[0], config.rowRange[1]), 0, maxRowStart);
+
+  return createSolidBlockLayer(
+    colStart * config.cellSize,
+    rowStart * config.cellSize,
+    colSpan * config.cellSize,
+    rowSpan * config.cellSize,
+    config.color,
+  );
+}
+
+function buildHomePixelBackground(shellRect) {
+  const cellSize = Math.round(clamp(Math.min(shellRect.width, shellRect.height) / 8.5, 72, 118));
+  const cols = Math.max(8, Math.ceil(shellRect.width / cellSize));
+  const rows = Math.max(7, Math.ceil(shellRect.height / cellSize));
+  const colors = pickRandomColors(8, homePastelPalette);
+  const blockConfigs = [
+    {
+      colRange: [0, 1],
+      rowRange: [1, 2],
+      colSpanRange: [2, 4],
+      rowSpanRange: [Math.max(3, rows - 4), Math.max(4, rows - 2)],
+    },
+    {
+      colRange: [2, Math.max(3, Math.floor(cols * 0.35))],
+      rowRange: [0, 1],
+      colSpanRange: [2, 4],
+      rowSpanRange: [1, 2],
+    },
+    {
+      colRange: [Math.max(2, Math.floor(cols * 0.3)), Math.max(3, Math.floor(cols * 0.46))],
+      rowRange: [Math.max(2, Math.floor(rows * 0.28)), Math.max(3, Math.floor(rows * 0.45))],
+      colSpanRange: [1, 2],
+      rowSpanRange: [Math.max(2, Math.floor(rows * 0.35)), Math.max(3, Math.floor(rows * 0.5))],
+    },
+    {
+      colRange: [Math.max(4, cols - 4), Math.max(5, cols - 2)],
+      rowRange: [0, 1],
+      colSpanRange: [2, 3],
+      rowSpanRange: [Math.max(4, rows - 4), Math.max(5, rows - 1)],
+    },
+    {
+      colRange: [Math.max(1, Math.floor(cols * 0.18)), Math.max(2, Math.floor(cols * 0.34))],
+      rowRange: [Math.max(4, rows - 3), Math.max(5, rows - 2)],
+      colSpanRange: [2, 3],
+      rowSpanRange: [2, 3],
+    },
+    {
+      colRange: [Math.max(3, Math.floor(cols * 0.5)), Math.max(4, Math.floor(cols * 0.64))],
+      rowRange: [Math.max(4, Math.floor(rows * 0.55)), Math.max(5, Math.floor(rows * 0.68))],
+      colSpanRange: [2, 4],
+      rowSpanRange: [1, 2],
+    },
+    {
+      colRange: [Math.max(4, Math.floor(cols * 0.62)), Math.max(5, Math.floor(cols * 0.76))],
+      rowRange: [1, 2],
+      colSpanRange: [2, 3],
+      rowSpanRange: [1, 2],
+    },
+  ];
+
+  const layers = blockConfigs.map((config, index) =>
+    createGridBlockLayer({
+      ...config,
+      cols,
+      rows,
+      cellSize,
+      color: colors[index + 1],
+    }),
+  );
+
+  return {
+    background: [...layers, colors[0]].join(", "),
+    cellSize,
+    accent: colors[2],
+  };
+}
+
 function randomizeShellBackground() {
   if (!shell) {
     return;
@@ -41,30 +134,24 @@ function randomizeShellBackground() {
 
   const body = document.body;
   const topLine = document.querySelector(".bg-line-top");
+  const shellRect = shell.getBoundingClientRect();
 
   if (body.classList.contains("page-home")) {
-    const [base, leftBlock, rightBlock, topBand, bottomBand, middleBand] = pickRandomColors(6);
+    const homeBackground = buildHomePixelBackground(shellRect);
 
-    shell.style.background = [
-      createColorBlockLayer(90, randomBetween(0, 14), randomBetween(18, 32), leftBlock),
-      createColorBlockLayer(90, randomBetween(66, 82), randomBetween(12, 22), rightBlock),
-      createColorBlockLayer(180, randomBetween(0, 14), randomBetween(10, 18), topBand),
-      createColorBlockLayer(180, randomBetween(56, 74), randomBetween(16, 26), bottomBand),
-      createColorBlockLayer(90, randomBetween(30, 48), randomBetween(8, 16), middleBand),
-      base,
-    ].join(", ");
-
-    shell.style.borderTopColor = topBand;
+    shell.style.background = homeBackground.background;
+    shell.style.setProperty("--pixel-grid-size", `${homeBackground.cellSize}px`);
+    shell.style.borderTopColor = homeBackground.accent;
 
     if (topLine) {
-      topLine.style.background = topBand;
+      topLine.style.background = homeBackground.accent;
     }
 
     return;
   }
 
   if (body.classList.contains("page-about")) {
-    const [base, leftBlock, rightBlock, topBand, bottomBand, centerBand] = pickRandomColors(6);
+    const [base, leftBlock, rightBlock, topBand, bottomBand, centerBand] = pickRandomColors(6, decorPalette);
 
     shell.style.background = [
       createColorBlockLayer(90, randomBetween(0, 16), randomBetween(20, 34), leftBlock),
@@ -138,43 +225,109 @@ function setSquareStyles(element, containerRect, config) {
   element.dataset.baseTransform = "";
 }
 
+function setGridSquareStyles(element, containerRect, config, palette, cellSize) {
+  const cols = Math.max(8, Math.ceil(containerRect.width / cellSize));
+  const rows = Math.max(7, Math.ceil(containerRect.height / cellSize));
+  const colSpan = clamp(randomInt(config.colSpanRange[0], config.colSpanRange[1]), 1, cols);
+  const rowSpan = clamp(randomInt(config.rowSpanRange[0], config.rowSpanRange[1]), 1, rows);
+  const maxColStart = Math.max(0, cols - colSpan);
+  const maxRowStart = Math.max(0, rows - rowSpan);
+  const colStart = clamp(randomInt(config.colRange[0], config.colRange[1]), 0, maxColStart);
+  const rowStart = clamp(randomInt(config.rowRange[0], config.rowRange[1]), 0, maxRowStart);
+  const color = palette[Math.floor(Math.random() * palette.length)];
+
+  element.style.width = `${colSpan * cellSize}px`;
+  element.style.height = `${rowSpan * cellSize}px`;
+  element.style.left = `${colStart * cellSize}px`;
+  element.style.top = `${rowStart * cellSize}px`;
+  element.style.right = "auto";
+  element.style.bottom = "auto";
+  element.style.background = color;
+  element.dataset.baseTransform = "";
+}
+
 function randomizeDecorSquares() {
   const shellSquares = Array.from(document.querySelectorAll(".bg-block, .bg-line-right"));
   const aboutRemix = document.querySelector(".about-remix");
   const aboutSquares = Array.from(document.querySelectorAll(".about-floating"));
+  const body = document.body;
 
   if (shell && shellSquares.length) {
     const shellRect = shell.getBoundingClientRect();
-    const shellConfigs = [
-      {
-        sizeRange: [0.2, 0.3],
-        pixelRange: [140, 320],
-        leftRange: [4, 18],
-        topRange: [56, 72],
-      },
-      {
-        sizeRange: [0.22, 0.34],
-        pixelRange: [180, 380],
-        leftRange: [-4, 8],
-        topRange: [8, 24],
-      },
-      {
-        sizeRange: [0.16, 0.24],
-        pixelRange: [130, 260],
-        leftRange: [72, 84],
-        topRange: [2, 14],
-      },
-      {
-        sizeRange: [0.22, 0.3],
-        pixelRange: [170, 320],
-        leftRange: [72, 84],
-        topRange: [48, 66],
-      },
-    ];
+    const isHome = body.classList.contains("page-home");
 
-    shellSquares.forEach((square, index) => {
-      setSquareStyles(square, shellRect, shellConfigs[index] || shellConfigs[shellConfigs.length - 1]);
-    });
+    if (isHome) {
+      const cellSize = Math.round(clamp(Math.min(shellRect.width, shellRect.height) / 8.5, 72, 118));
+      const cols = Math.max(8, Math.ceil(shellRect.width / cellSize));
+      const rows = Math.max(7, Math.ceil(shellRect.height / cellSize));
+      const shellConfigs = [
+        {
+          colRange: [0, 1],
+          rowRange: [Math.max(3, rows - 3), Math.max(4, rows - 2)],
+          colSpanRange: [2, 3],
+          rowSpanRange: [2, 3],
+        },
+        {
+          colRange: [0, 1],
+          rowRange: [1, 2],
+          colSpanRange: [1, 2],
+          rowSpanRange: [2, 3],
+        },
+        {
+          colRange: [Math.max(4, cols - 4), Math.max(5, cols - 2)],
+          rowRange: [0, 1],
+          colSpanRange: [1, 2],
+          rowSpanRange: [2, 3],
+        },
+        {
+          colRange: [Math.max(4, cols - 4), Math.max(5, cols - 2)],
+          rowRange: [Math.max(3, rows - 4), Math.max(4, rows - 3)],
+          colSpanRange: [2, 3],
+          rowSpanRange: [2, 3],
+        },
+      ];
+
+      shellSquares.forEach((square, index) => {
+        setGridSquareStyles(
+          square,
+          shellRect,
+          shellConfigs[index] || shellConfigs[shellConfigs.length - 1],
+          homePastelPalette,
+          cellSize,
+        );
+      });
+    } else {
+      const shellConfigs = [
+        {
+          sizeRange: [0.2, 0.3],
+          pixelRange: [140, 320],
+          leftRange: [4, 18],
+          topRange: [56, 72],
+        },
+        {
+          sizeRange: [0.22, 0.34],
+          pixelRange: [180, 380],
+          leftRange: [-4, 8],
+          topRange: [8, 24],
+        },
+        {
+          sizeRange: [0.16, 0.24],
+          pixelRange: [130, 260],
+          leftRange: [72, 84],
+          topRange: [2, 14],
+        },
+        {
+          sizeRange: [0.22, 0.3],
+          pixelRange: [170, 320],
+          leftRange: [72, 84],
+          topRange: [48, 66],
+        },
+      ];
+
+      shellSquares.forEach((square, index) => {
+        setSquareStyles(square, shellRect, shellConfigs[index] || shellConfigs[shellConfigs.length - 1]);
+      });
+    }
   }
 
   if (aboutRemix && aboutSquares.length) {

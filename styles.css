@@ -13,6 +13,7 @@
   --shadow: 10px 10px 0 rgba(36, 27, 42, 0.95);
   --shadow-soft: 18px 18px 0 rgba(36, 27, 42, 0.22);
   --font-ui: "Space Grotesk", sans-serif;
+  --pixel-grid-size: 88px;
 }
 
 * {
@@ -248,14 +249,15 @@ button {
   flex-direction: column;
   align-items: center;
   padding-block: 44px 34px;
-  background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(255, 255, 255, 0.02)),
-    linear-gradient(90deg, #00ff2a 0 32%, #ff7a00 32% 100%);
+  background: #ffd9e8;
 }
 
 .page-home .site-shell::before {
-  background: none;
-  opacity: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.24) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.24) 1px, transparent 1px);
+  background-size: var(--pixel-grid-size) var(--pixel-grid-size);
+  opacity: 0.5;
 }
 
 .page-home .site-shell::after {
@@ -266,6 +268,7 @@ button {
 .page-home .bg-block {
   border: 0;
   background: none;
+  opacity: 0.95;
 }
 
 .site-shell::before,
