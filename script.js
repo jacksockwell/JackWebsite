@@ -7,7 +7,7 @@ let targetY = 0;
 let currentX = 0;
 let currentY = 0;
 
-const decorPalette = ["#ff2452", "#29ff3f", "#fff200", "#00e5ff", "#ff00a8", "#2f7bff"];
+const decorPalette = ["#ff2452", "#29ff3f", "#fff200", "#00e5ff", "#ff00a8", "#ff8a00"];
 
 function randomBetween(min, max) {
   return min + Math.random() * (max - min);
