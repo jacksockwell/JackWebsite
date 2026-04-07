@@ -5,6 +5,7 @@
   --green: #39ff14;
   --yellow: #ffb300;
   --orange: #ff6a00;
+  --cyan: #1fdcff;
   --paper: #52ff00;
   --border: 3px solid var(--ink);
   --shadow: 10px 10px 0 rgba(36, 27, 42, 0.95);
@@ -427,33 +428,15 @@ button {
 .page-about .site-shell {
   overflow: hidden;
   background:
-    linear-gradient(90deg, rgba(255, 43, 99, 0.08) 0 12%, transparent 12% 100%),
-    linear-gradient(180deg, rgba(45, 255, 0, 0.08) 0 18%, transparent 18% 100%),
-    linear-gradient(135deg, #39ff14, #ff7a00 52%, #ffb300);
+    linear-gradient(90deg, #39ff14 0 34%, transparent 34% 100%),
+    linear-gradient(90deg, transparent 0 74%, #fbff00 74% 100%),
+    linear-gradient(180deg, transparent 0 46%, #ffb300 46% 100%),
+    #ff7a00;
 }
 
 .page-about .site-shell::before,
 .page-about .site-shell::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.page-about .site-shell::before {
-  background:
-    linear-gradient(rgba(36, 27, 42, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(36, 27, 42, 0.06) 1px, transparent 1px);
-  background-size: 88px 88px;
-  opacity: 0.35;
-}
-
-.page-about .site-shell::after {
-  background:
-    linear-gradient(90deg, transparent 0 62%, rgba(255, 106, 0, 0.24) 62% 78%, transparent 78% 100%),
-    linear-gradient(180deg, transparent 0 18%, rgba(255, 43, 99, 0.16) 18% 34%, transparent 34% 100%),
-    linear-gradient(180deg, transparent 0 58%, rgba(45, 255, 0, 0.14) 58% 74%, transparent 74% 100%);
-  opacity: 0.7;
+  content: none;
 }
 
 .about-topbar {
@@ -516,7 +499,7 @@ button {
 .about-info-panel {
   position: relative;
   border: 4px solid var(--ink);
-  background: linear-gradient(135deg, rgba(57, 255, 20, 0.96), rgba(255, 106, 0, 0.9));
+  background: var(--green);
   box-shadow: var(--shadow);
 }
 
@@ -558,7 +541,7 @@ button {
   display: grid;
   place-items: center;
   padding: 18px;
-  background: linear-gradient(135deg, #ffb300, #ff6a00);
+  background: var(--cyan);
   border: 4px solid var(--ink);
   box-shadow: 14px 14px 0 rgba(36, 27, 42, 0.24);
 }
@@ -579,8 +562,7 @@ button {
   right: 22px;
   width: 120px;
   height: 120px;
-  background:
-    linear-gradient(90deg, var(--pink) 0 50%, var(--green) 50% 100%);
+  background: var(--orange);
   opacity: 0.18;
 }
 
@@ -647,7 +629,7 @@ button {
   margin: 0;
   padding: 18px 20px;
   border: 3px solid var(--ink);
-  background: linear-gradient(135deg, rgba(255, 179, 0, 0.98), rgba(57, 255, 20, 0.88));
+  background: var(--yellow);
   font-size: 1.08rem;
   line-height: 1.2;
   font-weight: 700;
@@ -688,12 +670,20 @@ button {
   gap: 12px;
   padding: 12px 14px;
   border: 3px solid var(--ink);
-  background: linear-gradient(135deg, rgba(57, 255, 20, 0.96), rgba(255, 106, 0, 0.88));
+  background: var(--orange);
   font-size: 0.85rem;
   font-weight: 900;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.08);
+}
+
+.tool-item:nth-child(2) {
+  background: var(--yellow);
+}
+
+.tool-item:nth-child(3) {
+  background: var(--green);
 }
 
 .tool-icon {
@@ -731,7 +721,7 @@ button {
   z-index: 1;
   padding: 28px;
   border: 4px solid var(--ink);
-  background: linear-gradient(135deg, rgba(255, 179, 0, 0.94), rgba(255, 106, 0, 0.94));
+  background: var(--orange);
   box-shadow: var(--shadow);
 }
 
@@ -799,7 +789,7 @@ button {
   place-items: center;
   border: 3px solid var(--ink);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.18);
+  background: var(--yellow);
   box-shadow: 4px 4px 0 rgba(36, 27, 42, 0.12);
 }
 
@@ -877,7 +867,7 @@ button {
   margin-top: clamp(140px, 18vh, 240px);
   padding: 30px;
   border: 4px solid var(--ink);
-  background: linear-gradient(135deg, rgba(57, 255, 20, 0.92), rgba(255, 179, 0, 0.9) 52%, rgba(255, 106, 0, 0.92));
+  background: var(--pink);
   box-shadow: var(--shadow);
 }
 
@@ -924,7 +914,7 @@ button {
   margin: 0;
   padding: 20px 22px;
   border: 3px solid var(--ink);
-  background: linear-gradient(135deg, rgba(255, 179, 0, 0.95), rgba(255, 106, 0, 0.9));
+  background: var(--yellow);
   font-size: 1.08rem;
   line-height: 1.35;
   font-weight: 700;
@@ -963,7 +953,7 @@ button {
 .contact-link-card {
   padding: 16px 18px;
   border: 3px solid var(--ink);
-  background: linear-gradient(135deg, rgba(57, 255, 20, 0.96), rgba(255, 179, 0, 0.88));
+  background: var(--green);
   color: var(--ink);
   text-decoration: none;
   font-size: 0.98rem;
@@ -971,6 +961,18 @@ button {
   letter-spacing: 0.03em;
   box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.1);
   transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+.contact-link-card:nth-child(2) {
+  background: var(--orange);
+}
+
+.contact-link-card:nth-child(3) {
+  background: var(--yellow);
+}
+
+.contact-link-card:nth-child(4) {
+  background: var(--cyan);
 }
 
 .about-meta {
@@ -985,7 +987,7 @@ button {
   gap: 6px;
   padding: 16px 18px;
   border: 3px solid var(--ink);
-  background: linear-gradient(135deg, rgba(255, 179, 0, 0.96), rgba(255, 106, 0, 0.92));
+  background: var(--orange);
   box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.1);
 }
 
