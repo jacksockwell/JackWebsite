@@ -373,6 +373,82 @@ button {
   text-align: center;
 }
 
+.construction-banner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  width: min(100%, 640px);
+  padding: 16px 22px;
+  border: 4px solid #111111;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      #fff200 0 22px,
+      #111111 22px 34px
+    );
+  box-shadow: 14px 14px 0 rgba(24, 16, 34, 0.28);
+  transform: rotate(-1.1deg);
+}
+
+.construction-banner::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 3px solid rgba(255, 242, 0, 0.78);
+  pointer-events: none;
+}
+
+.construction-icon-shell {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border: 3px solid #111111;
+  background: #ff2452;
+  box-shadow: 8px 8px 0 rgba(24, 16, 34, 0.22);
+}
+
+.construction-icon {
+  display: block;
+  width: 38px;
+  height: 38px;
+}
+
+.construction-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: start;
+  gap: 4px;
+  text-align: left;
+}
+
+.construction-title {
+  color: #111111;
+  font-size: clamp(1.55rem, 3vw, 2.5rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.construction-note {
+  display: inline-block;
+  padding: 6px 10px;
+  border: 2px solid #111111;
+  background: rgba(17, 17, 17, 0.88);
+  color: #fff200;
+  font-size: 0.88rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .home-bottom-cta {
   position: relative;
   z-index: 1;
@@ -2265,6 +2341,17 @@ button {
     letter-spacing: 0.07em;
   }
 
+  .construction-banner {
+    width: min(100%, 560px);
+    padding: 14px 18px;
+    gap: 14px;
+  }
+
+  .construction-icon-shell {
+    width: 64px;
+    height: 64px;
+  }
+
   .about-icon-panel {
     min-height: 360px;
   }
@@ -2288,6 +2375,38 @@ button {
 @media (max-width: 700px) {
   .site-shell {
     padding: 18px;
+  }
+
+  .construction-banner {
+    width: 100%;
+    padding: 12px 14px;
+    gap: 12px;
+    transform: rotate(0deg);
+    box-shadow: 10px 10px 0 rgba(24, 16, 34, 0.24);
+  }
+
+  .construction-banner::after {
+    inset: 6px;
+  }
+
+  .construction-icon-shell {
+    width: 54px;
+    height: 54px;
+    box-shadow: 6px 6px 0 rgba(24, 16, 34, 0.2);
+  }
+
+  .construction-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .construction-title {
+    font-size: clamp(1.15rem, 6vw, 1.8rem);
+  }
+
+  .construction-note {
+    font-size: 0.72rem;
+    padding: 5px 8px;
   }
 
   .scrapbook-piece {
