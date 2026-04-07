@@ -916,15 +916,7 @@ button {
 }
 
 .about-info-panel::after {
-  content: "";
-  position: absolute;
-  left: -26px;
-  top: 130px;
-  width: 128px;
-  height: 18px;
-  background: var(--cyan);
-  transform: rotate(-8deg);
-  box-shadow: 8px 8px 0 rgba(36, 27, 42, 0.2);
+  content: none;
 }
 
 .bio-chip {
@@ -953,19 +945,12 @@ button {
   padding: 8px 10px 8px 14px;
   background: var(--pink);
   color: var(--yellow);
-  transform: rotate(-1deg);
+  transform: rotate(-0.4deg);
+  box-shadow: 6px 6px 0 rgba(36, 27, 42, 0.18);
 }
 
 .bio-chip-combo::before {
-  content: "";
-  position: absolute;
-  top: -9px;
-  left: 18px;
-  width: 42px;
-  height: 13px;
-  background: rgba(255, 255, 255, 0.5);
-  border: 2px solid rgba(36, 27, 42, 0.12);
-  transform: rotate(-8deg);
+  content: none;
 }
 
 .bio-chip-primary {
@@ -982,7 +967,7 @@ button {
   background: var(--ink);
   color: var(--green);
   box-shadow: 4px 4px 0 rgba(36, 27, 42, 0.24);
-  transform: rotate(1.8deg);
+  transform: none;
 }
 
 .chip-pink {
@@ -1028,15 +1013,15 @@ button {
 }
 
 .about-hero-row-top {
-  transform: translateX(-8px);
+  transform: none;
 }
 
 .about-hero-row-middle {
-  transform: translateX(18px);
+  transform: translateX(8px);
 }
 
 .about-hero-row-bottom {
-  transform: translateX(54px);
+  transform: translateX(18px);
 }
 
 .about-hero-word {
@@ -1045,54 +1030,46 @@ button {
   padding: 0.04em 0.16em 0.12em;
   border: 3px solid var(--ink);
   line-height: 0.92;
-  box-shadow: 10px 10px 0 rgba(36, 27, 42, 0.24);
+  box-shadow: 6px 6px 0 rgba(36, 27, 42, 0.18);
 }
 
 .about-hero-word::before {
-  content: "";
-  position: absolute;
-  top: -10px;
-  left: 12px;
-  width: 44px;
-  height: 14px;
-  background: rgba(255, 255, 255, 0.5);
-  border: 2px solid rgba(36, 27, 42, 0.12);
-  box-shadow: 2px 2px 0 rgba(36, 27, 42, 0.08);
-  transform: rotate(-7deg);
+  content: none;
 }
 
 .about-hero-word::after {
   content: "";
   position: absolute;
-  inset: auto -16px -14px 30%;
-  height: 16px;
+  inset: auto -10px -8px 34%;
+  height: 10px;
   z-index: -1;
   background: var(--orange);
   transform: skew(-18deg);
+  opacity: 0.82;
 }
 
 .about-hero-word-big {
-  font-size: 1.08em;
+  font-size: 1.02em;
   padding-inline: 0.2em;
 }
 
 .about-hero-word-small {
-  font-size: 0.54em;
+  font-size: 0.5em;
   letter-spacing: 0.08em;
-  padding-bottom: 0.18em;
-  transform: translateY(-4px) rotate(-1.8deg);
+  padding-bottom: 0.15em;
+  transform: translateY(-1px);
 }
 
 .about-hero-word-pink {
   background: var(--pink);
   color: #fff7fd;
-  transform: rotate(-1.8deg);
+  transform: rotate(-0.8deg);
 }
 
 .about-hero-word-paper {
   background: #fff6ea;
   color: var(--ink);
-  transform: rotate(0.8deg);
+  transform: rotate(0.35deg);
 }
 
 .about-hero-word-cyan {
@@ -1103,26 +1080,63 @@ button {
 .about-hero-word-yellow {
   background: var(--yellow);
   color: var(--ink);
-  transform: rotate(1.4deg);
+  transform: rotate(0.6deg);
 }
 
 .about-hero-word-ink {
   background: var(--ink);
   color: var(--green);
-  transform: rotate(-1deg);
+  transform: rotate(-0.45deg);
 }
 
 .about-hero-word-paper::before {
-  left: auto;
-  right: 18px;
-  transform: rotate(8deg);
+  content: none;
 }
 
 .about-hero-word-ink::before {
-  background: rgba(255, 221, 120, 0.4);
-  left: auto;
-  right: 14px;
-  transform: rotate(5deg);
+  content: none;
+}
+
+.page-about .about-heading .scrapbook-piece,
+.page-about .about-story-header .scrapbook-piece,
+.page-about .social-header .scrapbook-piece,
+.page-about .contact-header .scrapbook-piece,
+.page-about .back-link .scrapbook-piece {
+  box-shadow: 6px 6px 0 rgba(36, 27, 42, 0.16);
+}
+
+.page-about .about-heading .scrapbook-piece::before,
+.page-about .about-story-header .scrapbook-piece::before,
+.page-about .social-header .scrapbook-piece::before,
+.page-about .contact-header .scrapbook-piece::before,
+.page-about .back-link .scrapbook-piece::before {
+  content: none;
+}
+
+.page-about .about-heading .scrapbook-piece::after,
+.page-about .about-story-header .scrapbook-piece::after,
+.page-about .social-header .scrapbook-piece::after,
+.page-about .contact-header .scrapbook-piece::after,
+.page-about .back-link .scrapbook-piece::after {
+  inset: auto -10px -8px 36%;
+  height: 10px;
+  opacity: 0.78;
+}
+
+.page-about .scrapbook-piece-tilt-left {
+  transform: rotate(-0.55deg);
+}
+
+.page-about .scrapbook-piece-tilt-right {
+  transform: rotate(0.55deg);
+}
+
+.page-about .scrapbook-piece-tilt-up {
+  transform: translateY(-2px) rotate(-0.3deg);
+}
+
+.page-about .about-heading-title .scrapbook-piece-title {
+  font-size: clamp(2.4rem, 7vw, 5rem);
 }
 
 .about-hero-kicker {
