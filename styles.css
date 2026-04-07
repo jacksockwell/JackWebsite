@@ -122,10 +122,8 @@ button {
 }
 
 .bg-block-pink {
-  width: 25vw;
-  min-width: 150px;
-  height: 34vh;
-  min-height: 180px;
+  width: clamp(150px, 25vw, 320px);
+  height: clamp(150px, 25vw, 320px);
   left: 10%;
   bottom: -2%;
   top: auto;
@@ -136,10 +134,8 @@ button {
 }
 
 .bg-block-green {
-  width: 34vw;
-  min-width: 260px;
-  height: 28vh;
-  min-height: 180px;
+  width: clamp(180px, 28vw, 360px);
+  height: clamp(180px, 28vw, 360px);
   top: 10%;
   left: 0;
   right: auto;
@@ -150,10 +146,8 @@ button {
 }
 
 .bg-block-yellow {
-  width: 22vw;
-  min-width: 170px;
-  height: 24vh;
-  min-height: 150px;
+  width: clamp(150px, 22vw, 280px);
+  height: clamp(150px, 22vw, 280px);
   top: 0;
   right: 10%;
   bottom: auto;
@@ -173,10 +167,8 @@ button {
 .bg-line-right {
   right: 8%;
   bottom: 12%;
-  width: 32vw;
-  min-width: 240px;
-  height: 34vh;
-  min-height: 190px;
+  width: clamp(190px, 26vw, 340px);
+  height: clamp(190px, 26vw, 340px);
   border: 0;
   transform: none;
   opacity: 1;
@@ -513,24 +505,24 @@ button {
 .about-floating-pink {
   top: 70px;
   left: 44%;
-  width: 210px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
   background: var(--pink);
 }
 
 .about-floating-green {
   right: 8%;
   top: 120px;
-  width: 160px;
-  height: 110px;
+  width: 120px;
+  height: 120px;
   background: var(--green);
 }
 
 .about-floating-yellow {
   left: 54%;
   bottom: 72px;
-  width: 190px;
-  height: 130px;
+  width: 150px;
+  height: 150px;
   background: var(--yellow);
 }
 
@@ -1585,8 +1577,8 @@ button {
   }
 
   .about-floating-pink {
-    width: 120px;
-    height: 90px;
+    width: 110px;
+    height: 110px;
     left: auto;
     right: 12%;
   }
@@ -1598,8 +1590,8 @@ button {
   }
 
   .about-floating-yellow {
-    width: 110px;
-    height: 80px;
+    width: 96px;
+    height: 96px;
     left: 48%;
     bottom: 36px;
   }

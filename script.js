@@ -1,5 +1,5 @@
 const shell = document.getElementById("siteShell");
-const shapes = document.querySelectorAll(".bg-block, .bg-line");
+const shapes = document.querySelectorAll(".bg-block, .bg-line, .about-floating");
 const panels = document.querySelectorAll(".parallax-panel");
 
 let targetX = 0;
@@ -7,12 +7,106 @@ let targetY = 0;
 let currentX = 0;
 let currentY = 0;
 
-const baseTransforms = new Map([
-  ["bg-block-pink", "rotate(-12deg)"],
-  ["bg-block-green", "rotate(10deg)"],
-  ["bg-block-yellow", "rotate(-8deg)"],
-  ["bg-line-right", "skew(-16deg)"],
-]);
+const decorPalette = ["#ff0037", "#00ff2a", "#fbff00", "#ffac12", "#ff0f7b", "#1fdcff"];
+
+function randomBetween(min, max) {
+  return min + Math.random() * (max - min);
+}
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function setSquareStyles(element, containerRect, config) {
+  const minDimension = Math.min(containerRect.width, containerRect.height);
+  const size = Math.round(
+    clamp(
+      minDimension * randomBetween(config.sizeRange[0], config.sizeRange[1]),
+      config.pixelRange[0],
+      config.pixelRange[1],
+    ),
+  );
+  const left = randomBetween(config.leftRange[0], config.leftRange[1]);
+  const top = randomBetween(config.topRange[0], config.topRange[1]);
+  const color = decorPalette[Math.floor(Math.random() * decorPalette.length)];
+
+  element.style.width = `${size}px`;
+  element.style.height = `${size}px`;
+  element.style.left = `${left}%`;
+  element.style.top = `${top}%`;
+  element.style.right = "auto";
+  element.style.bottom = "auto";
+  element.style.background = `linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.03)), ${color}`;
+  element.dataset.baseTransform = "";
+}
+
+function randomizeDecorSquares() {
+  const shellSquares = Array.from(document.querySelectorAll(".bg-block, .bg-line-right"));
+  const aboutRemix = document.querySelector(".about-remix");
+  const aboutSquares = Array.from(document.querySelectorAll(".about-floating"));
+
+  if (shell && shellSquares.length) {
+    const shellRect = shell.getBoundingClientRect();
+    const shellConfigs = [
+      {
+        sizeRange: [0.2, 0.3],
+        pixelRange: [140, 320],
+        leftRange: [4, 18],
+        topRange: [56, 72],
+      },
+      {
+        sizeRange: [0.22, 0.34],
+        pixelRange: [180, 380],
+        leftRange: [-4, 8],
+        topRange: [8, 24],
+      },
+      {
+        sizeRange: [0.16, 0.24],
+        pixelRange: [130, 260],
+        leftRange: [72, 84],
+        topRange: [2, 14],
+      },
+      {
+        sizeRange: [0.22, 0.3],
+        pixelRange: [170, 320],
+        leftRange: [72, 84],
+        topRange: [48, 66],
+      },
+    ];
+
+    shellSquares.forEach((square, index) => {
+      setSquareStyles(square, shellRect, shellConfigs[index] || shellConfigs[shellConfigs.length - 1]);
+    });
+  }
+
+  if (aboutRemix && aboutSquares.length) {
+    const remixRect = aboutRemix.getBoundingClientRect();
+    const aboutConfigs = [
+      {
+        sizeRange: [0.14, 0.22],
+        pixelRange: [110, 210],
+        leftRange: [48, 62],
+        topRange: [4, 16],
+      },
+      {
+        sizeRange: [0.1, 0.16],
+        pixelRange: [90, 150],
+        leftRange: [76, 86],
+        topRange: [16, 30],
+      },
+      {
+        sizeRange: [0.12, 0.18],
+        pixelRange: [100, 170],
+        leftRange: [50, 64],
+        topRange: [72, 82],
+      },
+    ];
+
+    aboutSquares.forEach((square, index) => {
+      setSquareStyles(square, remixRect, aboutConfigs[index] || aboutConfigs[aboutConfigs.length - 1]);
+    });
+  }
+}
 
 function animateParallax() {
   currentX += (targetX - currentX) * 0.08;
@@ -22,8 +116,7 @@ function animateParallax() {
     const depth = Number(shape.dataset.depth || 12);
     const moveX = currentX / depth;
     const moveY = currentY / depth;
-    const transformClass = Array.from(shape.classList).find((className) => baseTransforms.has(className));
-    const baseTransform = baseTransforms.get(transformClass) || "";
+    const baseTransform = shape.dataset.baseTransform || "";
     shape.style.transform = `translate(${moveX}px, ${moveY}px) ${baseTransform}`.trim();
   });
 
@@ -42,6 +135,8 @@ function animateParallax() {
 }
 
 if (shell) {
+  randomizeDecorSquares();
+
   shell.addEventListener("mousemove", (event) => {
     const rect = shell.getBoundingClientRect();
     const relativeX = event.clientX - rect.left;
