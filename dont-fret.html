@@ -9,23 +9,74 @@
   <style>
     body.page-fret {
       margin: 0;
-      background: #c40018;
+      background: #060001;
     }
 
     .page-fret .site-shell {
+      position: relative;
+      isolation: isolate;
       min-height: 100vh;
       display: grid;
       place-items: center;
       padding: 24px;
-      background: #c40018;
+      overflow: hidden;
+      background: #060001;
     }
 
     .page-fret .site-shell::before,
     .page-fret .site-shell::after {
-      content: none;
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .page-fret .site-shell::before {
+      inset: -14%;
+      z-index: 0;
+      background:
+        repeating-conic-gradient(from 45deg, #050505 0 25%, #940014 0 50%) 50% / 10px 10px;
+      transform-origin: center;
+      animation: fret-checker-warp 30s ease-in-out infinite alternate;
+    }
+
+    .page-fret .site-shell::after {
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255, 18, 62, 0.1), transparent 55%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.5));
+    }
+
+    @keyframes fret-checker-warp {
+      0% {
+        transform: translate3d(-2%, -1%, 0) scale(1) skew(0deg, 0deg) rotate(0deg);
+        background-position: 0 0;
+      }
+
+      25% {
+        transform: translate3d(1%, -2%, 0) scale(1.05) skew(1.4deg, -1deg) rotate(-0.4deg);
+        background-position: 10px -6px;
+      }
+
+      50% {
+        transform: translate3d(-1%, 2%, 0) scale(1.09) skew(-1.2deg, 1.5deg) rotate(0.6deg);
+        background-position: -8px 12px;
+      }
+
+      75% {
+        transform: translate3d(2%, 1%, 0) scale(1.06) skew(1deg, 1.2deg) rotate(-0.6deg);
+        background-position: 12px 4px;
+      }
+
+      100% {
+        transform: translate3d(-2%, -2%, 0) scale(1.11) skew(-1.5deg, -1deg) rotate(0.5deg);
+        background-position: -10px -10px;
+      }
     }
 
     .fret-steam-only {
+      position: relative;
+      z-index: 1;
       width: min(720px, 100%);
       display: grid;
       gap: 16px;
