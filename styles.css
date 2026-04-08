@@ -1759,11 +1759,11 @@ body.clean-shot-mode .panel-close {
 
 .tool-icon {
   flex: 0 0 auto;
-  min-width: 54px;
-  height: 54px;
+  min-width: 58px;
+  height: 58px;
   display: grid;
   place-items: center;
-  padding: 8px;
+  padding: 6px;
   border: 3px solid rgba(255, 255, 255, 0.82);
   border-radius: 14px;
   background: rgba(245, 248, 255, 0.98);
@@ -1773,8 +1773,19 @@ body.clean-shot-mode .panel-close {
 
 .tool-icon img {
   display: block;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.tool-icon-substance img {
+  width: 36px;
+  height: 35px;
+}
+
+.tool-icon-unreal img {
+  width: 34px;
+  height: 34px;
 }
 
 .about-story-panel {
