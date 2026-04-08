@@ -11,11 +11,18 @@
   <link rel="stylesheet" href="styles.css?v=20260408-fret1" />
   <style>
     body.page-fret {
+      --fret-black: #060001;
+      --fret-black-soft: #110206;
+      --fret-red-deep: #4f0010;
+      --fret-red: #9e0223;
+      --fret-red-bright: #ea214d;
+      --fret-red-hot: #ff5f84;
+      --fret-line: rgba(255, 95, 132, 0.34);
+      --fret-text: #fff1ef;
+      --fret-muted: rgba(255, 241, 239, 0.82);
       margin: 0;
-      background:
-        radial-gradient(circle at top, rgba(255, 35, 74, 0.22), transparent 42%),
-        linear-gradient(180deg, #130306 0%, #090102 48%, #050001 100%);
-      color: #fff7ef;
+      background: var(--fret-black);
+      color: var(--fret-text);
     }
 
     .page-fret .site-shell {
@@ -24,39 +31,69 @@
       min-height: 100vh;
       padding: clamp(22px, 4vw, 38px);
       overflow: hidden;
-      background: transparent;
+      background: var(--fret-black);
     }
 
     .page-fret .site-shell::before,
     .page-fret .site-shell::after {
       content: "";
       position: absolute;
-      inset: 0;
       pointer-events: none;
     }
 
     .page-fret .site-shell::before {
-      opacity: 0.24;
+      inset: -14%;
+      z-index: 0;
+      opacity: 0.34;
       background:
-        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-      background-size: 38px 38px;
-      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2));
+        repeating-conic-gradient(from 45deg, #050505 0 25%, #a10828 0 50%) 50% / 14px 14px;
+      transform-origin: center;
+      animation: fret-checker-warp 30s ease-in-out infinite alternate;
     }
 
     .page-fret .site-shell::after {
-      inset: 18px;
-      border: 3px solid rgba(255, 91, 130, 0.2);
-      box-shadow: inset 0 0 0 1px rgba(255, 220, 120, 0.08);
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 22% 18%, rgba(255, 42, 88, 0.18), transparent 28%),
+        radial-gradient(circle at 80% 24%, rgba(255, 24, 64, 0.16), transparent 32%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.58));
+    }
+
+    @keyframes fret-checker-warp {
+      0% {
+        transform: translate3d(-2%, -1%, 0) scale(1) skew(0deg, 0deg) rotate(0deg);
+        background-position: 0 0;
+      }
+
+      25% {
+        transform: translate3d(1%, -2%, 0) scale(1.05) skew(1.4deg, -1deg) rotate(-0.4deg);
+        background-position: 10px -6px;
+      }
+
+      50% {
+        transform: translate3d(-1%, 2%, 0) scale(1.09) skew(-1.2deg, 1.5deg) rotate(0.6deg);
+        background-position: -8px 12px;
+      }
+
+      75% {
+        transform: translate3d(2%, 1%, 0) scale(1.06) skew(1deg, 1.2deg) rotate(-0.6deg);
+        background-position: 12px 4px;
+      }
+
+      100% {
+        transform: translate3d(-2%, -2%, 0) scale(1.11) skew(-1.5deg, -1deg) rotate(0.5deg);
+        background-position: -10px -10px;
+      }
     }
 
     .fret-page {
       position: relative;
       z-index: 1;
-      width: min(1240px, 100%);
+      width: min(1220px, 100%);
       margin: 0 auto;
       display: grid;
-      gap: 24px;
+      gap: 26px;
     }
 
     .fret-nav {
@@ -79,24 +116,26 @@
       place-items: center;
       min-height: 52px;
       padding: 12px 18px;
-      border: 3px solid #1a0004;
+      border: 2px solid var(--fret-line);
       text-decoration: none;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       font-size: 0.78rem;
       font-weight: 900;
-      box-shadow: 8px 8px 0 rgba(18, 2, 6, 0.24);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.04),
+        8px 8px 0 rgba(8, 1, 3, 0.54);
       transition: transform 0.14s ease, box-shadow 0.14s ease;
     }
 
     .fret-link {
-      background: #ff214f;
-      color: #fff7ef;
+      background: linear-gradient(180deg, var(--fret-red-hot), var(--fret-red));
+      color: var(--fret-text);
     }
 
     .fret-link-secondary {
-      background: #ffd24a;
-      color: #1a0905;
+      background: rgba(10, 1, 4, 0.82);
+      color: var(--fret-text);
     }
 
     .fret-link:hover,
@@ -104,7 +143,9 @@
     .fret-link-secondary:hover,
     .fret-link-secondary:focus-visible {
       transform: translate(-3px, -3px);
-      box-shadow: 12px 12px 0 rgba(18, 2, 6, 0.28);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        12px 12px 0 rgba(8, 1, 3, 0.58);
       outline: none;
     }
 
@@ -120,9 +161,10 @@
       align-items: center;
       min-height: 36px;
       padding: 8px 12px;
-      border: 2px solid rgba(255, 247, 239, 0.2);
-      background: rgba(15, 3, 6, 0.72);
-      color: #fff7ef;
+      border: 1px solid var(--fret-line);
+      background: rgba(8, 1, 3, 0.78);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03);
+      color: var(--fret-text);
       font-size: 0.72rem;
       font-weight: 900;
       letter-spacing: 0.14em;
@@ -130,9 +172,9 @@
     }
 
     .fret-chip-highlight {
-      background: #ffd24a;
-      color: #1c0904;
-      border-color: #1c0904;
+      background: linear-gradient(180deg, #e22b53, #8c011b);
+      color: var(--fret-text);
+      border-color: rgba(255, 124, 152, 0.48);
     }
 
     .fret-hero {
@@ -146,8 +188,10 @@
     .fret-media-card,
     .fret-section,
     .fret-steam-panel {
-      border: 4px solid #180004;
-      box-shadow: 14px 14px 0 rgba(18, 2, 6, 0.24);
+      border: 2px solid var(--fret-line);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.04),
+        14px 14px 0 rgba(8, 1, 3, 0.56);
     }
 
     .fret-copy {
@@ -156,13 +200,13 @@
       gap: 18px;
       padding: clamp(24px, 4vw, 34px);
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 24%),
-        linear-gradient(135deg, #200106 0%, #780017 62%, #ff234b 100%);
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 24%),
+        linear-gradient(135deg, rgba(122, 0, 28, 0.52) 0%, rgba(15, 1, 5, 0.95) 58%, rgba(78, 0, 17, 0.9) 100%);
     }
 
     .fret-kicker {
       margin: 0;
-      color: #ffd24a;
+      color: var(--fret-red-hot);
       font-size: 0.86rem;
       font-weight: 900;
       letter-spacing: 0.18em;
@@ -175,16 +219,16 @@
       line-height: 0.88;
       text-transform: uppercase;
       letter-spacing: 0.02em;
-      color: #fff6db;
+      color: var(--fret-text);
       text-shadow:
-        5px 5px 0 rgba(20, 2, 6, 0.42),
-        0 0 24px rgba(255, 210, 74, 0.16);
+        5px 5px 0 rgba(6, 0, 1, 0.56),
+        0 0 20px rgba(234, 33, 77, 0.2);
     }
 
     .fret-lead {
       margin: 0;
       max-width: 34rem;
-      color: #fff7ef;
+      color: var(--fret-text);
       font-size: clamp(1.08rem, 2vw, 1.28rem);
       line-height: 1.42;
       font-weight: 700;
@@ -193,7 +237,7 @@
     .fret-copy p {
       margin: 0;
       max-width: 42rem;
-      color: rgba(255, 247, 239, 0.92);
+      color: var(--fret-muted);
       font-size: 1rem;
       line-height: 1.56;
     }
@@ -208,8 +252,9 @@
 
     .fret-points li {
       padding: 12px 14px;
-      border-left: 5px solid #ffd24a;
-      background: rgba(10, 1, 4, 0.46);
+      border: 1px solid var(--fret-line);
+      border-left: 5px solid var(--fret-red-hot);
+      background: linear-gradient(90deg, rgba(120, 0, 27, 0.34), rgba(10, 1, 4, 0.5));
       font-size: 0.98rem;
       line-height: 1.45;
       font-weight: 700;
@@ -217,7 +262,9 @@
 
     .fret-media-card {
       overflow: hidden;
-      background: #090102;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 24%),
+        #070102;
       display: grid;
       align-content: stretch;
     }
@@ -237,9 +284,9 @@
       align-items: center;
       justify-content: space-between;
       padding: 14px 16px;
-      border-top: 3px solid #180004;
-      background: #ffd24a;
-      color: #180004;
+      border-top: 1px solid var(--fret-line);
+      background: linear-gradient(135deg, rgba(16, 1, 5, 0.98), rgba(90, 0, 20, 0.9));
+      color: var(--fret-muted);
       font-size: 0.9rem;
       font-weight: 900;
       line-height: 1.35;
@@ -255,8 +302,8 @@
     .fret-section {
       padding: 22px;
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 26%),
-        #120104;
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 24%),
+        rgba(9, 1, 4, 0.92);
     }
 
     .fret-section h2,
@@ -266,13 +313,14 @@
       line-height: 0.96;
       text-transform: uppercase;
       letter-spacing: 0.03em;
-      color: #ffe27e;
+      color: var(--fret-text);
+      text-shadow: 0 0 18px rgba(234, 33, 77, 0.16);
     }
 
     .fret-section p,
     .fret-steam-panel p {
       margin: 0 0 16px;
-      color: rgba(255, 247, 239, 0.9);
+      color: var(--fret-muted);
       font-size: 0.98rem;
       line-height: 1.58;
     }
@@ -286,9 +334,11 @@
     .fret-preview-card {
       margin: 0;
       overflow: hidden;
-      border: 3px solid rgba(255, 255, 255, 0.14);
+      border: 1px solid var(--fret-line);
       background: #090102;
-      box-shadow: 8px 8px 0 rgba(18, 2, 6, 0.22);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.03),
+        8px 8px 0 rgba(8, 1, 3, 0.44);
     }
 
     .fret-preview-card img {
@@ -300,7 +350,9 @@
 
     .fret-preview-card figcaption {
       padding: 12px 12px 14px;
-      color: #fff7ef;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(7, 1, 3, 0.92);
+      color: var(--fret-muted);
       font-size: 0.84rem;
       line-height: 1.45;
       font-weight: 700;
@@ -309,9 +361,10 @@
     .fret-note {
       margin: 16px 0 0;
       padding: 14px 16px;
-      border: 2px solid rgba(255, 210, 74, 0.34);
-      background: rgba(255, 210, 74, 0.08);
-      color: #fff3c4;
+      border: 1px solid var(--fret-line);
+      border-left: 5px solid var(--fret-red-hot);
+      background: rgba(100, 0, 24, 0.24);
+      color: var(--fret-text);
       font-size: 0.92rem;
       line-height: 1.5;
       font-weight: 700;
@@ -327,9 +380,10 @@
 
     .fret-contrib-list li {
       padding: 14px 14px 14px 16px;
-      border-left: 5px solid #ff234b;
-      background: rgba(255, 255, 255, 0.05);
-      color: #fff7ef;
+      border: 1px solid var(--fret-line);
+      border-left: 5px solid var(--fret-red-hot);
+      background: linear-gradient(90deg, rgba(112, 0, 25, 0.28), rgba(255, 255, 255, 0.03));
+      color: var(--fret-text);
       font-size: 0.96rem;
       line-height: 1.48;
       font-weight: 700;
@@ -338,16 +392,16 @@
     .fret-steam-panel {
       padding: 22px;
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 24%),
-        linear-gradient(135deg, #2a0008 0%, #6f0014 58%, #a80722 100%);
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 24%),
+        linear-gradient(135deg, rgba(14, 1, 4, 0.96) 0%, rgba(62, 0, 13, 0.94) 100%);
     }
 
     .steam-shell {
       min-height: auto;
       padding: 18px;
-      background: rgba(8, 1, 3, 0.5);
-      border: 3px solid rgba(255, 247, 239, 0.12);
-      box-shadow: none;
+      background: rgba(4, 0, 1, 0.7);
+      border: 1px solid var(--fret-line);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
     }
 
     .steam-widget {
