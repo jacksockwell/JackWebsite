@@ -997,20 +997,15 @@ function setPortfolioView(view, options = {}) {
 if (portfolioLauncher && portfolioContent && portfolioPanels.length && portfolioViewButtons.length) {
   initPortfolioLauncherRotator();
 
+  if (window.location.hash && window.history?.replaceState) {
+    window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+  }
+
   portfolioViewButtons.forEach((button) => {
     button.addEventListener("click", () => {
       setPortfolioView(button.dataset.portfolioView || "");
     });
   });
-
-  const initialView = window.location.hash.replace("#", "").trim().toLowerCase();
-
-  if (initialView) {
-    setPortfolioView(initialView, {
-      scroll: false,
-      updateHash: false,
-    });
-  }
 
   window.addEventListener("hashchange", () => {
     const nextView = window.location.hash.replace("#", "").trim().toLowerCase();
