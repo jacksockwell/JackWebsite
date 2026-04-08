@@ -720,12 +720,12 @@ const portfolioViewButtons = Array.from(document.querySelectorAll("[data-portfol
 const portfolioPanels = Array.from(document.querySelectorAll("[data-portfolio-panel]"));
 const portfolioLightbox = document.getElementById("portfolioLightbox");
 const portfolioLightboxImage = document.getElementById("portfolioLightboxImage");
-const portfolioLightboxVideo = document.getElementById("portfolioLightboxVideo");
 const portfolioLightboxCaption = document.getElementById("portfolioLightboxCaption");
 const portfolioLightboxTitle = document.getElementById("portfolioLightboxTitle");
 const portfolioLightboxMeta = document.getElementById("portfolioLightboxMeta");
 const portfolioLightboxCounter = document.getElementById("portfolioLightboxCounter");
 const portfolioLightboxStageFilters = document.getElementById("portfolioLightboxStageFilters");
+const portfolioLightboxThumbs = document.getElementById("portfolioLightboxThumbs");
 const portfolioLightboxPrev = document.getElementById("portfolioLightboxPrev");
 const portfolioLightboxNext = document.getElementById("portfolioLightboxNext");
 const portfolioLightboxClose = document.getElementById("portfolioLightboxClose");
@@ -769,6 +769,16 @@ const portfolioSectionLabels = {
   art: "Art",
   wips: "WIPs",
 };
+const portfolioVideoPlaceholder = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#0f131b"/>
+  <rect x="60" y="60" width="1080" height="680" rx="30" fill="#171d28" stroke="#394255" stroke-width="8"/>
+  <circle cx="600" cy="360" r="118" fill="#24314d" stroke="#7aa2ff" stroke-width="10"/>
+  <polygon points="560,285 560,435 690,360" fill="#f5f8ff"/>
+  <text x="600" y="585" text-anchor="middle" fill="#f5f8ff" font-family="Arial, sans-serif" font-size="64" font-weight="700">Video Clip</text>
+  <text x="600" y="645" text-anchor="middle" fill="#aeb7cc" font-family="Arial, sans-serif" font-size="32">Shown as a still in the gallery viewer</text>
+</svg>
+`)}`;
 
 function normalizePortfolioSection(value) {
   return String(value || "").trim().toLowerCase() === "wips" ? "wips" : "art";
@@ -794,6 +804,14 @@ function normalizePortfolioStage(value, section = "art") {
 
 function getPortfolioStageLabel(stage) {
   return portfolioStageLabels[stage] || portfolioStageLabels.finished;
+}
+
+function getPortfolioMediaPreviewSrc(media) {
+  if (media.type === "video") {
+    return media.poster || portfolioVideoPlaceholder;
+  }
+
+  return media.src;
 }
 
 function guessPortfolioMediaType(src, explicitType = "") {
@@ -960,28 +978,9 @@ function buildPortfolioStageSummary(item) {
 }
 
 function createPortfolioPreview(media) {
-  if (media.type === "video") {
-    const video = document.createElement("video");
-    video.src = media.src;
-
-    if (media.poster) {
-      video.poster = media.poster;
-    }
-
-    video.className = "portfolio-post-preview";
-    video.muted = true;
-    video.loop = true;
-    video.autoplay = true;
-    video.playsInline = true;
-    video.setAttribute("aria-hidden", "true");
-    video.tabIndex = -1;
-
-    return video;
-  }
-
   const image = document.createElement("img");
-  image.src = media.src;
-  image.alt = media.alt || "Portfolio preview";
+  image.src = getPortfolioMediaPreviewSrc(media);
+  image.alt = media.alt || (media.type === "video" ? "Portfolio clip preview" : "Portfolio preview");
   image.className = "portfolio-post-preview";
 
   return image;
@@ -1313,11 +1312,11 @@ function initPortfolioGallery() {
     !portfolioWipGrid ||
     !portfolioLightbox ||
     !portfolioLightboxImage ||
-    !portfolioLightboxVideo ||
     !portfolioLightboxCaption ||
     !portfolioLightboxTitle ||
     !portfolioLightboxMeta ||
-    !portfolioLightboxCounter
+    !portfolioLightboxCounter ||
+    !portfolioLightboxThumbs
   ) {
     return;
   }
@@ -1342,13 +1341,6 @@ function initPortfolioGallery() {
   let activePortfolioMediaIndex = 0;
   let activePortfolioStageFilter = "all";
   let activePortfolioVisibleMedia = [];
-
-  function stopPortfolioLightboxVideo() {
-    portfolioLightboxVideo.pause();
-    portfolioLightboxVideo.removeAttribute("src");
-    portfolioLightboxVideo.removeAttribute("poster");
-    portfolioLightboxVideo.load();
-  }
 
   function getDefaultPortfolioStageFilter(post) {
     if (!post) {
@@ -1410,6 +1402,55 @@ function initPortfolioGallery() {
     portfolioLightboxStageFilters.hidden = false;
   }
 
+  function renderPortfolioLightboxThumbs() {
+    portfolioLightboxThumbs.replaceChildren();
+
+    if (activePortfolioVisibleMedia.length <= 1) {
+      portfolioLightboxThumbs.hidden = true;
+      return;
+    }
+
+    activePortfolioVisibleMedia.forEach((media, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "portfolio-lightbox-thumb";
+      button.classList.toggle("is-active", index === activePortfolioMediaIndex);
+
+      if (media.type === "video") {
+        button.classList.add("is-video");
+      }
+
+      button.setAttribute("aria-label", media.type === "video" ? `Show clip ${index + 1}` : `Show image ${index + 1}`);
+      button.addEventListener("click", () => {
+        renderPortfolioLightbox(activePortfolioIndex, index);
+      });
+
+      const image = document.createElement("img");
+      image.className = "portfolio-lightbox-thumb-preview";
+      image.src = getPortfolioMediaPreviewSrc(media);
+      image.alt = media.alt || (media.type === "video" ? "Portfolio clip thumbnail" : "Portfolio thumbnail");
+      button.append(image);
+
+      if (media.type === "video") {
+        const badge = document.createElement("span");
+        badge.className = "portfolio-lightbox-thumb-badge";
+        badge.textContent = "Clip";
+        button.append(badge);
+      }
+
+      portfolioLightboxThumbs.append(button);
+    });
+
+    portfolioLightboxThumbs.hidden = false;
+
+    const activeThumb = portfolioLightboxThumbs.querySelector(".portfolio-lightbox-thumb.is-active");
+    activeThumb?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+  }
+
   function renderPortfolioLightbox(postIndex, mediaIndex = 0) {
     activePortfolioIndex = (postIndex + portfolioData.length) % portfolioData.length;
     const activePost = portfolioData[activePortfolioIndex];
@@ -1422,35 +1463,14 @@ function initPortfolioGallery() {
     activePortfolioMediaIndex = (mediaIndex + activePortfolioVisibleMedia.length) % activePortfolioVisibleMedia.length;
     const activeMedia = activePortfolioVisibleMedia[activePortfolioMediaIndex];
 
-    if (activeMedia.type === "video") {
-      portfolioLightboxImage.hidden = true;
-      portfolioLightboxVideo.hidden = false;
-      portfolioLightboxVideo.src = activeMedia.src;
-
-      if (activeMedia.poster) {
-        portfolioLightboxVideo.poster = activeMedia.poster;
-      } else {
-        portfolioLightboxVideo.removeAttribute("poster");
-      }
-
-      portfolioLightboxVideo.loop = true;
-      portfolioLightboxVideo.muted = true;
-
-      const playAttempt = portfolioLightboxVideo.play();
-
-      if (playAttempt?.catch) {
-        playAttempt.catch(() => {});
-      }
-    } else {
-      stopPortfolioLightboxVideo();
-      portfolioLightboxVideo.hidden = true;
-      portfolioLightboxImage.hidden = false;
-      portfolioLightboxImage.src = activeMedia.src;
-      portfolioLightboxImage.alt = activeMedia.alt;
-    }
+    portfolioLightboxImage.src = getPortfolioMediaPreviewSrc(activeMedia);
+    portfolioLightboxImage.alt = activeMedia.alt || (activeMedia.type === "video" ? "Portfolio clip preview" : "Portfolio enlarged image");
 
     portfolioLightboxTitle.textContent = activePost.title;
-    portfolioLightboxMeta.textContent = buildPortfolioMetaLine(activePost, [getPortfolioStageLabel(activeMedia.stage)]);
+    portfolioLightboxMeta.textContent = buildPortfolioMetaLine(activePost, [
+      getPortfolioStageLabel(activeMedia.stage),
+      activeMedia.type === "video" ? "Clip" : "",
+    ]);
     portfolioLightboxCaption.textContent = activeMedia.caption || activePost.text || "Selected Work";
     portfolioLightboxCounter.textContent =
       activePortfolioVisibleMedia.length > 1
@@ -1461,6 +1481,7 @@ function initPortfolioGallery() {
     portfolioLightboxPrev.hidden = activePortfolioVisibleMedia.length <= 1;
     portfolioLightboxNext.hidden = activePortfolioVisibleMedia.length <= 1;
     syncPortfolioStageFilters(activePost);
+    renderPortfolioLightboxThumbs();
   }
 
   function openPortfolioLightbox(index) {
@@ -1472,14 +1493,15 @@ function initPortfolioGallery() {
 
   function closePortfolioLightbox() {
     portfolioLightbox.hidden = true;
-    stopPortfolioLightboxVideo();
-    portfolioLightboxVideo.hidden = true;
-    portfolioLightboxImage.hidden = false;
+    portfolioLightboxImage.removeAttribute("src");
 
     if (portfolioLightboxStageFilters) {
       portfolioLightboxStageFilters.hidden = true;
       portfolioLightboxStageFilters.replaceChildren();
     }
+
+    portfolioLightboxThumbs.hidden = true;
+    portfolioLightboxThumbs.replaceChildren();
 
     document.body.style.overflow = "";
   }

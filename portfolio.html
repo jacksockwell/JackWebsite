@@ -70,10 +70,12 @@
 
   <div class="portfolio-lightbox" id="portfolioLightbox" hidden>
     <button class="portfolio-lightbox-close" id="portfolioLightboxClose" type="button" aria-label="Close viewer">Close</button>
-    <button class="portfolio-lightbox-nav portfolio-lightbox-prev" id="portfolioLightboxPrev" type="button" aria-label="Previous image">Prev</button>
     <figure class="portfolio-lightbox-frame">
-      <img id="portfolioLightboxImage" src="" alt="Portfolio enlarged image" />
-      <video id="portfolioLightboxVideo" controls playsinline hidden></video>
+      <div class="portfolio-lightbox-media-shell">
+        <button class="portfolio-lightbox-nav portfolio-lightbox-prev" id="portfolioLightboxPrev" type="button" aria-label="Previous image">&larr;</button>
+        <img class="portfolio-lightbox-media" id="portfolioLightboxImage" src="" alt="Portfolio enlarged image" />
+        <button class="portfolio-lightbox-nav portfolio-lightbox-next" id="portfolioLightboxNext" type="button" aria-label="Next image">&rarr;</button>
+      </div>
       <figcaption class="portfolio-lightbox-caption">
         <p class="portfolio-lightbox-counter" id="portfolioLightboxCounter">1 / 1</p>
         <div class="portfolio-lightbox-stage-filters" id="portfolioLightboxStageFilters" hidden></div>
@@ -81,8 +83,8 @@
         <p class="portfolio-lightbox-meta" id="portfolioLightboxMeta"></p>
         <p class="portfolio-lightbox-details" id="portfolioLightboxCaption"></p>
       </figcaption>
+      <div class="portfolio-lightbox-thumbs" id="portfolioLightboxThumbs" hidden></div>
     </figure>
-    <button class="portfolio-lightbox-nav portfolio-lightbox-next" id="portfolioLightboxNext" type="button" aria-label="Next image">Next</button>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
