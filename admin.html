@@ -175,7 +175,7 @@
                 <div class="admin-subsection-top">
                   <div>
                     <h3>Media Group</h3>
-                    <p>Add all final renders, nearly-finished images, videos, and BTS shots that belong to the same project.</p>
+                    <p>Add all final renders, WIPs, videos, and BTS shots that belong to the same project, then tag each one so the public viewer can filter them cleanly.</p>
                   </div>
 
                   <button class="admin-button" id="addMediaButton" type="button">Add Media Row</button>
@@ -221,6 +221,15 @@
           <select class="media-type">
             <option value="image">Image</option>
             <option value="video">Video</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Stage</span>
+          <select class="media-stage">
+            <option value="finished">Finished</option>
+            <option value="wip">WIP</option>
+            <option value="bts">BTS</option>
           </select>
         </label>
 

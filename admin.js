@@ -321,6 +321,7 @@ function createEmptyMedia() {
     caption: "",
     type: "image",
     poster: "",
+    stage: "finished",
   };
 }
 
@@ -361,6 +362,7 @@ function createMediaRow(media = createEmptyMedia()) {
   const preview = fragment.querySelector(".admin-media-preview");
   const srcInput = fragment.querySelector(".media-src");
   const typeInput = fragment.querySelector(".media-type");
+  const stageInput = fragment.querySelector(".media-stage");
   const altInput = fragment.querySelector(".media-alt");
   const captionInput = fragment.querySelector(".media-caption");
   const posterInput = fragment.querySelector(".media-poster");
@@ -371,6 +373,7 @@ function createMediaRow(media = createEmptyMedia()) {
 
   srcInput.value = media.src || "";
   typeInput.value = media.type || "image";
+  stageInput.value = media.stage || (projectSection.value === "wips" ? "wip" : "finished");
   altInput.value = media.alt || "";
   captionInput.value = media.caption || "";
   posterInput.value = media.poster || "";
@@ -381,6 +384,7 @@ function createMediaRow(media = createEmptyMedia()) {
       {
         src: srcInput.value.trim(),
         type: typeInput.value || "image",
+        stage: stageInput.value || (projectSection.value === "wips" ? "wip" : "finished"),
         alt: altInput.value.trim() || `${projectTitle.value.trim() || "Project"} media item`,
         poster: posterInput.value.trim(),
       },
@@ -435,6 +439,7 @@ function createMediaRow(media = createEmptyMedia()) {
 
   srcInput.addEventListener("input", refreshPreview);
   typeInput.addEventListener("change", refreshPreview);
+  stageInput.addEventListener("change", refreshPreview);
   altInput.addEventListener("input", refreshPreview);
   posterInput.addEventListener("input", refreshPreview);
   refreshPreview();
@@ -461,6 +466,7 @@ function readMediaRows() {
       return {
         src,
         type: row.querySelector(".media-type")?.value || "image",
+        stage: row.querySelector(".media-stage")?.value || (projectSection.value === "wips" ? "wip" : "finished"),
         alt: row.querySelector(".media-alt")?.value.trim() || "",
         caption: row.querySelector(".media-caption")?.value.trim() || "",
         poster: row.querySelector(".media-poster")?.value.trim() || "",

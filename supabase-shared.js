@@ -5,6 +5,7 @@
     projectTable: "portfolio_projects",
     storageBucket: "portfolio-media",
     publicSection: "art",
+    publicSections: ["art", "wips"],
   };
 
   const videoPattern = /\.(mp4|webm|ogg|mov)$/i;
@@ -97,7 +98,29 @@
     return videoPattern.test(src || "") ? "video" : "image";
   }
 
-  function normalizeMediaAsset(asset) {
+  function normalizeSection(value) {
+    return String(value || "").trim().toLowerCase() === "wips" ? "wips" : "art";
+  }
+
+  function normalizeMediaStage(value, section = "art") {
+    const normalized = String(value || "").trim().toLowerCase();
+
+    if (["finished", "final", "hero", "render", "rendered"].includes(normalized)) {
+      return "finished";
+    }
+
+    if (["wip", "work-in-progress", "work in progress", "process", "progress", "rough", "blockout", "sketch", "in-progress"].includes(normalized)) {
+      return "wip";
+    }
+
+    if (["bts", "behind-the-scenes", "behind the scenes", "viewport", "wireframe", "clay", "breakdown"].includes(normalized)) {
+      return "bts";
+    }
+
+    return normalizeSection(section) === "wips" ? "wip" : "finished";
+  }
+
+  function normalizeMediaAsset(asset, section = "art") {
     if (typeof asset === "string") {
       return {
         src: asset,
@@ -105,6 +128,7 @@
         caption: "",
         type: guessMediaType(asset),
         poster: "",
+        stage: normalizeMediaStage("", section),
       };
     }
 
@@ -118,6 +142,7 @@
       caption: asset.caption || "",
       type: guessMediaType(asset.src, asset.type),
       poster: asset.poster || "",
+      stage: normalizeMediaStage(asset.stage || asset.category, section),
     };
   }
 
@@ -169,16 +194,19 @@
           caption: "",
           type: "image",
           poster: "",
+          stage: "finished",
         },
       ],
     };
   }
 
   function mapProjectRowToClient(row) {
+    const section = normalizeSection(row.section);
+
     return {
       id: row.id || "",
       slug: row.slug || "",
-      section: row.section || "art",
+      section,
       status: row.status || "published",
       title: row.title || "",
       text: row.description || "",
@@ -186,17 +214,18 @@
       sortOrder: Number.isFinite(Number(row.sort_order)) ? Number(row.sort_order) : 0,
       madeIn: coerceArray(row.made_in).filter(Boolean),
       thumbnail: normalizeThumbnailAsset(coerceObject(row.thumbnail)),
-      media: coerceArray(row.media).map(normalizeMediaAsset).filter(Boolean),
+      media: coerceArray(row.media).map((asset) => normalizeMediaAsset(asset, section)).filter(Boolean),
     };
   }
 
   function mapProjectClientToRow(project) {
-    const media = coerceArray(project.media).map(normalizeMediaAsset).filter(Boolean);
+    const section = normalizeSection(project.section);
+    const media = coerceArray(project.media).map((asset) => normalizeMediaAsset(asset, section)).filter(Boolean);
     const thumbnail = normalizeThumbnailAsset(project.thumbnail);
     const slug = slugify(project.slug || project.title);
     const row = {
       slug,
-      section: project.section || "art",
+      section,
       status: project.status || "draft",
       title: project.title?.trim() || "",
       description: project.text || "",
@@ -228,8 +257,16 @@
       .order("sort_order", { ascending: false })
       .order("updated_at", { ascending: false });
 
-    if (options.section) {
-      query = query.eq("section", options.section);
+    const sections = Array.isArray(options.sections)
+      ? options.sections.map(normalizeSection).filter(Boolean)
+      : [];
+
+    if (sections.length > 1) {
+      query = query.in("section", sections);
+    } else if (sections.length === 1) {
+      query = query.eq("section", sections[0]);
+    } else if (options.section) {
+      query = query.eq("section", normalizeSection(options.section));
     }
 
     if (!options.includeDrafts) {
@@ -250,6 +287,21 @@
 
     return fetchProjects({
       section: config.publicSection || "art",
+      includeDrafts: false,
+    });
+  }
+
+  function getPublicPortfolioSections(config = getConfig()) {
+    const configuredSections = Array.isArray(config.publicSections) && config.publicSections.length
+      ? config.publicSections
+      : [config.publicSection || "art"];
+
+    return [...new Set(configuredSections.map(normalizeSection).filter(Boolean))];
+  }
+
+  async function fetchPublicPortfolioProjects() {
+    return fetchProjects({
+      sections: getPublicPortfolioSections(),
       includeDrafts: false,
     });
   }
@@ -348,7 +400,7 @@
           ...deepClone(item),
           slug: uniqueSlug,
           sortOrder: Number.isFinite(Number(item.sortOrder)) ? Number(item.sortOrder) : sourceItems.length - index,
-          section: item.section || "art",
+          section: normalizeSection(item.section),
           status: item.status || "published",
         });
       })
@@ -476,6 +528,7 @@
     mapProjectClientToRow,
     fetchProjects,
     fetchPublishedProjects,
+    fetchPublicPortfolioProjects,
     saveProject,
     deleteProject,
     seedProjects,

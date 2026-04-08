@@ -6,7 +6,9 @@
       return;
     }
 
-    const remoteProjects = await api.fetchPublishedProjects();
+    const remoteProjects = api.fetchPublicPortfolioProjects
+      ? await api.fetchPublicPortfolioProjects()
+      : await api.fetchPublishedProjects();
 
     if (Array.isArray(remoteProjects) && remoteProjects.length) {
       window.portfolioItems = remoteProjects;

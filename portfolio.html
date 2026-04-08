@@ -31,6 +31,7 @@
 
           <nav class="portfolio-tabs" aria-label="Portfolio sections">
             <button class="portfolio-tab portfolio-tab-art" data-portfolio-view="artwork" type="button">Art</button>
+            <button class="portfolio-tab portfolio-tab-wips" data-portfolio-view="wips" type="button">WIPs</button>
             <button class="portfolio-tab portfolio-tab-resume" data-portfolio-view="resume" type="button">Resume</button>
             <a class="portfolio-tab portfolio-tab-shop" href="shop.html">Shop</a>
           </nav>
@@ -40,10 +41,19 @@
           <section class="portfolio-section portfolio-panel" data-portfolio-panel="artwork" aria-labelledby="portfolio-artwork-heading">
             <div class="portfolio-summary">
               <h2 id="portfolio-artwork-heading">Artwork</h2>
-              <p>Newest work sits up top, and older pieces are grouped into a clearer timeline so visitors can tell what comes from earlier eras.</p>
+              <p>Finished projects live here, while each project can still carry WIPs and BTS images inside the viewer when you want to show the whole process.</p>
             </div>
 
             <div class="portfolio-timeline" id="portfolioPostGrid" aria-label="Portfolio posts"></div>
+          </section>
+
+          <section class="portfolio-section portfolio-panel" data-portfolio-panel="wips" aria-labelledby="portfolio-wips-heading" hidden>
+            <div class="portfolio-summary">
+              <h2 id="portfolio-wips-heading">WIPs</h2>
+              <p>Ongoing studies, rough passes, and in-progress project dumps stay separate from the finished wall so you can show more without making the main portfolio feel crowded.</p>
+            </div>
+
+            <div class="portfolio-timeline" id="portfolioWipGrid" aria-label="Work in progress posts"></div>
           </section>
 
           <section class="portfolio-section portfolio-panel" data-portfolio-panel="resume" aria-labelledby="portfolio-resume-heading" hidden>
@@ -66,6 +76,7 @@
       <video id="portfolioLightboxVideo" controls playsinline hidden></video>
       <figcaption class="portfolio-lightbox-caption">
         <p class="portfolio-lightbox-counter" id="portfolioLightboxCounter">1 / 1</p>
+        <div class="portfolio-lightbox-stage-filters" id="portfolioLightboxStageFilters" hidden></div>
         <h2 class="portfolio-lightbox-title" id="portfolioLightboxTitle">Selected Work</h2>
         <p class="portfolio-lightbox-meta" id="portfolioLightboxMeta"></p>
         <p class="portfolio-lightbox-details" id="portfolioLightboxCaption"></p>

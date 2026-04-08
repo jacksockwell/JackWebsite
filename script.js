@@ -711,6 +711,7 @@ if (shell) {
 }
 
 const portfolioGrid = document.getElementById("portfolioPostGrid");
+const portfolioWipGrid = document.getElementById("portfolioWipGrid");
 const portfolioCreditGrid = document.getElementById("portfolioCreditGrid");
 const portfolioLauncher = document.getElementById("portfolioLauncher");
 const portfolioLauncherRotator = document.getElementById("portfolioLauncherRotator");
@@ -724,6 +725,7 @@ const portfolioLightboxCaption = document.getElementById("portfolioLightboxCapti
 const portfolioLightboxTitle = document.getElementById("portfolioLightboxTitle");
 const portfolioLightboxMeta = document.getElementById("portfolioLightboxMeta");
 const portfolioLightboxCounter = document.getElementById("portfolioLightboxCounter");
+const portfolioLightboxStageFilters = document.getElementById("portfolioLightboxStageFilters");
 const portfolioLightboxPrev = document.getElementById("portfolioLightboxPrev");
 const portfolioLightboxNext = document.getElementById("portfolioLightboxNext");
 const portfolioLightboxClose = document.getElementById("portfolioLightboxClose");
