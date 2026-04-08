@@ -1995,22 +1995,63 @@ body.clean-shot-mode .panel-close {
 
 .social-icon {
   flex: 0 0 auto;
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
   display: grid;
   place-items: center;
   border: 3px solid #fff8ff;
-  border-radius: 999px;
+  border-radius: 16px;
   background: rgba(20, 15, 32, 0.94);
   box-shadow:
     0 0 0 3px rgba(255, 255, 255, 0.1),
     4px 4px 0 rgba(36, 27, 42, 0.16);
+  overflow: hidden;
 }
 
 .social-icon img {
   display: block;
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
+}
+
+.social-icon-instagram {
+  background:
+    radial-gradient(circle at 30% 110%, #fdf497 0 12%, #fd5949 34%, #d6249f 62%, #285aeb 100%);
+}
+
+.social-icon-instagram img {
+  width: 30px;
+  height: 30px;
+}
+
+.social-icon-tiktok {
+  background: #08080d;
+}
+
+.social-icon-tiktok img {
+  width: 30px;
+  height: 30px;
+}
+
+.social-icon-artstation {
+  border-color: #c6f0ff;
+  background:
+    linear-gradient(135deg, rgba(19, 175, 240, 0.5), rgba(19, 175, 240, 0) 45%),
+    #0d2137;
+}
+
+.social-icon-artstation img {
+  width: 30px;
+  height: 30px;
+}
+
+.social-icon-x {
+  background: #000;
+}
+
+.social-icon-x img {
+  width: 24px;
+  height: 24px;
 }
 
 .social-copy {
