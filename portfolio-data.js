@@ -968,4 +968,13 @@ window.portfolioCredits = [
     link: "dont-fret.html",
     linkLabel: "View project page",
   },
+  {
+    title: "Saber Simulator",
+    type: "Game",
+    role: "Pet Artist",
+    text: "I make new pets for Saber Simulator every week, focused on the 1-star through 5-star pets.",
+    status: "Active",
+    link: "https://www.roblox.com/games/3823781113/Saber-Simulator",
+    linkLabel: "Open Roblox page",
+  },
 ];
