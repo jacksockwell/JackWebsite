@@ -2486,14 +2486,14 @@ button {
 
 .portfolio-post-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 320px));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 260px));
   gap: 18px;
   justify-content: start;
 }
 
 .portfolio-credit-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 360px));
+  grid-template-columns: repeat(auto-fit, minmax(360px, 460px));
   gap: 18px;
   justify-content: start;
 }
@@ -2510,6 +2510,8 @@ button {
 }
 
 .portfolio-post {
+  width: min(100%, 260px);
+  justify-self: start;
   padding: 0;
   border: 1px solid #272b35;
   border-radius: 12px;
@@ -2530,6 +2532,8 @@ button {
 
 .portfolio-credit-card {
   display: grid;
+  width: min(100%, 460px);
+  justify-self: start;
   min-height: 100%;
   border: 1px solid #272b35;
   border-radius: 16px;
@@ -2889,6 +2893,11 @@ button {
 
   .portfolio-tabs {
     grid-template-columns: 1fr;
+  }
+
+  .portfolio-post,
+  .portfolio-credit-card {
+    justify-self: center;
   }
 
   .action-label {
