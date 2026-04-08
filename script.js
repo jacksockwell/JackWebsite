@@ -90,6 +90,14 @@ function renderMosaicTiles(tiles) {
     tileElement.style.background = tile.color;
     tileElement.dataset.depth = String(tile.depth || 12);
     tileElement.dataset.baseTransform = "";
+    tileElement.dataset.baseLeft = `${tile.x}`;
+    tileElement.dataset.baseTop = `${tile.y}`;
+    tileElement.dataset.shapeWidth = `${tile.width}`;
+    tileElement.dataset.shapeHeight = `${tile.height}`;
+    tileElement.dataset.loopAxis = "y";
+    tileElement.dataset.loopRange = `${shell.clientHeight + tile.height + 120}`;
+    tileElement.dataset.loopPhase = `${randomBetween(0, shell.clientHeight).toFixed(1)}`;
+    tileElement.dataset.loopSpeed = `${randomBetween(1.2, 3.1).toFixed(3)}`;
     tileElement.style.opacity = typeof tile.opacity === "number" ? String(tile.opacity) : "0.96";
     tileElement.style.zIndex = String(tile.zIndex || 0);
     tileElement.style.setProperty("--tile-order", String(index));
@@ -440,18 +448,26 @@ function setSquareStyles(element, containerRect, config) {
       config.pixelRange[1],
     ),
   );
-  const left = randomBetween(config.leftRange[0], config.leftRange[1]);
-  const top = randomBetween(config.topRange[0], config.topRange[1]);
+  const left = (randomBetween(config.leftRange[0], config.leftRange[1]) / 100) * containerRect.width;
+  const top = (randomBetween(config.topRange[0], config.topRange[1]) / 100) * containerRect.height;
   const color = decorPalette[Math.floor(Math.random() * decorPalette.length)];
 
   element.style.width = `${size}px`;
   element.style.height = `${size}px`;
-  element.style.left = `${left}%`;
-  element.style.top = `${top}%`;
+  element.style.left = `${left}px`;
+  element.style.top = `${top}px`;
   element.style.right = "auto";
   element.style.bottom = "auto";
   element.style.background = color;
   element.dataset.baseTransform = "";
+  element.dataset.baseLeft = `${left}`;
+  element.dataset.baseTop = `${top}`;
+  element.dataset.shapeWidth = `${size}`;
+  element.dataset.shapeHeight = `${size}`;
+  element.dataset.loopAxis = "y";
+  element.dataset.loopRange = `${containerRect.height + size + 120}`;
+  element.dataset.loopPhase = `${randomBetween(0, containerRect.height).toFixed(1)}`;
+  element.dataset.loopSpeed = `${randomBetween(1, 2.4).toFixed(3)}`;
 }
 
 function setGridSquareStyles(element, containerRect, config, palette, cellSize) {
@@ -473,6 +489,14 @@ function setGridSquareStyles(element, containerRect, config, palette, cellSize) 
   element.style.bottom = "auto";
   element.style.background = color;
   element.dataset.baseTransform = "";
+  element.dataset.baseLeft = `${colStart * cellSize}`;
+  element.dataset.baseTop = `${rowStart * cellSize}`;
+  element.dataset.shapeWidth = `${colSpan * cellSize}`;
+  element.dataset.shapeHeight = `${rowSpan * cellSize}`;
+  element.dataset.loopAxis = "y";
+  element.dataset.loopRange = `${containerRect.height + rowSpan * cellSize + 120}`;
+  element.dataset.loopPhase = `${randomBetween(0, containerRect.height).toFixed(1)}`;
+  element.dataset.loopSpeed = `${randomBetween(1.1, 2.8).toFixed(3)}`;
 }
 
 function randomizeDecorSquares() {
@@ -597,15 +621,39 @@ function randomizeDecorSquares() {
   }
 }
 
-function animateParallax() {
+function animateParallax(timestamp = 0) {
+  const elapsedSeconds = timestamp / 1000;
+
   currentX += (targetX - currentX) * 0.08;
   currentY += (targetY - currentY) * 0.08;
 
   shapes.forEach((shape) => {
     const depth = Number(shape.dataset.depth || 12);
     const motionBoost = shape.matches(".about-floating") ? 3.1 : shape.matches(".bg-tile") ? 2.95 : 2.6;
-    const moveX = (currentX / depth) * motionBoost;
-    const moveY = (currentY / depth) * motionBoost;
+    let moveX = (currentX / depth) * motionBoost;
+    let moveY = (currentY / depth) * motionBoost;
+    const loopAxis = shape.dataset.loopAxis;
+
+    if (loopAxis) {
+      const loopRange = Number(shape.dataset.loopRange || 0);
+      const loopSpeed = Number(shape.dataset.loopSpeed || 0);
+      const loopPhase = Number(shape.dataset.loopPhase || 0);
+      const baseLeft = Number(shape.dataset.baseLeft || 0);
+      const baseTop = Number(shape.dataset.baseTop || 0);
+      const shapeWidth = Number(shape.dataset.shapeWidth || 0);
+      const shapeHeight = Number(shape.dataset.shapeHeight || 0);
+
+      if (loopRange > 0 && loopSpeed > 0) {
+        if (loopAxis === "x") {
+          const wrappedX = (((baseLeft + elapsedSeconds * loopSpeed + loopPhase) % loopRange) + loopRange) % loopRange - shapeWidth;
+          moveX += wrappedX - baseLeft;
+        } else {
+          const wrappedY = (((baseTop + elapsedSeconds * loopSpeed + loopPhase) % loopRange) + loopRange) % loopRange - shapeHeight;
+          moveY += wrappedY - baseTop;
+        }
+      }
+    }
+
     const baseTransform = shape.dataset.baseTransform || "";
     shape.style.transform = `translate(${moveX}px, ${moveY}px) ${baseTransform}`.trim();
   });
