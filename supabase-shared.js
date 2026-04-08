@@ -194,9 +194,7 @@
     const media = coerceArray(project.media).map(normalizeMediaAsset).filter(Boolean);
     const thumbnail = normalizeThumbnailAsset(project.thumbnail);
     const slug = slugify(project.slug || project.title);
-
-    return {
-      id: project.id || undefined,
+    const row = {
       slug,
       section: project.section || "art",
       status: project.status || "draft",
@@ -208,6 +206,12 @@
       thumbnail,
       media,
     };
+
+    if (project.id) {
+      row.id = project.id;
+    }
+
+    return row;
   }
 
   async function fetchProjects(options = {}) {
