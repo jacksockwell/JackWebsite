@@ -177,15 +177,8 @@
       border-color: rgba(255, 124, 152, 0.48);
     }
 
-    .fret-hero {
-      display: grid;
-      grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
-      gap: 28px;
-      align-items: start;
-    }
-
+    .fret-banner-card,
     .fret-copy,
-    .fret-media-card,
     .fret-section,
     .fret-steam-panel {
       border: 2px solid var(--fret-line);
@@ -194,11 +187,68 @@
         14px 14px 0 rgba(8, 1, 3, 0.56);
     }
 
+    .fret-banner-card {
+      position: relative;
+      margin: 0;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 24%),
+        #070102;
+    }
+
+    .fret-banner-card::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 38%;
+      pointer-events: none;
+      background: linear-gradient(180deg, transparent, rgba(6, 0, 1, 0.92));
+    }
+
+    .fret-banner-image {
+      width: 100%;
+      height: clamp(280px, 39vw, 520px);
+      display: block;
+      object-fit: cover;
+      object-position: center 32%;
+    }
+
+    .fret-banner-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      color: var(--fret-muted);
+      font-size: 0.92rem;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .fret-banner-caption span:first-child {
+      font-size: 1.06rem;
+      color: var(--fret-text);
+    }
+
+    .fret-hero {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      align-items: start;
+    }
+
     .fret-copy {
       display: grid;
       align-content: start;
       gap: 18px;
       padding: clamp(24px, 4vw, 34px);
+      max-width: 860px;
       background:
         linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 24%),
         linear-gradient(135deg, rgba(122, 0, 28, 0.52) 0%, rgba(15, 1, 5, 0.95) 58%, rgba(78, 0, 17, 0.9) 100%);
@@ -249,44 +299,6 @@
       font-size: 0.98rem;
       line-height: 1.45;
       font-weight: 700;
-    }
-
-    .fret-media-card {
-      overflow: hidden;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 24%),
-        #070102;
-      display: grid;
-      align-content: start;
-      align-self: start;
-      transform: translateY(10px);
-    }
-
-    .fret-hero-image {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: contain;
-    }
-
-    .fret-media-caption {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 18px;
-      border-top: 1px solid var(--fret-line);
-      background: linear-gradient(135deg, rgba(16, 1, 5, 0.98), rgba(90, 0, 20, 0.9));
-      color: var(--fret-muted);
-      font-size: 0.9rem;
-      font-weight: 900;
-      line-height: 1.35;
-    }
-
-    .fret-media-caption span:first-child {
-      font-size: 1rem;
-      color: var(--fret-text);
     }
 
     .fret-grid {
@@ -406,7 +418,6 @@
     }
 
     @media (max-width: 980px) {
-      .fret-hero,
       .fret-grid,
       .fret-preview-grid {
         grid-template-columns: 1fr;
@@ -414,11 +425,6 @@
 
       .fret-status-line {
         justify-content: flex-start;
-      }
-
-      .fret-media-card {
-        min-height: 0;
-        transform: none;
       }
     }
 
@@ -445,6 +451,15 @@
       .fret-nav {
         align-items: stretch;
       }
+
+      .fret-banner-caption {
+        padding: 14px 16px;
+        font-size: 0.82rem;
+      }
+
+      .fret-banner-caption span:first-child {
+        font-size: 0.94rem;
+      }
     }
   </style>
 </head>
@@ -464,6 +479,18 @@
         </div>
       </div>
 
+      <figure class="fret-banner-card">
+        <img
+          class="fret-banner-image"
+          src="Dont Fret high quality banner.png"
+          alt="Don't Fret banner artwork"
+        />
+        <figcaption class="fret-banner-caption">
+          <span>Don't Fret key art</span>
+          <span>Scary Kid Studios / Digital Pajamas</span>
+        </figcaption>
+      </figure>
+
       <section class="fret-hero">
         <div class="fret-copy">
           <h1>Don't Fret</h1>
@@ -480,18 +507,6 @@
             <li>The clearest snapshot of the kind of stylized horror work I want more of in my portfolio.</li>
           </ul>
         </div>
-
-        <figure class="fret-media-card">
-          <img
-            class="fret-hero-image"
-            src="Dont Fret high quality banner.png"
-            alt="Don't Fret banner artwork"
-          />
-          <figcaption class="fret-media-caption">
-            <span>Don't Fret key art</span>
-            <span>Scary Kid Studios / Digital Pajamas</span>
-          </figcaption>
-        </figure>
       </section>
 
       <section class="fret-grid">
