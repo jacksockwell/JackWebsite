@@ -162,6 +162,13 @@
                     <input id="thumbnailUpload" type="file" accept="image/*,video/*" />
                   </label>
                 </div>
+
+                <div class="admin-preview-stack">
+                  <p class="admin-preview-label">Thumbnail Preview</p>
+                  <div class="admin-asset-preview admin-asset-preview-large is-empty" id="thumbnailPreview">
+                    <p class="admin-preview-empty">Thumbnail preview will show here.</p>
+                  </div>
+                </div>
               </section>
 
               <section class="admin-subsection">
@@ -197,6 +204,10 @@
           <button class="admin-icon-button" data-media-action="down" type="button" aria-label="Move item down">Down</button>
           <button class="admin-icon-button admin-icon-button-danger" data-media-action="remove" type="button" aria-label="Remove item">Remove</button>
         </div>
+      </div>
+
+      <div class="admin-asset-preview is-empty admin-media-preview">
+        <p class="admin-preview-empty">Media preview will show here.</p>
       </div>
 
       <div class="admin-field-grid">

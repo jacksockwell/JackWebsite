@@ -26,6 +26,7 @@ const projectMadeIn = document.getElementById("projectMadeIn");
 const thumbnailSrc = document.getElementById("thumbnailSrc");
 const thumbnailAlt = document.getElementById("thumbnailAlt");
 const thumbnailUpload = document.getElementById("thumbnailUpload");
+const thumbnailPreview = document.getElementById("thumbnailPreview");
 const mediaRows = document.getElementById("mediaRows");
 const mediaRowTemplate = document.getElementById("mediaRowTemplate");
 const addMediaButton = document.getElementById("addMediaButton");
@@ -58,6 +59,132 @@ function sortProjects(projects) {
 
     return (left.title || "").localeCompare(right.title || "");
   });
+}
+
+function resolveAssetUrl(src) {
+  const cleaned = typeof src === "string" ? src.trim() : "";
+
+  if (!cleaned) {
+    return "";
+  }
+
+  try {
+    return new URL(cleaned, window.location.href).href;
+  } catch (_error) {
+    return cleaned;
+  }
+}
+
+function guessAssetType(src, fallback = "image") {
+  return /\.(mp4|mov|m4v|webm)(?:[?#].*)?$/i.test(src || "") ? "video" : fallback;
+}
+
+function setPreviewEmpty(container, message) {
+  if (!container) {
+    return;
+  }
+
+  container.replaceChildren();
+  container.classList.add("is-empty");
+
+  const empty = document.createElement("p");
+  empty.className = "admin-preview-empty";
+  empty.textContent = message;
+  container.append(empty);
+}
+
+function renderAssetPreview(container, asset = {}, options = {}) {
+  if (!container) {
+    return;
+  }
+
+  const {
+    compact = false,
+    emptyMessage = "Preview will show here.",
+    fallbackAlt = "Portfolio asset preview",
+    showSource = true,
+    sourceLabel = "",
+  } = options;
+
+  const source = typeof asset?.src === "string" ? asset.src.trim() : "";
+  const previewUrl = resolveAssetUrl(source);
+
+  if (!previewUrl) {
+    setPreviewEmpty(container, emptyMessage);
+    return;
+  }
+
+  container.replaceChildren();
+  container.classList.remove("is-empty");
+
+  const type = asset?.type === "video" ? "video" : guessAssetType(source, "image");
+  const mediaElement = document.createElement(type === "video" ? "video" : "img");
+
+  if (type === "video") {
+    mediaElement.src = previewUrl;
+    mediaElement.preload = "metadata";
+    mediaElement.playsInline = true;
+
+    const posterUrl = resolveAssetUrl(asset?.poster || "");
+    if (posterUrl) {
+      mediaElement.poster = posterUrl;
+    }
+
+    if (compact) {
+      mediaElement.autoplay = true;
+      mediaElement.loop = true;
+      mediaElement.muted = true;
+    } else {
+      mediaElement.controls = true;
+    }
+  } else {
+    mediaElement.src = previewUrl;
+    mediaElement.alt = asset?.alt?.trim() || fallbackAlt;
+    mediaElement.loading = "lazy";
+  }
+
+  mediaElement.addEventListener("error", () => {
+    setPreviewEmpty(container, "Could not load preview.");
+  });
+
+  container.append(mediaElement);
+
+  if (showSource) {
+    const sourceCopy = document.createElement("p");
+    sourceCopy.className = "admin-preview-source";
+    sourceCopy.textContent = sourceLabel ? `${sourceLabel}: ${source}` : source;
+    container.append(sourceCopy);
+  }
+}
+
+function getProjectPreviewAsset(project) {
+  if (project?.thumbnail?.src) {
+    return {
+      src: project.thumbnail.src,
+      alt: project.thumbnail.alt || `${project.title || "Project"} thumbnail`,
+      type: guessAssetType(project.thumbnail.src, "image"),
+    };
+  }
+
+  const firstMedia = Array.isArray(project?.media) ? project.media.find((item) => item?.src) : null;
+  return firstMedia || null;
+}
+
+function refreshThumbnailPreview() {
+  renderAssetPreview(
+    thumbnailPreview,
+    {
+      src: thumbnailSrc.value.trim(),
+      alt: thumbnailAlt.value.trim() || `${projectTitle.value.trim() || "Project"} thumbnail`,
+      type: guessAssetType(thumbnailSrc.value.trim(), "image"),
+    },
+    {
+      emptyMessage: "Thumbnail preview will show here.",
+      fallbackAlt: `${projectTitle.value.trim() || "Project"} thumbnail`,
+      showSource: true,
+      sourceLabel: "Thumbnail",
+    },
+  );
 }
 
 function createBlankProject() {
@@ -140,7 +267,20 @@ function renderProjectList() {
     meta.className = "admin-project-item-meta";
     meta.textContent = formatProjectMeta(project);
 
-    button.append(title, meta);
+    const preview = document.createElement("div");
+    preview.className = "admin-asset-preview admin-project-item-thumb";
+    renderAssetPreview(preview, getProjectPreviewAsset(project), {
+      compact: true,
+      emptyMessage: "No preview",
+      fallbackAlt: `${project.title || "Project"} preview`,
+      showSource: false,
+    });
+
+    const copy = document.createElement("div");
+    copy.className = "admin-project-item-copy";
+    copy.append(title, meta);
+
+    button.append(preview, copy);
     button.addEventListener("click", () => {
       selectProject(project);
     });
@@ -164,6 +304,7 @@ function syncFormWithProject(project) {
   thumbnailSrc.value = nextProject.thumbnail?.src || "";
   thumbnailAlt.value = nextProject.thumbnail?.alt || "";
   thumbnailUpload.value = "";
+  refreshThumbnailPreview();
 
   renderMediaRows(Array.isArray(nextProject.media) && nextProject.media.length ? nextProject.media : [createEmptyMedia()]);
   renderProjectList();
@@ -217,6 +358,7 @@ async function uploadFileAndPopulate(file, onComplete, folder) {
 function createMediaRow(media = createEmptyMedia()) {
   const fragment = mediaRowTemplate.content.cloneNode(true);
   const row = fragment.querySelector(".admin-media-row");
+  const preview = fragment.querySelector(".admin-media-preview");
   const srcInput = fragment.querySelector(".media-src");
   const typeInput = fragment.querySelector(".media-type");
   const altInput = fragment.querySelector(".media-alt");
@@ -232,6 +374,24 @@ function createMediaRow(media = createEmptyMedia()) {
   altInput.value = media.alt || "";
   captionInput.value = media.caption || "";
   posterInput.value = media.poster || "";
+
+  const refreshPreview = () => {
+    renderAssetPreview(
+      preview,
+      {
+        src: srcInput.value.trim(),
+        type: typeInput.value || "image",
+        alt: altInput.value.trim() || `${projectTitle.value.trim() || "Project"} media item`,
+        poster: posterInput.value.trim(),
+      },
+      {
+        emptyMessage: "Media preview will show here.",
+        fallbackAlt: altInput.value.trim() || `${projectTitle.value.trim() || "Project"} media item`,
+        showSource: true,
+        sourceLabel: typeInput.value === "video" ? "Video" : "Image",
+      },
+    );
+  };
 
   upButton.addEventListener("click", () => {
     moveMediaRow(row, -1);
@@ -264,12 +424,20 @@ function createMediaRow(media = createEmptyMedia()) {
         if (!altInput.value.trim() && projectTitle.value.trim()) {
           altInput.value = `${projectTitle.value.trim()} media item`;
         }
+
+        refreshPreview();
       },
       "projects",
     );
 
     uploadInput.value = "";
   });
+
+  srcInput.addEventListener("input", refreshPreview);
+  typeInput.addEventListener("change", refreshPreview);
+  altInput.addEventListener("input", refreshPreview);
+  posterInput.addEventListener("input", refreshPreview);
+  refreshPreview();
 
   return fragment;
 }
@@ -463,19 +631,25 @@ thumbnailUpload.addEventListener("change", async (event) => {
   const file = event.target.files?.[0];
 
   await uploadFileAndPopulate(
-    file,
+  file,
     (publicUrl) => {
       thumbnailSrc.value = publicUrl;
 
       if (!thumbnailAlt.value.trim() && projectTitle.value.trim()) {
         thumbnailAlt.value = `${projectTitle.value.trim()} thumbnail`;
       }
+
+      refreshThumbnailPreview();
     },
     "thumbnails",
   );
 
   thumbnailUpload.value = "";
 });
+
+thumbnailSrc.addEventListener("input", refreshThumbnailPreview);
+thumbnailAlt.addEventListener("input", refreshThumbnailPreview);
+projectTitle.addEventListener("input", refreshThumbnailPreview);
 
 addMediaButton.addEventListener("click", () => {
   mediaRows.append(createMediaRow());

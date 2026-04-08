@@ -216,13 +216,21 @@ body.page-admin {
 
 .admin-project-item {
   display: grid;
-  gap: 8px;
+  grid-template-columns: 84px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
   width: 100%;
   padding: 14px;
   border: 1px solid #2d3443;
   border-radius: 16px;
   background: #13161d;
   text-align: left;
+}
+
+.admin-project-item-copy {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
 }
 
 .admin-project-item.is-active {
@@ -311,6 +319,86 @@ body.page-admin {
   border: 1px solid #293142;
   border-radius: 18px;
   background: #12161d;
+}
+
+.admin-preview-stack {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-preview-label {
+  margin: 0;
+  color: #cdd3e1;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admin-asset-preview {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  align-content: center;
+  min-height: 180px;
+  padding: 14px;
+  border: 1px solid #2c3445;
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 55%),
+    #0c1016;
+  overflow: hidden;
+}
+
+.admin-asset-preview.is-empty {
+  border-style: dashed;
+}
+
+.admin-asset-preview-large {
+  min-height: 240px;
+}
+
+.admin-media-preview {
+  margin-bottom: 14px;
+}
+
+.admin-project-item-thumb {
+  min-height: 84px;
+  padding: 8px;
+}
+
+.admin-asset-preview img,
+.admin-asset-preview video {
+  display: block;
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #080b11;
+}
+
+.admin-project-item-thumb img,
+.admin-project-item-thumb video {
+  max-height: 68px;
+}
+
+.admin-preview-empty,
+.admin-preview-source {
+  margin: 0;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.admin-preview-empty {
+  color: #8f98ac;
+  font-size: 0.9rem;
+}
+
+.admin-preview-source {
+  width: 100%;
+  color: #aab2c4;
+  font-size: 0.78rem;
+  word-break: break-word;
 }
 
 .admin-subsection-top,
