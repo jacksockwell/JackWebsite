@@ -293,10 +293,11 @@ button {
   opacity: 0;
 }
 
-.page-home .bg-block {
-  border: 0;
-  background: none;
-  opacity: 0.95;
+.page-home .bg-block,
+.page-home .bg-line-right,
+.page-about .bg-block,
+.page-about .bg-line-right {
+  display: none;
 }
 
 .site-shell::before,

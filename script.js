@@ -94,10 +94,10 @@ function renderMosaicTiles(tiles) {
     tileElement.dataset.baseTop = `${tile.y}`;
     tileElement.dataset.shapeWidth = `${tile.width}`;
     tileElement.dataset.shapeHeight = `${tile.height}`;
-    tileElement.dataset.loopAxis = "y";
-    tileElement.dataset.loopRange = `${shell.clientHeight + tile.height + 120}`;
-    tileElement.dataset.loopPhase = `${randomBetween(0, shell.clientHeight).toFixed(1)}`;
-    tileElement.dataset.loopSpeed = `${randomBetween(1.2, 3.1).toFixed(3)}`;
+    tileElement.dataset.loopAxis = tile.loopAxis || "y";
+    tileElement.dataset.loopRange = `${tile.loopRange || shell.clientHeight + tile.height + 120}`;
+    tileElement.dataset.loopPhase = `${typeof tile.loopPhase === "number" ? tile.loopPhase.toFixed(1) : tile.height}`;
+    tileElement.dataset.loopSpeed = `${typeof tile.loopSpeed === "number" ? tile.loopSpeed.toFixed(3) : randomBetween(1.2, 3.1).toFixed(3)}`;
     tileElement.style.opacity = typeof tile.opacity === "number" ? String(tile.opacity) : "0.96";
     tileElement.style.zIndex = String(tile.zIndex || 0);
     tileElement.style.setProperty("--tile-order", String(index));
@@ -111,148 +111,71 @@ function refreshParallaxShapes() {
   shapes = Array.from(document.querySelectorAll(".bg-block, .bg-line-right, .about-floating, .bg-tile"));
 }
 
-function buildHomePixelBackground(shellRect) {
-  const cellSize = Math.round(clamp(Math.min(shellRect.width, shellRect.height) / 8.5, 72, 118));
-  const cols = Math.max(8, Math.ceil(shellRect.width / cellSize));
-  const rows = Math.max(7, Math.ceil(shellRect.height / cellSize));
-  const colors = pickRandomColors(8, homeGridPalette);
-  const blockConfigs = [
-    {
-      colRange: [0, 1],
-      rowRange: [1, 2],
-      colSpanRange: [2, 4],
-      rowSpanRange: [Math.max(3, rows - 4), Math.max(4, rows - 2)],
-    },
-    {
-      colRange: [2, Math.max(3, Math.floor(cols * 0.35))],
-      rowRange: [0, 1],
-      colSpanRange: [2, 4],
-      rowSpanRange: [1, 2],
-    },
-    {
-      colRange: [Math.max(2, Math.floor(cols * 0.3)), Math.max(3, Math.floor(cols * 0.46))],
-      rowRange: [Math.max(2, Math.floor(rows * 0.28)), Math.max(3, Math.floor(rows * 0.45))],
-      colSpanRange: [1, 2],
-      rowSpanRange: [Math.max(2, Math.floor(rows * 0.35)), Math.max(3, Math.floor(rows * 0.5))],
-    },
-    {
-      colRange: [Math.max(4, cols - 4), Math.max(5, cols - 2)],
-      rowRange: [0, 1],
-      colSpanRange: [2, 3],
-      rowSpanRange: [Math.max(4, rows - 4), Math.max(5, rows - 1)],
-    },
-    {
-      colRange: [Math.max(1, Math.floor(cols * 0.18)), Math.max(2, Math.floor(cols * 0.34))],
-      rowRange: [Math.max(4, rows - 3), Math.max(5, rows - 2)],
-      colSpanRange: [2, 3],
-      rowSpanRange: [2, 3],
-    },
-    {
-      colRange: [Math.max(3, Math.floor(cols * 0.5)), Math.max(4, Math.floor(cols * 0.64))],
-      rowRange: [Math.max(4, Math.floor(rows * 0.55)), Math.max(5, Math.floor(rows * 0.68))],
-      colSpanRange: [2, 4],
-      rowSpanRange: [1, 2],
-    },
-    {
-      colRange: [Math.max(4, Math.floor(cols * 0.62)), Math.max(5, Math.floor(cols * 0.76))],
-      rowRange: [1, 2],
-      colSpanRange: [2, 3],
-      rowSpanRange: [1, 2],
-    },
-  ];
-
-  const tiles = blockConfigs.map((config, index) =>
-    resolveGridBlock({
-      ...config,
-      cols,
-      rows,
-      cellSize,
-      color: colors[index + 1],
-      depth: randomInt(9, 16),
-    }),
+function buildBalancedPixelField(shellRect, palette, options = {}) {
+  const cellSize = Math.round(
+    clamp(
+      Math.min(shellRect.width, shellRect.height) / (options.divisor || 10.5),
+      options.minCell || 62,
+      options.maxCell || 96,
+    ),
   );
+  const cols = Math.max(8, Math.ceil(shellRect.width / cellSize) + 1);
+  const rows = Math.max(8, Math.ceil(shellRect.height / cellSize) + 2);
+  const rowShiftSeed = randomInt(0, palette.length - 1);
+  const rowFlipSeed = randomInt(0, 1);
+  const tiles = [];
+
+  for (let row = 0; row < rows; row += 1) {
+    const rowOffset = (rowShiftSeed + row * 2) % palette.length;
+    const reverseRow = (row + rowFlipSeed) % 2 === 1;
+
+    for (let col = 0; col < cols; col += 1) {
+      const colorIndex = reverseRow
+        ? (palette.length - 1 - ((col + rowOffset) % palette.length) + palette.length) % palette.length
+        : (col + rowOffset) % palette.length;
+
+      tiles.push({
+        x: col * cellSize,
+        y: (row - 1) * cellSize,
+        width: cellSize,
+        height: cellSize,
+        color: palette[colorIndex],
+        depth: 12 + ((row + col) % 3) * 2,
+        loopAxis: "y",
+        loopRange: rows * cellSize,
+        loopPhase: cellSize,
+        loopSpeed: options.scrollSpeed || 10,
+        opacity: options.opacity || 0.96,
+      });
+    }
+  }
 
   return {
-    baseColor: colors[0],
+    baseColor: palette[rowShiftSeed % palette.length],
     cellSize,
-    accent: colors[2],
+    accent: palette[(rowShiftSeed + 1) % palette.length],
     tiles,
   };
 }
 
+function buildHomePixelBackground(shellRect) {
+  return buildBalancedPixelField(shellRect, homeGridPalette, {
+    divisor: 10.8,
+    minCell: 64,
+    maxCell: 92,
+    scrollSpeed: 12,
+    opacity: 0.97,
+  });
+}
+
 function buildAboutPixelBackground(shellRect) {
-  const cellSize = Math.round(clamp(Math.min(shellRect.width, shellRect.height) / 9, 72, 112));
-  const cols = Math.max(8, Math.ceil(shellRect.width / cellSize));
-  const rows = Math.max(10, Math.ceil(shellRect.height / cellSize));
-  const colors = pickRandomColors(10, aboutGridPalette);
-  const blockConfigs = [
-    {
-      colRange: [0, 1],
-      rowRange: [0, 2],
-      colSpanRange: [2, 3],
-      rowSpanRange: [4, 6],
-    },
-    {
-      colRange: [Math.max(2, Math.floor(cols * 0.28)), Math.max(3, Math.floor(cols * 0.4))],
-      rowRange: [0, 1],
-      colSpanRange: [2, 3],
-      rowSpanRange: [1, 2],
-    },
-    {
-      colRange: [Math.max(4, cols - 4), Math.max(5, cols - 2)],
-      rowRange: [0, 2],
-      colSpanRange: [2, 3],
-      rowSpanRange: [4, 6],
-    },
-    {
-      colRange: [Math.max(2, Math.floor(cols * 0.18)), Math.max(3, Math.floor(cols * 0.3))],
-      rowRange: [Math.max(4, Math.floor(rows * 0.24)), Math.max(5, Math.floor(rows * 0.34))],
-      colSpanRange: [2, 3],
-      rowSpanRange: [2, 4],
-    },
-    {
-      colRange: [Math.max(4, Math.floor(cols * 0.56)), Math.max(5, Math.floor(cols * 0.72))],
-      rowRange: [Math.max(5, Math.floor(rows * 0.28)), Math.max(6, Math.floor(rows * 0.4))],
-      colSpanRange: [2, 3],
-      rowSpanRange: [2, 4],
-    },
-    {
-      colRange: [0, 2],
-      rowRange: [Math.max(8, rows - 6), Math.max(9, rows - 4)],
-      colSpanRange: [2, 4],
-      rowSpanRange: [2, 4],
-    },
-    {
-      colRange: [Math.max(3, Math.floor(cols * 0.3)), Math.max(4, Math.floor(cols * 0.48))],
-      rowRange: [Math.max(10, rows - 5), Math.max(11, rows - 3)],
-      colSpanRange: [2, 4],
-      rowSpanRange: [1, 2],
-    },
-    {
-      colRange: [Math.max(4, cols - 4), Math.max(5, cols - 2)],
-      rowRange: [Math.max(8, rows - 7), Math.max(9, rows - 5)],
-      colSpanRange: [2, 3],
-      rowSpanRange: [3, 5],
-    },
-  ];
-
-  const tiles = blockConfigs.map((config, index) =>
-    resolveGridBlock({
-      ...config,
-      cols,
-      rows,
-      cellSize,
-      color: colors[index + 1],
-      depth: randomInt(10, 18),
-    }),
-  );
-
-  return {
-    baseColor: colors[0],
-    cellSize,
-    accent: colors[2],
-    tiles,
-  };
+  return buildBalancedPixelField(shellRect, aboutGridPalette, {
+    divisor: 11.5,
+    minCell: 60,
+    maxCell: 88,
+    scrollSpeed: 10,
+    opacity: 0.95,
+  });
 }
 
 function randomizeShellBackground() {
