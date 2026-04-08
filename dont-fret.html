@@ -4,125 +4,501 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Don't Fret | Jack Sockwell</title>
-  <meta name="description" content="Don't Fret by Jack Sockwell." />
-  <link rel="stylesheet" href="styles.css?v=20260407ah" />
+  <meta
+    name="description"
+    content="Featured Don't Fret project page for Jack Sockwell, highlighting the game and Jack's contributions."
+  />
+  <link rel="stylesheet" href="styles.css?v=20260408-fret1" />
   <style>
     body.page-fret {
       margin: 0;
-      background: #060001;
+      background:
+        radial-gradient(circle at top, rgba(255, 35, 74, 0.22), transparent 42%),
+        linear-gradient(180deg, #130306 0%, #090102 48%, #050001 100%);
+      color: #fff7ef;
     }
 
     .page-fret .site-shell {
       position: relative;
       isolation: isolate;
       min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
+      padding: clamp(22px, 4vw, 38px);
       overflow: hidden;
-      background: #060001;
+      background: transparent;
     }
 
     .page-fret .site-shell::before,
     .page-fret .site-shell::after {
       content: "";
       position: absolute;
+      inset: 0;
       pointer-events: none;
     }
 
     .page-fret .site-shell::before {
-      inset: -14%;
-      z-index: 0;
+      opacity: 0.24;
       background:
-        repeating-conic-gradient(from 45deg, #050505 0 25%, #ff153f 0 50%) 50% / 10px 10px;
-      transform-origin: center;
-      animation: fret-checker-warp 30s ease-in-out infinite alternate;
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 38px 38px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2));
     }
 
     .page-fret .site-shell::after {
-      inset: 0;
-      z-index: 0;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(255, 18, 62, 0.1), transparent 55%),
-        linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.5));
+      inset: 18px;
+      border: 3px solid rgba(255, 91, 130, 0.2);
+      box-shadow: inset 0 0 0 1px rgba(255, 220, 120, 0.08);
     }
 
-    @keyframes fret-checker-warp {
-      0% {
-        transform: translate3d(-2%, -1%, 0) scale(1) skew(0deg, 0deg) rotate(0deg);
-        background-position: 0 0;
-      }
-
-      25% {
-        transform: translate3d(1%, -2%, 0) scale(1.05) skew(1.4deg, -1deg) rotate(-0.4deg);
-        background-position: 10px -6px;
-      }
-
-      50% {
-        transform: translate3d(-1%, 2%, 0) scale(1.09) skew(-1.2deg, 1.5deg) rotate(0.6deg);
-        background-position: -8px 12px;
-      }
-
-      75% {
-        transform: translate3d(2%, 1%, 0) scale(1.06) skew(1deg, 1.2deg) rotate(-0.6deg);
-        background-position: 12px 4px;
-      }
-
-      100% {
-        transform: translate3d(-2%, -2%, 0) scale(1.11) skew(-1.5deg, -1deg) rotate(0.5deg);
-        background-position: -10px -10px;
-      }
-    }
-
-    .fret-steam-only {
+    .fret-page {
       position: relative;
       z-index: 1;
-      width: min(720px, 100%);
+      width: min(1240px, 100%);
+      margin: 0 auto;
       display: grid;
-      gap: 16px;
+      gap: 24px;
     }
 
-    .page-fret .steam-shell {
-      min-height: auto;
-      padding: 18px;
-      background: #8e0012;
-      border: 4px solid #1a0004;
-      box-shadow: 14px 14px 0 rgba(26, 0, 4, 0.3);
+    .fret-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .fret-home-link {
-      justify-self: start;
+    .fret-nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .fret-link,
+    .fret-link-secondary {
       display: inline-grid;
       place-items: center;
       min-height: 52px;
-      padding: 12px 16px;
+      padding: 12px 18px;
       border: 3px solid #1a0004;
-      background: #6a0010;
-      color: #ffcf66;
       text-decoration: none;
       text-transform: uppercase;
-      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      font-size: 0.78rem;
       font-weight: 900;
-      letter-spacing: 0.1em;
-      box-shadow: 8px 8px 0 rgba(26, 0, 4, 0.22);
+      box-shadow: 8px 8px 0 rgba(18, 2, 6, 0.24);
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+    }
+
+    .fret-link {
+      background: #ff214f;
+      color: #fff7ef;
+    }
+
+    .fret-link-secondary {
+      background: #ffd24a;
+      color: #1a0905;
+    }
+
+    .fret-link:hover,
+    .fret-link:focus-visible,
+    .fret-link-secondary:hover,
+    .fret-link-secondary:focus-visible {
+      transform: translate(-3px, -3px);
+      box-shadow: 12px 12px 0 rgba(18, 2, 6, 0.28);
+      outline: none;
+    }
+
+    .fret-status-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .fret-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 8px 12px;
+      border: 2px solid rgba(255, 247, 239, 0.2);
+      background: rgba(15, 3, 6, 0.72);
+      color: #fff7ef;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .fret-chip-highlight {
+      background: #ffd24a;
+      color: #1c0904;
+      border-color: #1c0904;
+    }
+
+    .fret-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .fret-copy,
+    .fret-media-card,
+    .fret-section,
+    .fret-steam-panel {
+      border: 4px solid #180004;
+      box-shadow: 14px 14px 0 rgba(18, 2, 6, 0.24);
+    }
+
+    .fret-copy {
+      display: grid;
+      align-content: start;
+      gap: 18px;
+      padding: clamp(24px, 4vw, 34px);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 24%),
+        linear-gradient(135deg, #200106 0%, #780017 62%, #ff234b 100%);
+    }
+
+    .fret-kicker {
+      margin: 0;
+      color: #ffd24a;
+      font-size: 0.86rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .fret-copy h1 {
+      margin: 0;
+      font-size: clamp(3.8rem, 10vw, 7rem);
+      line-height: 0.88;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: #fff6db;
+      text-shadow:
+        5px 5px 0 rgba(20, 2, 6, 0.42),
+        0 0 24px rgba(255, 210, 74, 0.16);
+    }
+
+    .fret-lead {
+      margin: 0;
+      max-width: 34rem;
+      color: #fff7ef;
+      font-size: clamp(1.08rem, 2vw, 1.28rem);
+      line-height: 1.42;
+      font-weight: 700;
+    }
+
+    .fret-copy p {
+      margin: 0;
+      max-width: 42rem;
+      color: rgba(255, 247, 239, 0.92);
+      font-size: 1rem;
+      line-height: 1.56;
+    }
+
+    .fret-points {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .fret-points li {
+      padding: 12px 14px;
+      border-left: 5px solid #ffd24a;
+      background: rgba(10, 1, 4, 0.46);
+      font-size: 0.98rem;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .fret-media-card {
+      overflow: hidden;
+      background: #090102;
+      display: grid;
+      align-content: stretch;
+    }
+
+    .fret-hero-image {
+      width: 100%;
+      height: 100%;
+      min-height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .fret-media-caption {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-top: 3px solid #180004;
+      background: #ffd24a;
+      color: #180004;
+      font-size: 0.9rem;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .fret-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .fret-section {
+      padding: 22px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 26%),
+        #120104;
+    }
+
+    .fret-section h2,
+    .fret-steam-panel h2 {
+      margin: 0 0 12px;
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      line-height: 0.96;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: #ffe27e;
+    }
+
+    .fret-section p,
+    .fret-steam-panel p {
+      margin: 0 0 16px;
+      color: rgba(255, 247, 239, 0.9);
+      font-size: 0.98rem;
+      line-height: 1.58;
+    }
+
+    .fret-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .fret-preview-card {
+      margin: 0;
+      overflow: hidden;
+      border: 3px solid rgba(255, 255, 255, 0.14);
+      background: #090102;
+      box-shadow: 8px 8px 0 rgba(18, 2, 6, 0.22);
+    }
+
+    .fret-preview-card img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: block;
+      object-fit: cover;
+    }
+
+    .fret-preview-card figcaption {
+      padding: 12px 12px 14px;
+      color: #fff7ef;
+      font-size: 0.84rem;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .fret-note {
+      margin: 16px 0 0;
+      padding: 14px 16px;
+      border: 2px solid rgba(255, 210, 74, 0.34);
+      background: rgba(255, 210, 74, 0.08);
+      color: #fff3c4;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .fret-contrib-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .fret-contrib-list li {
+      padding: 14px 14px 14px 16px;
+      border-left: 5px solid #ff234b;
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff7ef;
+      font-size: 0.96rem;
+      line-height: 1.48;
+      font-weight: 700;
+    }
+
+    .fret-steam-panel {
+      padding: 22px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 24%),
+        linear-gradient(135deg, #2a0008 0%, #6f0014 58%, #a80722 100%);
+    }
+
+    .steam-shell {
+      min-height: auto;
+      padding: 18px;
+      background: rgba(8, 1, 3, 0.5);
+      border: 3px solid rgba(255, 247, 239, 0.12);
+      box-shadow: none;
+    }
+
+    .steam-widget {
+      min-height: 190px;
+    }
+
+    @media (max-width: 980px) {
+      .fret-hero,
+      .fret-grid,
+      .fret-preview-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .fret-status-line {
+        justify-content: flex-start;
+      }
+
+      .fret-media-card {
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-fret .site-shell {
+        padding: 18px;
+      }
+
+      .fret-copy,
+      .fret-section,
+      .fret-steam-panel {
+        padding: 18px;
+      }
+
+      .fret-link,
+      .fret-link-secondary {
+        width: 100%;
+      }
+
+      .fret-nav-links {
+        width: 100%;
+      }
+
+      .fret-nav {
+        align-items: stretch;
+      }
     }
   </style>
 </head>
 <body class="page-fret">
   <main class="site-shell" id="siteShell">
-    <section class="fret-steam-only">
-      <a class="fret-home-link" href="index.html">Back Home</a>
-      <div class="steam-shell steam-shell-solo">
-        <iframe
-          class="steam-widget"
-          src="https://store.steampowered.com/widget/2716830/"
-          frameborder="0"
-          width="100%"
-          height="190"
-          loading="lazy"
-          title="Don't Fret on Steam">
-        </iframe>
+    <section class="fret-page">
+      <div class="fret-nav">
+        <div class="fret-nav-links">
+          <a class="fret-link" href="index.html">Back Home</a>
+          <a class="fret-link-secondary" href="portfolio.html">Back to Portfolio</a>
+        </div>
+
+        <div class="fret-status-line" aria-label="Project status">
+          <span class="fret-chip fret-chip-highlight">Featured Project</span>
+          <span class="fret-chip">2026 Release</span>
+          <span class="fret-chip">Coming Soon</span>
+        </div>
       </div>
+
+      <section class="fret-hero">
+        <div class="fret-copy">
+          <p class="fret-kicker">The project behind the quiet years</p>
+          <h1>Don't Fret</h1>
+          <p class="fret-lead">
+            This is the project that has taken up most of the last three years of my pipeline, which is a big reason the rest of this stretch of my portfolio looks lighter than I want it to.
+          </p>
+          <p>
+            My work on Don't Fret has covered character modeling, design tweaks, retopology, optimization, and high poly sculpting. It has been a huge chunk of my recent growth, so I wanted it sitting right at the top instead of feeling like a gap.
+          </p>
+
+          <ul class="fret-points" aria-label="Project focus">
+            <li>Long-term production work across character builds, cleanup passes, and sculpting polish.</li>
+            <li>A major recent project that better explains where my time and energy have been going.</li>
+            <li>The clearest snapshot of the kind of stylized horror work I want more of in my portfolio.</li>
+          </ul>
+        </div>
+
+        <figure class="fret-media-card">
+          <img
+            class="fret-hero-image"
+            src="Dont Fret high quality banner.png"
+            alt="Don't Fret banner artwork"
+          />
+          <figcaption class="fret-media-caption">
+            <span>Don't Fret key art</span>
+            <span>Scary Kid Studios / Digital Pajamas</span>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="fret-grid">
+        <article class="fret-section">
+          <h2>Project Preview</h2>
+          <p>
+            A few official preview shots are here now so the project feels real on the site instead of hidden behind one banner and a store widget.
+          </p>
+
+          <div class="fret-preview-grid">
+            <figure class="fret-preview-card">
+              <img src="dont-fret-preview-01.jpg" alt="Official Don't Fret Steam screenshot 1" loading="lazy" />
+              <figcaption>Official preview still from the current Steam page.</figcaption>
+            </figure>
+            <figure class="fret-preview-card">
+              <img src="dont-fret-preview-02.jpg" alt="Official Don't Fret Steam screenshot 2" loading="lazy" />
+              <figcaption>Another project preview while the full breakdown section is still growing.</figcaption>
+            </figure>
+            <figure class="fret-preview-card">
+              <img src="dont-fret-preview-03.jpg" alt="Official Don't Fret Steam screenshot 3" loading="lazy" />
+              <figcaption>More atmosphere from the game so the page carries some real weight.</figcaption>
+            </figure>
+          </div>
+
+          <p class="fret-note">
+            More model sheets, turnarounds, and process shots can slot into this page next without changing the layout again.
+          </p>
+        </article>
+
+        <article class="fret-section">
+          <h2>What I Touched</h2>
+          <ul class="fret-contrib-list" aria-label="Don't Fret contributions">
+            <li>Character modeling from concept into production-ready meshes.</li>
+            <li>Design tweaks to help characters land better in 3D.</li>
+            <li>Retopology and optimization work so the assets are usable in-game.</li>
+            <li>High poly sculpting passes where the forms really start to sing.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="fret-steam-panel">
+        <h2>Steam Page</h2>
+        <p>
+          The official Steam widget is still here for anyone who wants the store page, trailer, and wishlist button right away.
+        </p>
+
+        <div class="steam-shell">
+          <iframe
+            class="steam-widget"
+            src="https://store.steampowered.com/widget/2716830/"
+            frameborder="0"
+            width="100%"
+            height="190"
+            loading="lazy"
+            title="Don't Fret on Steam">
+          </iframe>
+        </div>
+      </section>
     </section>
   </main>
 

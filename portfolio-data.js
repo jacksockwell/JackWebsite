@@ -24,17 +24,33 @@ window.portfolioItems = [
 
   {
     title: "Don't Fret",
-    text: "An upcoming 2026 game project that has taken a huge amount of my focus over the last three years, including character modeling, design tweaks, retopology, optimization, and high poly sculpting.",
+    text: "The project that has taken up most of my last three years, covering character modeling, design tweaks, retopology, optimization, and high poly sculpting, and the biggest reason this stretch of my portfolio has been lighter.",
     dateLabel: "2026",
-    sortOrder: 202601,
+    sortOrder: 202699,
     status: "Upcoming",
     link: "dont-fret.html",
-    linkLabel: "View Project Page",
+    linkLabel: "Open Featured Project",
     thumbnail: "Dont Fret high quality banner.png",
     media: [
       {
         src: "Dont Fret high quality banner.png",
         alt: "Don't Fret banner art",
+        caption: "Featured key art for Don't Fret.",
+      },
+      {
+        src: "dont-fret-preview-01.jpg",
+        alt: "Official Don't Fret preview still 1",
+        caption: "Official project preview from the current Steam page.",
+      },
+      {
+        src: "dont-fret-preview-02.jpg",
+        alt: "Official Don't Fret preview still 2",
+        caption: "Another official project preview while more breakdowns are on the way.",
+      },
+      {
+        src: "dont-fret-preview-03.jpg",
+        alt: "Official Don't Fret preview still 3",
+        caption: "More atmosphere from the game so the project reads like a full feature.",
       },
     ],
   },
