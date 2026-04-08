@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio | Jack Sockwell</title>
   <meta name="description" content="Portfolio work by Jack Sockwell." />
-  <link rel="stylesheet" href="styles.css?v=20260407ah" />
+  <link rel="stylesheet" href="styles.css?v=20260407-timeline1" />
 </head>
 <body class="page-portfolio">
   <main class="site-shell" id="siteShell">
@@ -40,9 +40,10 @@
           <section class="portfolio-section portfolio-panel" data-portfolio-panel="artwork" aria-labelledby="portfolio-artwork-heading">
             <div class="portfolio-summary">
               <h2 id="portfolio-artwork-heading">Artwork</h2>
+              <p>Newest work sits up top, and older pieces are grouped into a clearer timeline so visitors can tell what comes from earlier eras.</p>
             </div>
 
-            <div class="portfolio-post-grid" id="portfolioPostGrid" aria-label="Portfolio posts"></div>
+            <div class="portfolio-timeline" id="portfolioPostGrid" aria-label="Portfolio posts"></div>
           </section>
 
           <section class="portfolio-section portfolio-panel" data-portfolio-panel="resume" aria-labelledby="portfolio-resume-heading" hidden>
@@ -62,6 +63,7 @@
     <button class="portfolio-lightbox-nav portfolio-lightbox-prev" id="portfolioLightboxPrev" type="button" aria-label="Previous image">Prev</button>
     <figure class="portfolio-lightbox-frame">
       <img id="portfolioLightboxImage" src="" alt="Portfolio enlarged image" />
+      <video id="portfolioLightboxVideo" controls playsinline hidden></video>
       <figcaption class="portfolio-lightbox-caption">
         <p class="portfolio-lightbox-counter" id="portfolioLightboxCounter">1 / 1</p>
         <h2 class="portfolio-lightbox-title" id="portfolioLightboxTitle">Selected Work</h2>
@@ -72,7 +74,7 @@
     <button class="portfolio-lightbox-nav portfolio-lightbox-next" id="portfolioLightboxNext" type="button" aria-label="Next image">Next</button>
   </div>
 
-  <script src="portfolio-data.js?v=20260407-portfolio-tabs3"></script>
-  <script src="script.js?v=20260407aa"></script>
+  <script src="portfolio-data.js?v=20260407-timeline1"></script>
+  <script src="script.js?v=20260407-timeline1"></script>
 </body>
 </html>
