@@ -362,6 +362,66 @@ function initDonateHeartRain() {
   });
 }
 
+const screenshotKeysPressed = new Set();
+let screenshotComboLatched = false;
+
+function isTypingIntoField() {
+  const activeElement = document.activeElement;
+
+  if (!activeElement) {
+    return false;
+  }
+
+  const tagName = activeElement.tagName;
+
+  return (
+    activeElement.isContentEditable ||
+    tagName === "INPUT" ||
+    tagName === "TEXTAREA" ||
+    tagName === "SELECT"
+  );
+}
+
+function initScreenshotModeShortcut() {
+  document.addEventListener("keydown", (event) => {
+    const key = event.key.toLowerCase();
+
+    if (key !== "o" && key !== "r") {
+      return;
+    }
+
+    if (isTypingIntoField()) {
+      return;
+    }
+
+    screenshotKeysPressed.add(key);
+
+    if (screenshotKeysPressed.has("o") && screenshotKeysPressed.has("r") && !screenshotComboLatched) {
+      document.body.classList.toggle("clean-shot-mode");
+      screenshotComboLatched = true;
+    }
+  });
+
+  document.addEventListener("keyup", (event) => {
+    const key = event.key.toLowerCase();
+
+    if (key !== "o" && key !== "r") {
+      return;
+    }
+
+    screenshotKeysPressed.delete(key);
+
+    if (!screenshotKeysPressed.has("o") || !screenshotKeysPressed.has("r")) {
+      screenshotComboLatched = false;
+    }
+  });
+
+  window.addEventListener("blur", () => {
+    screenshotKeysPressed.clear();
+    screenshotComboLatched = false;
+  });
+}
+
 function setSquareStyles(element, containerRect, config) {
   const minDimension = Math.min(containerRect.width, containerRect.height);
   const size = Math.round(
@@ -1045,3 +1105,5 @@ if (contactForm) {
     window.location.href = mailtoUrl;
   });
 }
+
+initScreenshotModeShortcut();

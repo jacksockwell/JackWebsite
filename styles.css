@@ -317,6 +317,20 @@ button {
   opacity: 0.55;
 }
 
+body.clean-shot-mode .home-support-corner,
+body.clean-shot-mode .hero-actions,
+body.clean-shot-mode .home-bottom-cta,
+body.clean-shot-mode .back-link,
+body.clean-shot-mode .portfolio-launcher,
+body.clean-shot-mode .portfolio-credit-link,
+body.clean-shot-mode .portfolio-post-open,
+body.clean-shot-mode .support-link,
+body.clean-shot-mode .contact-email,
+body.clean-shot-mode .contact-form,
+body.clean-shot-mode .panel-close {
+  display: none !important;
+}
+
 .bg-block,
 .bg-line {
   position: absolute;
