@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio Admin | Jack Sockwell</title>
+  <meta name="description" content="Private portfolio editor for Jack Sockwell." />
+  <link rel="stylesheet" href="styles.css?v=20260407-admin1" />
+  <link rel="stylesheet" href="admin.css?v=20260407-admin1" />
+</head>
+<body class="page-admin">
+  <main class="admin-shell">
+    <header class="admin-topbar">
+      <div class="admin-topbar-copy">
+        <p class="admin-kicker">Private Editor</p>
+        <h1>Portfolio Admin</h1>
+        <p class="admin-intro">Sign in, import your current art set, then add, reorder, publish, and group projects without hand-editing the portfolio file every time.</p>
+      </div>
+
+      <div class="admin-topbar-actions">
+        <a class="back-link" href="portfolio.html">View Portfolio</a>
+      </div>
+    </header>
+
+    <section class="admin-layout">
+      <aside class="admin-sidebar">
+        <section class="admin-card">
+          <div class="admin-card-header">
+            <h2>Login</h2>
+            <p>Uses Supabase auth, so this stays secure on a static site.</p>
+          </div>
+
+          <form class="admin-auth-form" id="authForm">
+            <label>
+              <span>Email</span>
+              <input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com" required />
+            </label>
+
+            <label>
+              <span>Password</span>
+              <input id="authPassword" type="password" autocomplete="current-password" placeholder="Password" required />
+            </label>
+
+            <button class="admin-button admin-button-primary" id="authSubmit" type="submit">Sign In</button>
+          </form>
+
+          <div class="admin-session" id="sessionPanel" hidden>
+            <p class="admin-session-copy" id="sessionCopy">Signed in.</p>
+            <button class="admin-button" id="signOutButton" type="button">Sign Out</button>
+          </div>
+
+          <p class="admin-status" id="adminStatus">Checking configuration…</p>
+        </section>
+
+        <section class="admin-card">
+          <div class="admin-card-header">
+            <h2>Quick Actions</h2>
+            <p>Seed the database from your current local portfolio or start a new project from scratch.</p>
+          </div>
+
+          <div class="admin-action-stack">
+            <button class="admin-button admin-button-primary" id="newProjectButton" type="button">New Project</button>
+            <button class="admin-button" id="refreshProjectsButton" type="button">Refresh Projects</button>
+            <button class="admin-button" id="importLocalButton" type="button">Import Local Portfolio</button>
+          </div>
+
+          <p class="admin-helper">Anything marked as <strong>draft</strong> or filed under <strong>wips</strong> stays out of the public art page.</p>
+        </section>
+      </aside>
+
+      <section class="admin-workspace">
+        <section class="admin-card admin-project-list-card">
+          <div class="admin-card-header">
+            <h2>Projects</h2>
+            <p>Pick an entry to edit it, or create a new grouped project.</p>
+          </div>
+
+          <div class="admin-project-list" id="projectList"></div>
+        </section>
+
+        <section class="admin-card admin-editor-card">
+          <div class="admin-card-header">
+            <h2>Editor</h2>
+            <p>Choose the timeline year, section, thumbnail, and grouped media for each project.</p>
+          </div>
+
+          <form class="admin-editor-form" id="projectForm">
+            <fieldset id="projectFieldset">
+              <input id="projectId" type="hidden" />
+
+              <div class="admin-field-grid admin-field-grid-compact">
+                <label>
+                  <span>Slug</span>
+                  <input id="projectSlug" type="text" placeholder="auto-generated-from-title" />
+                </label>
+
+                <label>
+                  <span>Section</span>
+                  <select id="projectSection">
+                    <option value="art">Art</option>
+                    <option value="wips">WIPs</option>
+                  </select>
+                </label>
+
+                <label>
+                  <span>Status</span>
+                  <select id="projectStatus">
+                    <option value="published">Published</option>
+                    <option value="draft">Draft</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="admin-field-grid">
+                <label class="admin-field-span-2">
+                  <span>Title</span>
+                  <input id="projectTitle" type="text" placeholder="Project title" required />
+                </label>
+
+                <label>
+                  <span>Timeline Label</span>
+                  <input id="projectDateLabel" type="text" placeholder="2024" />
+                </label>
+
+                <label>
+                  <span>Sort Order</span>
+                  <input id="projectSortOrder" type="number" step="1" placeholder="202401" />
+                </label>
+              </div>
+
+              <label>
+                <span>Description</span>
+                <textarea id="projectText" rows="4" placeholder="Short project description"></textarea>
+              </label>
+
+              <label>
+                <span>Software Tags</span>
+                <input id="projectMadeIn" type="text" placeholder="Blender, Substance Painter" />
+              </label>
+
+              <section class="admin-subsection">
+                <div class="admin-subsection-top">
+                  <div>
+                    <h3>Thumbnail</h3>
+                    <p>Optional card-only thumbnail. Leave blank to use the first media item.</p>
+                  </div>
+                </div>
+
+                <div class="admin-field-grid">
+                  <label class="admin-field-span-2">
+                    <span>Thumbnail Source</span>
+                    <input id="thumbnailSrc" type="text" placeholder="https://... or local-file.jpg" />
+                  </label>
+
+                  <label>
+                    <span>Thumbnail Alt</span>
+                    <input id="thumbnailAlt" type="text" placeholder="Thumbnail alt text" />
+                  </label>
+
+                  <label>
+                    <span>Upload Thumbnail</span>
+                    <input id="thumbnailUpload" type="file" accept="image/*,video/*" />
+                  </label>
+                </div>
+              </section>
+
+              <section class="admin-subsection">
+                <div class="admin-subsection-top">
+                  <div>
+                    <h3>Media Group</h3>
+                    <p>Add all final renders, nearly-finished images, videos, and BTS shots that belong to the same project.</p>
+                  </div>
+
+                  <button class="admin-button" id="addMediaButton" type="button">Add Media Row</button>
+                </div>
+
+                <div class="admin-media-list" id="mediaRows"></div>
+              </section>
+
+              <div class="admin-form-actions">
+                <button class="admin-button admin-button-primary" id="saveProjectButton" type="submit">Save Project</button>
+                <button class="admin-button admin-button-danger" id="deleteProjectButton" type="button">Delete Project</button>
+              </div>
+            </fieldset>
+          </form>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <template id="mediaRowTemplate">
+    <article class="admin-media-row">
+      <div class="admin-media-row-top">
+        <p class="admin-media-label">Media Item</p>
+        <div class="admin-media-actions">
+          <button class="admin-icon-button" data-media-action="up" type="button" aria-label="Move item up">Up</button>
+          <button class="admin-icon-button" data-media-action="down" type="button" aria-label="Move item down">Down</button>
+          <button class="admin-icon-button admin-icon-button-danger" data-media-action="remove" type="button" aria-label="Remove item">Remove</button>
+        </div>
+      </div>
+
+      <div class="admin-field-grid">
+        <label class="admin-field-span-2">
+          <span>Source</span>
+          <input class="media-src" type="text" placeholder="https://... or local-file.jpg" />
+        </label>
+
+        <label>
+          <span>Type</span>
+          <select class="media-type">
+            <option value="image">Image</option>
+            <option value="video">Video</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Upload File</span>
+          <input class="media-upload" type="file" accept="image/*,video/*" />
+        </label>
+
+        <label class="admin-field-span-2">
+          <span>Alt Text</span>
+          <input class="media-alt" type="text" placeholder="Describe what this media shows" />
+        </label>
+
+        <label class="admin-field-span-2">
+          <span>Caption</span>
+          <input class="media-caption" type="text" placeholder="Optional caption or note" />
+        </label>
+
+        <label class="admin-field-span-2">
+          <span>Poster</span>
+          <input class="media-poster" type="text" placeholder="Optional poster image for videos" />
+        </label>
+      </div>
+    </article>
+  </template>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="supabase-config.js?v=20260407-admin1"></script>
+  <script src="supabase-shared.js?v=20260407-admin1"></script>
+  <script src="portfolio-data.js?v=20260407-admin1"></script>
+  <script src="admin.js?v=20260407-admin1"></script>
+</body>
+</html>
