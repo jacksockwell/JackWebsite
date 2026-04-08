@@ -2829,6 +2829,11 @@ body.clean-shot-mode .panel-close {
   outline: none;
 }
 
+.portfolio-post-is-link {
+  text-decoration: none;
+  color: inherit;
+}
+
 .portfolio-post-is-wip {
   border-color: #31456f;
   background:
@@ -3027,6 +3032,12 @@ body.clean-shot-mode .panel-close {
   color: #d7e6ff;
   border-color: #4c5f87;
   background: #202a3d;
+}
+
+.portfolio-post-badge-status {
+  color: #ffe3a8;
+  border-color: #ff9d2f;
+  background: #3d2815;
 }
 
 .portfolio-post-title {

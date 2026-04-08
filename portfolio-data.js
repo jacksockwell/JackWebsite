@@ -5,6 +5,9 @@ window.portfolioItems = [
   // - `sortOrder`: larger numbers appear first in the timeline.
   // - `dateLabel`: the visible timeline badge/group label.
   // - `section`: `art` or `wips` to control which public tab it lands in.
+  // - `link`: optional project page to open instead of the lightbox.
+  // - `linkLabel`: optional card CTA copy for linked projects.
+  // - `status`: optional card badge like `Upcoming` or `In Development`.
   // - `thumbnail`: optional card-only thumbnail that will not appear in the gallery.
   // - `madeIn`: optional software tags.
   // - `media`: images or videos. Images can still use `images` if you prefer.
@@ -19,6 +22,22 @@ window.portfolioItems = [
   //   poster: "optional-poster.png", // optional video poster
   // }
 
+  {
+    title: "Don't Fret",
+    text: "An upcoming 2026 game project that has taken a huge amount of my focus over the last three years, including character modeling, design tweaks, retopology, optimization, and high poly sculpting.",
+    dateLabel: "2026",
+    sortOrder: 202601,
+    status: "Upcoming",
+    link: "dont-fret.html",
+    linkLabel: "View Project Page",
+    thumbnail: "Dont Fret high quality banner.png",
+    media: [
+      {
+        src: "Dont Fret high quality banner.png",
+        alt: "Don't Fret banner art",
+      },
+    ],
+  },
   {
     title: "Little Nightmares 3 - She's Here!",
     text: "A Little Nightmares-inspired fan art scene featuring Alone, Low, and The Supervisor, built from character models through the final scene render for a Rockit Music video.",

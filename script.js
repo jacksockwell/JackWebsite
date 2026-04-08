@@ -894,6 +894,9 @@ function collectPortfolioData(sourceItems = window.portfolioItems) {
             title: item.title,
             text: item.text || "",
             section,
+            status: item.status || "",
+            link: item.link || "",
+            linkLabel: item.linkLabel || "",
             madeIn: Array.isArray(item.madeIn) ? item.madeIn.filter(Boolean) : item.madeIn ? [item.madeIn] : [],
             media,
             thumbnail: normalizePortfolioThumbnail(item.thumbnail, { ...item, section }),
@@ -987,10 +990,16 @@ function createPortfolioPreview(media) {
 }
 
 function createPortfolioPost(item) {
-  const post = document.createElement("button");
+  const post = document.createElement(item.link ? "a" : "button");
   post.className = "portfolio-post";
-  post.type = "button";
-  post.dataset.portfolioIndex = String(item.portfolioIndex);
+
+  if (item.link) {
+    post.href = item.link;
+    post.classList.add("portfolio-post-is-link");
+  } else {
+    post.type = "button";
+    post.dataset.portfolioIndex = String(item.portfolioIndex);
+  }
 
   if (item.section === "wips") {
     post.classList.add("portfolio-post-is-wip");
@@ -1015,7 +1024,11 @@ function createPortfolioPost(item) {
 
   const openHint = document.createElement("span");
   openHint.className = "portfolio-post-open";
-  openHint.textContent = item.media.length === 1 && item.media[0].type === "video" ? "Open Clip" : "Open Project";
+  openHint.textContent = item.link
+    ? item.linkLabel || "View Project"
+    : item.media.length === 1 && item.media[0].type === "video"
+      ? "Open Clip"
+      : "Open Project";
   imageShell.append(openHint);
 
   const copy = document.createElement("span");
@@ -1037,6 +1050,13 @@ function createPortfolioPost(item) {
       sectionBadge.className = "portfolio-post-badge portfolio-post-badge-section";
       sectionBadge.textContent = portfolioSectionLabels[item.section];
       header.append(sectionBadge);
+    }
+
+    if (item.status) {
+      const statusBadge = document.createElement("span");
+      statusBadge.className = "portfolio-post-badge portfolio-post-badge-status";
+      statusBadge.textContent = item.status;
+      header.append(statusBadge);
     }
 
     copy.append(header);
@@ -1540,6 +1560,10 @@ function initPortfolioGallery() {
   }
 
   portfolioPosts.forEach((post) => {
+    if (!post.dataset.portfolioIndex) {
+      return;
+    }
+
     post.addEventListener("click", () => {
       openPortfolioLightbox(Number(post.dataset.portfolioIndex || 0));
     });
