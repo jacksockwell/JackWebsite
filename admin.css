@@ -481,4 +481,17 @@ body.page-admin {
   .admin-project-list {
     max-height: none;
   }
+
+  .admin-project-item {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-project-item-thumb {
+    min-height: 160px;
+  }
+
+  .admin-project-item-thumb img,
+  .admin-project-item-thumb video {
+    max-height: 144px;
+  }
 }
