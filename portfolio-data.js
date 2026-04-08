@@ -57,6 +57,80 @@ window.portfolioItems = [
     ],
   },
   {
+    title: "Sprunki Variants for Rockit",
+    text: "A Sprunki character set built for a Rockit video in mid-2025, grouped with the normal versions first and the evil variants after them so the whole set reads as one project.",
+    dateLabel: "2025",
+    sortOrder: 202506,
+    thumbnail: "sprunki/normal/1161191d57a7a721fc3395dc9d45a2b0.png",
+    madeIn: ["Blender"],
+    media: [
+      {
+        src: "sprunki/normal/1161191d57a7a721fc3395dc9d45a2b0.png",
+        alt: "Sprunki normal variant render 1",
+      },
+      {
+        src: "sprunki/normal/25aaf4be0b3207862eebe353c9137033.png",
+        alt: "Sprunki normal variant render 2",
+      },
+      {
+        src: "sprunki/normal/463cc85964f0bde698df9623e5aaaede.png",
+        alt: "Sprunki normal variant render 3",
+      },
+      {
+        src: "sprunki/normal/80c5e7acb9a8ea4a33dbd445963335e3.png",
+        alt: "Sprunki normal variant render 4",
+      },
+      {
+        src: "sprunki/normal/942f4e4dd4601b07e8a407704d2498b2.png",
+        alt: "Sprunki normal variant render 5",
+      },
+      {
+        src: "sprunki/normal/a2ba72cc62b8a6ff27506bdc0865668c.png",
+        alt: "Sprunki normal variant render 6",
+      },
+      {
+        src: "sprunki/normal/af5edc4691b9d82a62cec99a2758c77e.png",
+        alt: "Sprunki normal variant render 7",
+      },
+      {
+        src: "sprunki/normal/e135c41c668efab00a04a280c21d8efc.png",
+        alt: "Sprunki normal variant render 8",
+      },
+      {
+        src: "sprunki/normal/eae502fb967ac45a6419bc5e821f28d0.png",
+        alt: "Sprunki normal variant render 9",
+      },
+      {
+        src: "sprunki/evil/17bc5fcffeeddfbab1f1f0fcefc5247d.png",
+        alt: "Sprunki evil variant render 1",
+      },
+      {
+        src: "sprunki/evil/3c3a7276a5de80fa3c8bb11f5c0ac4e7.png",
+        alt: "Sprunki evil variant render 2",
+      },
+      {
+        src: "sprunki/evil/4b12f3e9e17984465c0106d42eee3d66.png",
+        alt: "Sprunki evil variant render 3",
+      },
+      {
+        src: "sprunki/evil/767f771f15e5e0046cb29d35b8f4a75c.png",
+        alt: "Sprunki evil variant render 4",
+      },
+      {
+        src: "sprunki/evil/a7665b0cb4fbe9e6535530db7b6d8ea6.png",
+        alt: "Sprunki evil variant render 5",
+      },
+      {
+        src: "sprunki/evil/b6d65bb84f9e6bcee373706bfd516d76.png",
+        alt: "Sprunki evil variant render 6",
+      },
+      {
+        src: "sprunki/evil/d1d232bbecd45883e249a3abb7ed2416.png",
+        alt: "Sprunki evil variant render 7",
+      },
+    ],
+  },
+  {
     title: "Crying Children from the FNAF Movie",
     text: "Fan art character set inspired by the crying children from the Five Nights at Freddy's movie, grouped as one project with the final character renders and viewport passes.",
     dateLabel: "2024",
