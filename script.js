@@ -1079,6 +1079,21 @@ function createPortfolioPost(item) {
   return post;
 }
 
+function getPortfolioGroupSortValue(label, entries) {
+  const normalizedLabel = String(label || "").trim();
+  const yearMatch = normalizedLabel.match(/\d{4}/);
+
+  if (yearMatch) {
+    return Number(yearMatch[0]) * 1000 + Math.max(...entries.map((entry) => Number(entry.item.sortOrder) || 0), 0);
+  }
+
+  if (normalizedLabel.toLowerCase() === "archive") {
+    return -1;
+  }
+
+  return Math.max(...entries.map((entry) => Number(entry.item.sortOrder) || 0), 0);
+}
+
 function buildPortfolioTimelineGroups(items) {
   const groups = [];
   const byLabel = new Map();
@@ -1101,7 +1116,25 @@ function buildPortfolioTimelineGroups(items) {
     });
   });
 
-  return groups;
+  groups.forEach((group) => {
+    group.entries.sort((left, right) => {
+      if (right.item.sortOrder !== left.item.sortOrder) {
+        return right.item.sortOrder - left.item.sortOrder;
+      }
+
+      return left.item.originalIndex - right.item.originalIndex;
+    });
+
+    group.sortValue = getPortfolioGroupSortValue(group.label, group.entries);
+  });
+
+  return groups.sort((left, right) => {
+    if (right.sortValue !== left.sortValue) {
+      return right.sortValue - left.sortValue;
+    }
+
+    return String(left.label || "").localeCompare(String(right.label || ""));
+  });
 }
 
 function createPortfolioTimelineGroup(group) {
