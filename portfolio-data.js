@@ -4,6 +4,7 @@ window.portfolioItems = [
   // Helpful fields:
   // - `sortOrder`: larger numbers appear first in the timeline.
   // - `dateLabel`: the visible timeline badge/group label.
+  // - `section`: `art` or `wips` to control which public tab it lands in.
   // - `thumbnail`: optional card-only thumbnail that will not appear in the gallery.
   // - `madeIn`: optional software tags.
   // - `media`: images or videos. Images can still use `images` if you prefer.
@@ -13,6 +14,7 @@ window.portfolioItems = [
   //   src: "file-name.png",
   //   alt: "What the media shows",
   //   caption: "Optional note",
+  //   stage: "finished", // optional: `finished`, `wip`, or `bts`
   //   type: "video", // only needed for videos
   //   poster: "optional-poster.png", // optional video poster
   // }
@@ -29,6 +31,7 @@ window.portfolioItems = [
         src: "lnFINAL.png",
         alt: "Final Little Nightmares-inspired scene render with Alone, Low, and The Supervisor around a television",
         caption: "Final scene render.",
+        stage: "finished",
       },
       {
         src: "ln1.png",
@@ -49,6 +52,7 @@ window.portfolioItems = [
         src: "ln4.png",
         alt: "Little Nightmares scene setup with the characters before the final lighting pass",
         caption: "Early scene layout and staging.",
+        stage: "wip",
       },
     ],
   },
@@ -64,11 +68,13 @@ window.portfolioItems = [
         src: "jack-sockwell-abbyrender.jpg",
         alt: "Abby character render in pink cloud pajamas",
         caption: "Abby render.",
+        stage: "finished",
       },
       {
         src: "jack-sockwell-abbyview.jpg",
         alt: "Abby character viewport presentation",
         caption: "Abby viewport pass.",
+        stage: "bts",
       },
       {
         src: "jack-sockwell-freddy.jpg",
@@ -132,11 +138,13 @@ window.portfolioItems = [
         src: "jack-sockwell-blue.jpg",
         alt: "Blue from Rainbow Friends in a final black background render",
         caption: "Blue render.",
+        stage: "finished",
       },
       {
         src: "jack-sockwell-blueframe.jpg",
         alt: "Blue from Rainbow Friends shown in a wireframe or viewport pass",
         caption: "Blue behind-the-scenes pass.",
+        stage: "bts",
       },
       {
         src: "jack-sockwell-cyan.jpg",
@@ -597,11 +605,13 @@ window.portfolioItems = [
         src: "bmo.jpg",
         alt: "BMO rendered with neon blue and pink rim lighting",
         caption: "Final hero render.",
+        stage: "finished",
       },
       {
         src: "bmo bts.jpg",
         alt: "BMO shown in a wireframe or modeling pass",
         caption: "Behind-the-scenes model pass.",
+        stage: "bts",
       },
     ],
   },
@@ -636,11 +646,13 @@ window.portfolioItems = [
         src: "lemon grab 2022.jpg",
         alt: "Lemongrab-inspired character reaching toward the camera in a yellow-green render",
         caption: "Final render.",
+        stage: "finished",
       },
       {
         src: "lemongrab bts.jpg",
         alt: "Lemongrab-inspired character shown in a viewport or wireframe pass",
         caption: "Behind-the-scenes model pass.",
+        stage: "bts",
       },
     ],
   },
@@ -673,14 +685,17 @@ window.portfolioItems = [
       {
         src: "pump.png",
         alt: "Finished pumpkin render on a black background",
+        stage: "finished",
       },
       {
         src: "hallo.png",
         alt: "Lit pumpkin scene preview in Blender",
+        stage: "wip",
       },
       {
         src: "pump2.png",
         alt: "Early pumpkin model render",
+        stage: "wip",
       },
     ],
   },

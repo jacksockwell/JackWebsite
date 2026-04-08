@@ -738,7 +738,7 @@ function initPortfolioLauncherRotator() {
   const messages = [
     "Thank you for checking my stuff out! Pick an option below",
     "Take a look around and choose what you want to see first",
-    "Jump into my art, my resume work, or the future shop",
+    "Jump into finished art, WIPs, my resume work, or the future shop",
     "Pick a section below and I will take you right to it",
   ];
 
@@ -759,6 +759,42 @@ function initPortfolioLauncherRotator() {
 }
 
 const portfolioVideoPattern = /\.(mp4|webm|ogg|mov)$/i;
+const portfolioStageOrder = ["finished", "wip", "bts"];
+const portfolioStageLabels = {
+  finished: "Finished",
+  wip: "WIP",
+  bts: "BTS",
+};
+const portfolioSectionLabels = {
+  art: "Art",
+  wips: "WIPs",
+};
+
+function normalizePortfolioSection(value) {
+  return String(value || "").trim().toLowerCase() === "wips" ? "wips" : "art";
+}
+
+function normalizePortfolioStage(value, section = "art") {
+  const normalized = String(value || "").trim().toLowerCase();
+
+  if (["finished", "final", "hero", "render", "rendered"].includes(normalized)) {
+    return "finished";
+  }
+
+  if (["wip", "work-in-progress", "work in progress", "process", "progress", "rough", "blockout", "sketch", "in-progress"].includes(normalized)) {
+    return "wip";
+  }
+
+  if (["bts", "behind-the-scenes", "behind the scenes", "viewport", "wireframe", "clay", "breakdown"].includes(normalized)) {
+    return "bts";
+  }
+
+  return normalizePortfolioSection(section) === "wips" ? "wip" : "finished";
+}
+
+function getPortfolioStageLabel(stage) {
+  return portfolioStageLabels[stage] || portfolioStageLabels.finished;
+}
 
 function guessPortfolioMediaType(src, explicitType = "") {
   if (explicitType === "video" || explicitType === "image") {
@@ -776,6 +812,7 @@ function normalizePortfolioMedia(media, item, index) {
       alt: `${item.title} piece ${index + 1}`,
       caption: "",
       poster: "",
+      stage: normalizePortfolioStage("", item.section),
     };
   }
 
@@ -789,6 +826,7 @@ function normalizePortfolioMedia(media, item, index) {
     alt: media.alt || `${item.title} piece ${index + 1}`,
     caption: media.caption || "",
     poster: media.poster || "",
+    stage: normalizePortfolioStage(media.stage || media.category, item.section),
   };
 }
 
@@ -817,6 +855,7 @@ function collectPortfolioData(sourceItems = window.portfolioItems) {
             return null;
           }
 
+          const section = normalizePortfolioSection(item.section);
           const media = (
             Array.isArray(item.media)
               ? item.media
@@ -826,7 +865,7 @@ function collectPortfolioData(sourceItems = window.portfolioItems) {
                   ? [{ src: item.image, alt: item.alt, caption: item.text }]
                   : []
           )
-            .map((asset, assetIndex) => normalizePortfolioMedia(asset, item, assetIndex))
+            .map((asset, assetIndex) => normalizePortfolioMedia(asset, { ...item, section }, assetIndex))
             .filter(Boolean);
 
           if (!media.length) {
@@ -836,9 +875,10 @@ function collectPortfolioData(sourceItems = window.portfolioItems) {
           return {
             title: item.title,
             text: item.text || "",
+            section,
             madeIn: Array.isArray(item.madeIn) ? item.madeIn.filter(Boolean) : item.madeIn ? [item.madeIn] : [],
             media,
-            thumbnail: normalizePortfolioThumbnail(item.thumbnail, item),
+            thumbnail: normalizePortfolioThumbnail(item.thumbnail, { ...item, section }),
             dateLabel: item.dateLabel || item.yearLabel || "",
             sortOrder: Number.isFinite(Number(item.sortOrder)) ? Number(item.sortOrder) : index,
             originalIndex: index,
@@ -851,6 +891,19 @@ function collectPortfolioData(sourceItems = window.portfolioItems) {
           }
 
           return left.originalIndex - right.originalIndex;
+        })
+        .map((item, portfolioIndex) => {
+          const stageCounts = item.media.reduce((counts, media) => {
+            counts[media.stage] = (counts[media.stage] || 0) + 1;
+            return counts;
+          }, {});
+
+          return {
+            ...item,
+            portfolioIndex,
+            stageCounts,
+            availableStages: portfolioStageOrder.filter((stage) => stageCounts[stage]),
+          };
         })
     : [];
 }
@@ -882,8 +935,28 @@ function buildPortfolioSoftware(item) {
   return item.madeIn.length ? `Made in: ${item.madeIn.join(", ")}` : "";
 }
 
-function buildPortfolioMetaLine(item) {
-  return [item.dateLabel, buildPortfolioSoftware(item)].filter(Boolean).join(" • ");
+function buildPortfolioMetaLine(item, extraParts = []) {
+  return [item.dateLabel, buildPortfolioSoftware(item), ...extraParts].filter(Boolean).join(" | ");
+}
+
+function buildPortfolioStageSummary(item) {
+  const stagesToShow = portfolioStageOrder.filter((stage) => item.stageCounts?.[stage]);
+
+  if (!stagesToShow.length || (stagesToShow.length === 1 && item.section !== "wips")) {
+    return null;
+  }
+
+  const summary = document.createElement("span");
+  summary.className = "portfolio-post-stage-summary";
+
+  stagesToShow.forEach((stage) => {
+    const chip = document.createElement("span");
+    chip.className = `portfolio-post-stage-chip portfolio-post-stage-chip-${stage}`;
+    chip.textContent = `${item.stageCounts[stage]} ${getPortfolioStageLabel(stage)}`;
+    summary.append(chip);
+  });
+
+  return summary;
 }
 
 function createPortfolioPreview(media) {
@@ -914,11 +987,15 @@ function createPortfolioPreview(media) {
   return image;
 }
 
-function createPortfolioPost(item, index) {
+function createPortfolioPost(item) {
   const post = document.createElement("button");
   post.className = "portfolio-post";
   post.type = "button";
-  post.dataset.portfolioIndex = String(index);
+  post.dataset.portfolioIndex = String(item.portfolioIndex);
+
+  if (item.section === "wips") {
+    post.classList.add("portfolio-post-is-wip");
+  }
 
   const imageShell = document.createElement("span");
   imageShell.className = "portfolio-post-image";
@@ -939,20 +1016,30 @@ function createPortfolioPost(item, index) {
 
   const openHint = document.createElement("span");
   openHint.className = "portfolio-post-open";
-  openHint.textContent = item.media[0].type === "video" ? "Open Clip" : "Open Gallery";
+  openHint.textContent = item.media.length === 1 && item.media[0].type === "video" ? "Open Clip" : "Open Project";
   imageShell.append(openHint);
 
   const copy = document.createElement("span");
   copy.className = "portfolio-post-copy";
 
-  if (item.dateLabel) {
+  if (item.dateLabel || item.section === "wips") {
     const header = document.createElement("span");
     header.className = "portfolio-post-header";
 
-    const badge = document.createElement("span");
-    badge.className = "portfolio-post-badge";
-    badge.textContent = item.dateLabel;
-    header.append(badge);
+    if (item.dateLabel) {
+      const badge = document.createElement("span");
+      badge.className = "portfolio-post-badge";
+      badge.textContent = item.dateLabel;
+      header.append(badge);
+    }
+
+    if (item.section === "wips") {
+      const sectionBadge = document.createElement("span");
+      sectionBadge.className = "portfolio-post-badge portfolio-post-badge-section";
+      sectionBadge.textContent = portfolioSectionLabels[item.section];
+      header.append(sectionBadge);
+    }
+
     copy.append(header);
   }
 
@@ -960,6 +1047,12 @@ function createPortfolioPost(item, index) {
   title.className = "portfolio-post-title";
   title.textContent = item.title;
   copy.append(title);
+
+  const stageSummary = buildPortfolioStageSummary(item);
+
+  if (stageSummary) {
+    copy.append(stageSummary);
+  }
 
   if (item.text) {
     const meta = document.createElement("span");
@@ -991,7 +1084,7 @@ function buildPortfolioTimelineGroups(items) {
   const groups = [];
   const byLabel = new Map();
 
-  items.forEach((item, index) => {
+  items.forEach((item) => {
     const label = item.dateLabel || "Archive";
 
     if (!byLabel.has(label)) {
@@ -1006,7 +1099,6 @@ function buildPortfolioTimelineGroups(items) {
 
     byLabel.get(label).entries.push({
       item,
-      index,
     });
   });
 
@@ -1034,12 +1126,32 @@ function createPortfolioTimelineGroup(group) {
   grid.className = "portfolio-era-grid";
 
   group.entries.forEach((entry) => {
-    grid.append(createPortfolioPost(entry.item, entry.index));
+    grid.append(createPortfolioPost(entry.item));
   });
 
   section.append(heading, grid);
 
   return section;
+}
+
+function renderPortfolioTimeline(container, items, emptyMessage) {
+  if (!container) {
+    return;
+  }
+
+  container.replaceChildren();
+
+  if (!items.length) {
+    const emptyState = document.createElement("p");
+    emptyState.className = "portfolio-empty";
+    emptyState.textContent = emptyMessage;
+    container.append(emptyState);
+    return;
+  }
+
+  buildPortfolioTimelineGroups(items).forEach((group) => {
+    container.append(createPortfolioTimelineGroup(group));
+  });
 }
 
 function createPortfolioCredit(item) {
@@ -1198,6 +1310,7 @@ if (portfolioLauncher && portfolioContent && portfolioPanels.length && portfolio
 function initPortfolioGallery() {
   if (
     !portfolioGrid ||
+    !portfolioWipGrid ||
     !portfolioLightbox ||
     !portfolioLightboxImage ||
     !portfolioLightboxVideo ||
@@ -1210,22 +1323,25 @@ function initPortfolioGallery() {
   }
 
   portfolioData = collectPortfolioData();
-  portfolioGrid.replaceChildren();
+  const portfolioArtData = portfolioData.filter((item) => item.section !== "wips");
+  const portfolioWipsData = portfolioData.filter((item) => item.section === "wips");
 
-  if (!portfolioData.length) {
-    const emptyState = document.createElement("p");
-    emptyState.className = "portfolio-empty";
-    emptyState.textContent = "Add portfolio items in portfolio-data.js or Supabase to show your work here.";
-    portfolioGrid.append(emptyState);
-  } else {
-    buildPortfolioTimelineGroups(portfolioData).forEach((group) => {
-      portfolioGrid.append(createPortfolioTimelineGroup(group));
-    });
-  }
+  renderPortfolioTimeline(
+    portfolioGrid,
+    portfolioArtData,
+    "Add portfolio items in portfolio-data.js or Supabase to show your finished work here.",
+  );
+  renderPortfolioTimeline(
+    portfolioWipGrid,
+    portfolioWipsData,
+    "Add published WIP projects to show rough passes, process shots, and unfinished work here.",
+  );
 
   const portfolioPosts = Array.from(document.querySelectorAll(".portfolio-post"));
   let activePortfolioIndex = 0;
   let activePortfolioMediaIndex = 0;
+  let activePortfolioStageFilter = "all";
+  let activePortfolioVisibleMedia = [];
 
   function stopPortfolioLightboxVideo() {
     portfolioLightboxVideo.pause();
@@ -1234,11 +1350,77 @@ function initPortfolioGallery() {
     portfolioLightboxVideo.load();
   }
 
+  function getDefaultPortfolioStageFilter(post) {
+    if (!post) {
+      return "all";
+    }
+
+    if (post.section === "wips" && post.availableStages.includes("wip")) {
+      return "wip";
+    }
+
+    if (post.availableStages.includes("finished") && post.availableStages.length > 1) {
+      return "finished";
+    }
+
+    return "all";
+  }
+
+  function getVisiblePortfolioMedia(post) {
+    if (!post) {
+      return [];
+    }
+
+    if (activePortfolioStageFilter === "all") {
+      return post.media;
+    }
+
+    const filteredMedia = post.media.filter((media) => media.stage === activePortfolioStageFilter);
+    return filteredMedia.length ? filteredMedia : post.media;
+  }
+
+  function syncPortfolioStageFilters(post) {
+    if (!portfolioLightboxStageFilters || !post) {
+      return;
+    }
+
+    const availableStages = post.availableStages || [];
+    portfolioLightboxStageFilters.replaceChildren();
+
+    if (availableStages.length <= 1) {
+      portfolioLightboxStageFilters.hidden = true;
+      return;
+    }
+
+    const filters = ["all", ...portfolioStageOrder.filter((stage) => availableStages.includes(stage))];
+
+    filters.forEach((stage) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "portfolio-lightbox-stage-filter";
+      button.textContent = stage === "all" ? "All" : getPortfolioStageLabel(stage);
+      button.classList.toggle("is-active", activePortfolioStageFilter === stage);
+      button.addEventListener("click", () => {
+        activePortfolioStageFilter = stage;
+        renderPortfolioLightbox(activePortfolioIndex, 0);
+      });
+      portfolioLightboxStageFilters.append(button);
+    });
+
+    portfolioLightboxStageFilters.hidden = false;
+  }
+
   function renderPortfolioLightbox(postIndex, mediaIndex = 0) {
     activePortfolioIndex = (postIndex + portfolioData.length) % portfolioData.length;
     const activePost = portfolioData[activePortfolioIndex];
-    activePortfolioMediaIndex = (mediaIndex + activePost.media.length) % activePost.media.length;
-    const activeMedia = activePost.media[activePortfolioMediaIndex];
+
+    if (activePortfolioStageFilter !== "all" && !activePost.availableStages.includes(activePortfolioStageFilter)) {
+      activePortfolioStageFilter = getDefaultPortfolioStageFilter(activePost);
+    }
+
+    activePortfolioVisibleMedia = getVisiblePortfolioMedia(activePost);
+    activePortfolioMediaIndex = (mediaIndex + activePortfolioVisibleMedia.length) % activePortfolioVisibleMedia.length;
+    const activeMedia = activePortfolioVisibleMedia[activePortfolioMediaIndex];
 
     if (activeMedia.type === "video") {
       portfolioLightboxImage.hidden = true;
@@ -1268,19 +1450,21 @@ function initPortfolioGallery() {
     }
 
     portfolioLightboxTitle.textContent = activePost.title;
-    portfolioLightboxMeta.textContent = buildPortfolioMetaLine(activePost);
+    portfolioLightboxMeta.textContent = buildPortfolioMetaLine(activePost, [getPortfolioStageLabel(activeMedia.stage)]);
     portfolioLightboxCaption.textContent = activeMedia.caption || activePost.text || "Selected Work";
     portfolioLightboxCounter.textContent =
-      activePost.media.length > 1
-        ? `${activePortfolioMediaIndex + 1} / ${activePost.media.length}`
+      activePortfolioVisibleMedia.length > 1
+        ? `${activePortfolioMediaIndex + 1} / ${activePortfolioVisibleMedia.length}`
         : activeMedia.type === "video"
           ? "1 clip"
           : "1 / 1";
-    portfolioLightboxPrev.hidden = activePost.media.length <= 1;
-    portfolioLightboxNext.hidden = activePost.media.length <= 1;
+    portfolioLightboxPrev.hidden = activePortfolioVisibleMedia.length <= 1;
+    portfolioLightboxNext.hidden = activePortfolioVisibleMedia.length <= 1;
+    syncPortfolioStageFilters(activePost);
   }
 
   function openPortfolioLightbox(index) {
+    activePortfolioStageFilter = getDefaultPortfolioStageFilter(portfolioData[index]);
     renderPortfolioLightbox(index, 0);
     portfolioLightbox.hidden = false;
     document.body.style.overflow = "hidden";
@@ -1291,6 +1475,12 @@ function initPortfolioGallery() {
     stopPortfolioLightboxVideo();
     portfolioLightboxVideo.hidden = true;
     portfolioLightboxImage.hidden = false;
+
+    if (portfolioLightboxStageFilters) {
+      portfolioLightboxStageFilters.hidden = true;
+      portfolioLightboxStageFilters.replaceChildren();
+    }
+
     document.body.style.overflow = "";
   }
 

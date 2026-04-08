@@ -5,6 +5,7 @@ window.SUPABASE_CONFIG = Object.assign(
     projectTable: "portfolio_projects",
     storageBucket: "portfolio-media",
     publicSection: "art",
+    publicSections: ["art", "wips"],
   },
   window.SUPABASE_CONFIG || {},
 );

@@ -198,6 +198,7 @@ function createBlankProject() {
     sortOrder: highestSortOrder + 1,
     status: "draft",
     section: "art",
+    media: [createEmptyMedia()],
   };
 }
 
@@ -321,7 +322,7 @@ function createEmptyMedia() {
     caption: "",
     type: "image",
     poster: "",
-    stage: "finished",
+    stage: "",
   };
 }
 
