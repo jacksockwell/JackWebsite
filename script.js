@@ -237,21 +237,34 @@ function initHeroNameJitter() {
       return;
     }
 
-    line.textContent = "";
-
-    [...text].forEach((character, index) => {
-      const letter = document.createElement("span");
-      letter.className = "hero-letter";
-      letter.textContent = character;
-      letter.style.setProperty("--jitter-x", `${randomBetween(-1.8, 1.8).toFixed(2)}px`);
-      letter.style.setProperty("--jitter-y", `${randomBetween(-1.6, 1.6).toFixed(2)}px`);
-      letter.style.setProperty("--jitter-rotate", `${randomBetween(-1.4, 1.4).toFixed(2)}deg`);
-      letter.style.setProperty("--jitter-duration", `${randomBetween(2.4, 4.8).toFixed(2)}s`);
-      letter.style.setProperty("--jitter-delay", `${(index * 0.05 + randomBetween(0, 0.4)).toFixed(2)}s`);
-      line.append(letter);
-    });
+    applyJitterText(line, text);
 
     line.dataset.jitterReady = "true";
+  });
+}
+
+function applyJitterText(target, text, letterClassName = "hero-letter") {
+  if (!target) {
+    return;
+  }
+
+  target.replaceChildren();
+
+  [...text].forEach((character, index) => {
+    if (character === " ") {
+      target.append(document.createTextNode(" "));
+      return;
+    }
+
+    const letter = document.createElement("span");
+    letter.className = letterClassName;
+    letter.textContent = character;
+    letter.style.setProperty("--jitter-x", `${randomBetween(-1.8, 1.8).toFixed(2)}px`);
+    letter.style.setProperty("--jitter-y", `${randomBetween(-1.6, 1.6).toFixed(2)}px`);
+    letter.style.setProperty("--jitter-rotate", `${randomBetween(-1.4, 1.4).toFixed(2)}deg`);
+    letter.style.setProperty("--jitter-duration", `${randomBetween(2.4, 4.8).toFixed(2)}s`);
+    letter.style.setProperty("--jitter-delay", `${(index * 0.05 + randomBetween(0, 0.4)).toFixed(2)}s`);
+    target.append(letter);
   });
 }
 
@@ -684,6 +697,7 @@ if (shell) {
 const portfolioGrid = document.getElementById("portfolioPostGrid");
 const portfolioCreditGrid = document.getElementById("portfolioCreditGrid");
 const portfolioLauncher = document.getElementById("portfolioLauncher");
+const portfolioLauncherRotator = document.getElementById("portfolioLauncherRotator");
 const portfolioContent = document.getElementById("portfolioContent");
 const portfolioViewButtons = Array.from(document.querySelectorAll("[data-portfolio-view]"));
 const portfolioPanels = Array.from(document.querySelectorAll("[data-portfolio-panel]"));
@@ -696,6 +710,34 @@ const portfolioLightboxCounter = document.getElementById("portfolioLightboxCount
 const portfolioLightboxPrev = document.getElementById("portfolioLightboxPrev");
 const portfolioLightboxNext = document.getElementById("portfolioLightboxNext");
 const portfolioLightboxClose = document.getElementById("portfolioLightboxClose");
+
+function initPortfolioLauncherRotator() {
+  if (!portfolioLauncherRotator) {
+    return;
+  }
+
+  const messages = [
+    "Thank you for checking my stuff out! Pick an option below",
+    "Take a look around and choose what you want to see first",
+    "Jump into my art, my resume work, or the future shop",
+    "Pick a section below and I will take you right to it",
+  ];
+
+  let messageIndex = 0;
+
+  const renderMessage = () => {
+    applyJitterText(portfolioLauncherRotator, messages[messageIndex]);
+  };
+
+  renderMessage();
+
+  if (messages.length > 1) {
+    window.setInterval(() => {
+      messageIndex = (messageIndex + 1) % messages.length;
+      renderMessage();
+    }, 10000);
+  }
+}
 const portfolioData = Array.isArray(window.portfolioItems)
   ? window.portfolioItems
       .map((item) => {
@@ -953,6 +995,8 @@ function setPortfolioView(view, options = {}) {
 }
 
 if (portfolioLauncher && portfolioContent && portfolioPanels.length && portfolioViewButtons.length) {
+  initPortfolioLauncherRotator();
+
   portfolioViewButtons.forEach((button) => {
     button.addEventListener("click", () => {
       setPortfolioView(button.dataset.portfolioView || "");
