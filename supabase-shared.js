@@ -272,11 +272,34 @@
       throw new Error("Add at least one media item before saving.");
     }
 
-    const { data, error } = await client
-      .from(config.projectTable)
-      .upsert(row, { onConflict: "slug" })
-      .select("*")
-      .single();
+    const { id, ...payload } = row;
+    let data = null;
+    let error = null;
+
+    if (id) {
+      const response = await client
+        .from(config.projectTable)
+        .update(payload)
+        .eq("id", id)
+        .select("*")
+        .maybeSingle();
+
+      data = response.data;
+      error = response.error;
+
+      if (!error && !data) {
+        throw new Error("This project could not be found. Refresh the project list and try again.");
+      }
+    } else {
+      const response = await client
+        .from(config.projectTable)
+        .insert(payload)
+        .select("*")
+        .single();
+
+      data = response.data;
+      error = response.error;
+    }
 
     if (error) {
       throw error;
