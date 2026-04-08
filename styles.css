@@ -1671,10 +1671,9 @@ button {
 }
 
 .social-header {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 14px;
+  display: grid;
+  justify-items: start;
+  gap: 10px;
   margin-bottom: 22px;
 }
 
@@ -1695,6 +1694,21 @@ button {
   margin: 0;
   font-size: inherit;
   line-height: 1;
+}
+
+.social-kicker {
+  width: fit-content;
+}
+
+.social-kicker-chip {
+  font-size: clamp(0.84rem, 1.1vw, 0.96rem);
+  letter-spacing: 0.14em;
+  padding: 0.26em 0.58em 0.3em;
+}
+
+.social-title .scrapbook-row {
+  align-items: flex-end;
+  gap: 10px;
 }
 
 .social-grid {
