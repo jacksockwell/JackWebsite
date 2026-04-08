@@ -777,6 +777,12 @@ body.clean-shot-mode .panel-close {
   will-change: transform;
 }
 
+.jitter-word {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
 @keyframes hero-letter-jitter {
   0% {
     transform: translate(0, 0) rotate(0deg);

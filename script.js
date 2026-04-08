@@ -249,23 +249,39 @@ function applyJitterText(target, text, letterClassName = "hero-letter") {
   }
 
   target.replaceChildren();
+  const fragment = document.createDocumentFragment();
+  let letterIndex = 0;
 
-  [...text].forEach((character, index) => {
-    if (character === " ") {
-      target.append(document.createTextNode(" "));
+  text.split(/(\s+)/).forEach((token) => {
+    if (!token) {
       return;
     }
 
-    const letter = document.createElement("span");
-    letter.className = letterClassName;
-    letter.textContent = character;
-    letter.style.setProperty("--jitter-x", `${randomBetween(-1.8, 1.8).toFixed(2)}px`);
-    letter.style.setProperty("--jitter-y", `${randomBetween(-1.6, 1.6).toFixed(2)}px`);
-    letter.style.setProperty("--jitter-rotate", `${randomBetween(-1.4, 1.4).toFixed(2)}deg`);
-    letter.style.setProperty("--jitter-duration", `${randomBetween(2.4, 4.8).toFixed(2)}s`);
-    letter.style.setProperty("--jitter-delay", `${(index * 0.05 + randomBetween(0, 0.4)).toFixed(2)}s`);
-    target.append(letter);
+    if (/^\s+$/.test(token)) {
+      fragment.append(document.createTextNode(token));
+      return;
+    }
+
+    const word = document.createElement("span");
+    word.className = "jitter-word";
+
+    [...token].forEach((character) => {
+      const letter = document.createElement("span");
+      letter.className = letterClassName;
+      letter.textContent = character;
+      letter.style.setProperty("--jitter-x", `${randomBetween(-1.8, 1.8).toFixed(2)}px`);
+      letter.style.setProperty("--jitter-y", `${randomBetween(-1.6, 1.6).toFixed(2)}px`);
+      letter.style.setProperty("--jitter-rotate", `${randomBetween(-1.4, 1.4).toFixed(2)}deg`);
+      letter.style.setProperty("--jitter-duration", `${randomBetween(2.4, 4.8).toFixed(2)}s`);
+      letter.style.setProperty("--jitter-delay", `${(letterIndex * 0.05 + randomBetween(0, 0.4)).toFixed(2)}s`);
+      word.append(letter);
+      letterIndex += 1;
+    });
+
+    fragment.append(word);
   });
+
+  target.append(fragment);
 }
 
 function initSymbolRain(targets, options) {
