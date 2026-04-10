@@ -188,33 +188,20 @@ function randomizeShellBackground() {
   const shellRect = shell.getBoundingClientRect();
   const mosaicLayer = ensureMosaicLayer();
 
-  if (body.classList.contains("page-home")) {
+  if (body.classList.contains("page-home") || body.classList.contains("page-about")) {
+    const sharedTopLine =
+      "linear-gradient(90deg, #b8ddbf 0%, #f3cedc 34%, #f2e1a9 68%, #c8e5ee 100%)";
+
     shell.style.background = "var(--paper)";
     shell.style.setProperty("--pixel-grid-size", "120px");
-    shell.style.borderTopColor = "#a9cfc0";
+    shell.style.borderTopColor = "#c9dcbf";
 
     if (mosaicLayer) {
       mosaicLayer.replaceChildren();
     }
 
     if (topLine) {
-      topLine.style.background = "#a9cfc0";
-    }
-
-    return;
-  }
-
-  if (body.classList.contains("page-about")) {
-    shell.style.background = "var(--paper)";
-    shell.style.setProperty("--pixel-grid-size", "128px");
-    shell.style.borderTopColor = "#d7c5e1";
-
-    if (mosaicLayer) {
-      mosaicLayer.replaceChildren();
-    }
-
-    if (topLine) {
-      topLine.style.background = "#d7c5e1";
+      topLine.style.background = sharedTopLine;
     }
 
     return;
