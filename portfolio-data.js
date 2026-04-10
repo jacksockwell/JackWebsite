@@ -24,7 +24,7 @@ window.portfolioItems = [
 
   {
     title: "Don't Fret",
-    text: "The project that has taken up most of my last three years, covering character modeling, design tweaks, retopology, optimization, and high poly sculpting, and the biggest reason this stretch of my portfolio has been lighter.",
+    text: "A defining long-term project spanning character modeling, design refinement, high poly sculpting, retopology, optimization, and the full push toward game-ready character work.",
     dateLabel: "2026",
     sortOrder: 202699,
     status: "Upcoming",
