@@ -205,15 +205,16 @@ function randomizeShellBackground() {
   }
 
   if (body.classList.contains("page-about")) {
-    const aboutBackground = buildAboutPixelBackground(shellRect);
+    shell.style.background = "var(--paper)";
+    shell.style.setProperty("--pixel-grid-size", "128px");
+    shell.style.borderTopColor = "#d7c5e1";
 
-    shell.style.background = aboutBackground.baseColor;
-    shell.style.setProperty("--pixel-grid-size", `${aboutBackground.cellSize}px`);
-    shell.style.borderTopColor = aboutBackground.accent;
-    renderMosaicTiles(aboutBackground.tiles);
+    if (mosaicLayer) {
+      mosaicLayer.replaceChildren();
+    }
 
     if (topLine) {
-      topLine.style.background = aboutBackground.accent;
+      topLine.style.background = "#d7c5e1";
     }
 
     return;
