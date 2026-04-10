@@ -8,7 +8,7 @@ let currentX = 0;
 let currentY = 0;
 
 const decorPalette = ["#ff2452", "#29ff3f", "#fff200", "#00e5ff", "#ff00a8", "#ff8a00"];
-const homeGridPalette = ["#20d5e9", "#ff032d", "#ff9108", "#00ff18"];
+const homeGridPalette = ["#f4d9e2", "#d9ece0", "#f4e1b4", "#d8edf2"];
 const aboutGridPalette = ["#12efd4", "#31ff00", "#dcff00"];
 
 function randomBetween(min, max) {
@@ -189,15 +189,16 @@ function randomizeShellBackground() {
   const mosaicLayer = ensureMosaicLayer();
 
   if (body.classList.contains("page-home")) {
-    const homeBackground = buildHomePixelBackground(shellRect);
+    shell.style.background = "var(--paper)";
+    shell.style.setProperty("--pixel-grid-size", "120px");
+    shell.style.borderTopColor = "#a9cfc0";
 
-    shell.style.background = homeBackground.baseColor;
-    shell.style.setProperty("--pixel-grid-size", `${homeBackground.cellSize}px`);
-    shell.style.borderTopColor = homeBackground.accent;
-    renderMosaicTiles(homeBackground.tiles);
+    if (mosaicLayer) {
+      mosaicLayer.replaceChildren();
+    }
 
     if (topLine) {
-      topLine.style.background = homeBackground.accent;
+      topLine.style.background = "#a9cfc0";
     }
 
     return;
